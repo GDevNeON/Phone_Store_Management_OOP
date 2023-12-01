@@ -1,0 +1,6 @@
+nv1;Nguyễn Văn Anh;21;nam;13/20 Phạm ngọc Thạch;NVA@gmail.com;093890944;nhân viên bán hàng;ca tối
+nv2;Đường Tank;22;nam;123/12 Làng Chài;duongtank@gmail.com;092847382;nhân viên bán hàng;ca sáng
+nv3;Ngộ Ghê;22;nam;Indonesia;ngokhi@gmail.com;092847382;nhân viên cskh;ca sáng
+nv4;Sa Ngộ Tịnh;22;Chùa Láng;625 Chảo lửa;ngotinh@gmail.com;092847382;nhân viên cskh;ca sáng
+nv5;Truong Gia Thanh;16;Nam;45/3242 Nguyen Van Trieu;trggta@gmail.com;0942346435;;Sang
+
