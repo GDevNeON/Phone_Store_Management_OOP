@@ -1,0 +1,6 @@
+ncc1;Cong ty cung cap Nokia;19 Duong Phen, Tan binh;0917294392;20938493
+ncc2;Nha phan phoi Vsmart;32/12 Duong Cat, Thu Duc;0817228736;19857483
+ncc3;Ong Hoang Iphone;1/3/4 Duong Den, TP.HCM;0019283948;27830284
+ncc4;Chua te Galaxy;876/12 Xa lo Ha Noi, Cau giay, Ha Noi;0817228736;54382643
+ncc5;De nhat Oppo;19 Duong Tang, Q. Phu Nhuan;0817228736;92717462
+ncc6;Updated Provider;123 Updated st.;0123456789;12345678

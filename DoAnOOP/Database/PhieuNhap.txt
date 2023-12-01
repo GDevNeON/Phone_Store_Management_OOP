@@ -1,0 +1,4 @@
+pn2;nv5;Ong Hoang Iphone;2022-12-25;2000000
+pn3;nv3;Nha phan phoi Vsmart;2023-11-15;12000000
+pn4;nv3;Ong Hoang Iphone;2023-11-24;5000000
+pn1;nv1;Apple Corporation;2023-11-27;100000000
