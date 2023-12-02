@@ -238,7 +238,7 @@ public class QuanLyThanhToan implements ControllerInterface {
                                 id.setPaymentId(sc.nextLine());
                                 int check = 0;
                                 ThanhToan[] ttList  = QuanLyThanhToan.getInstance().getListPayments();
-                                for (ThanhToan p : payment) {
+                                for (ThanhToan p : ttList) {
                                     if (id.getPaymentId().equals(p.getPaymentId())) {
                                         check = 1;
                                         break;

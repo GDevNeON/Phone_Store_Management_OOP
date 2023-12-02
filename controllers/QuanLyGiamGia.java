@@ -395,7 +395,7 @@ public class QuanLyGiamGia implements ControllerInterface {
     }
 
     @Override
-    public void Search_byCategory() {
+    public void searchByCategory() {
         GiamGia[] result = new GiamGia[0];
         System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
         System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
