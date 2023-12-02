@@ -1,0 +1,254 @@
+package views;
+
+import java.util.Scanner;
+
+import controllers.QuanLyChiTietHoaDon;
+import controllers.QuanLyChiTietPhieuNhapHang;
+import controllers.QuanLyConfigurations;
+import controllers.QuanLyNhaCungCap;
+import controllers.QuanLyPhieuNhapHang;
+import controllers.QuanLySanPham;
+
+public class QuanLyKhoHangUI {
+  private static QuanLyKhoHangUI instance;
+  private static final Scanner input = new Scanner(System.in);
+
+  public static QuanLyKhoHangUI getInstance() {
+    if (instance == null) {
+      instance = new QuanLyKhoHangUI();
+    }
+    return instance;
+  }
+
+  // Hàm xuất ra danh sách chức năng quản lý
+  public static void method() {
+    System.out.println("---------Danh sách chức năng---------");
+    System.out.println("1.Quản lý sản phẩm");
+    System.out.println("2.Quản lý nhập hàng");
+    System.out.println("3.Quản lý cấu hình sản phẩm");
+    System.out.println("4.Quản lý nhà cung cấp");
+    System.out.println("5.Quản lý chi tiết phiếu nhập hàng");
+    System.out.println("6.Quản lý chi tiết hóa đơn");
+    System.out.println("0.Thoát chương trình.");
+    System.out.println("-------------------------------------");
+  }
+
+  // Hàm xuất danh sách chức năng và gọi hàm từ lớp quản lý sản phẩm
+  public static void quanLySanPhamUI() {
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý sản phẩm:");
+      System.out.println("1.Xem danh sách sản phẩm");
+      System.out.println("2.Thêm sản phẩm");
+      System.out.println("3.Sửa sản phẩm");
+      System.out.println("4.Xóa sản phẩm");
+      System.out.println("5.Tìm kiếm sản phẩm");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> QuanLySanPham.getInstance().Read();
+        case 2 -> QuanLySanPham.getInstance().Create();
+        case 3 -> QuanLySanPham.getInstance().Update();
+        case 4 -> QuanLySanPham.getInstance().Delete();
+        case 5 -> QuanLySanPham.getInstance().searchByCategory();
+        case 0 -> System.out.println("Thoát quản lý sản phẩm");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  // Hàm xuất danh sách chức năng và gọi hàm từ lớp quản lý phiếu nhập
+  public static void quanLyNhapHangUI() {
+    QuanLyPhieuNhapHang qlpn = new QuanLyPhieuNhapHang();
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý nhập hàng:");
+      System.out.println("1.Xem danh sách phiếu nhập");
+      System.out.println("2.Thêm phiếu nhập");
+      System.out.println("3.Sửa phiếu nhập");
+      System.out.println("4.Xóa phiếu nhập");
+      System.out.println("5.Tìm kiếm phiếu nhập");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> qlpn.Read();
+        case 2 -> qlpn.Create();
+        case 3 -> qlpn.Update();
+        case 4 -> qlpn.Delete();
+        case 5 -> qlpn.Search_byCategory();
+        case 0 -> System.out.println("Thoát quản lý phiếu nhập");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  public static void quanLyNhaCungCapUI() {
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý nhà cung cấp:");
+      System.out.println("1.Xem danh sách nhà cung cấp");
+      System.out.println("2.Thêm nhà cung cấp");
+      System.out.println("3.Sửa nhà cung cấp");
+      System.out.println("4.Xóa nhà cung cấp");
+      System.out.println("5.Tìm kiếm nhà cung cấp");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> QuanLyNhaCungCap.getInstance().Read();
+        case 2 -> QuanLyNhaCungCap.getInstance().Create();
+        case 3 -> QuanLyNhaCungCap.getInstance().Update();
+        case 4 -> QuanLyNhaCungCap.getInstance().Delete();
+        case 5 -> QuanLyNhaCungCap.getInstance().searchByCategory();
+        case 0 -> System.out.println("Thoát quản lý nhà cung cấp");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  public static void quanLyCauHinhUI() {
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý cấu hình:");
+      System.out.println("1.Xem danh sách cấu hình");
+      System.out.println("2.Thêm cấu hình");
+      System.out.println("3.Sửa cấu hình");
+      System.out.println("4.Xóa cấu hình");
+      System.out.println("5.Tìm kiếm cấu hình");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> QuanLyConfigurations.getInstance().Read();
+        case 2 -> QuanLyConfigurations.getInstance().Create();
+        case 3 -> QuanLyConfigurations.getInstance().Update();
+        case 4 -> QuanLyConfigurations.getInstance().Delete();
+        case 5 -> QuanLyConfigurations.getInstance().searchByCategory();
+        case 0 -> System.out.println("Thoát quản lý cấu hình sản phẩm");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  public static void quanLyChiTietPhieuNhapHangUI() {
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý chi tiết phiếu nhập hàng:");
+      System.out.println("1.Xem danh sách chi tiết phiếu nhập hàng");
+      System.out.println("2.Thêm chi tiết phiếu nhập hàng");
+      System.out.println("3.Sửa chi tiết phiếu nhập hàng");
+      System.out.println("4.Xóa chi tiết phiếu nhập hàng");
+      System.out.println("5.Tìm kiếm chi tiết phiếu nhập hàng");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> QuanLyChiTietPhieuNhapHang.getInstance().Read();
+        case 2 -> QuanLyChiTietPhieuNhapHang.getInstance().Create();
+        case 3 -> QuanLyChiTietPhieuNhapHang.getInstance().Update();
+        case 4 -> QuanLyChiTietPhieuNhapHang.getInstance().Delete();
+        case 5 -> QuanLyChiTietPhieuNhapHang.getInstance().searchByCategory();
+        case 0 -> System.out.println("Thoát quản lý cấu hình sản phẩm");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  public static void quanLyChiTietHoaDonUI() {
+    int subCheck = 0;
+    do {
+      System.out.println("Quản lý chi tiết hóa đơn:");
+      System.out.println("1.Xem danh sách chi tiết hóa đơn");
+      System.out.println("2.Thêm chi tiết hóa đơn");
+      System.out.println("3.Sửa chi tiết hóa đơn");
+      System.out.println("4.Xóa chi tiết hóa đơn");
+      System.out.println("5.Tìm kiếm chi tiết hóa đơn");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> QuanLyChiTietHoaDon.getInstance().Read();
+        case 2 -> QuanLyChiTietHoaDon.getInstance().Create();
+        case 3 -> QuanLyChiTietHoaDon.getInstance().Update();
+
+        case 4 -> {
+          input.nextLine();
+          String id;
+          System.out.println("Nhập ID hóa đơn muốn xóa");
+          id = input.nextLine();
+          QuanLyChiTietHoaDon.getInstance().Delete(id);
+
+        }
+        case 5 -> QuanLyChiTietHoaDon.getInstance().searchByCategory();
+        case 0 -> System.out.println("Thoát quản lý cấu hình sản phẩm");
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
+
+  private QuanLyKhoHangUI() {
+    int check = 0;
+    do {
+      method();
+      System.out.print("Chọn chức năng: ");
+      check = input.nextInt();
+      switch (check) {
+        case 1 -> {
+          quanLySanPhamUI();
+        }
+        case 2 -> {
+          quanLyNhapHangUI();
+        }
+        case 3 -> {
+          quanLyCauHinhUI();
+        }
+        case 4 -> {
+          quanLyNhaCungCapUI();
+        }
+        case 5 -> {
+          quanLyChiTietPhieuNhapHangUI();
+        }
+        case 6 -> {
+          quanLyChiTietHoaDonUI();
+        }
+        case 0 -> {
+          System.out.println("\nThoát chương trình quản lý khách hàng thành công");
+        }
+        default -> {
+          System.out.println("\nNhập sai chức năng, vui lòng nhập lại!\n");
+        }
+      }
+    } while (check != 0);
+  }
+
+  // public static void main(String[] args) {
+  // int check = 0;
+  // do {
+  // method();
+  // System.out.print("Chọn chức năng: ");
+  // check = input.nextInt();
+  // switch (check) {
+  // case 1 -> {
+  // quanLySanPhamUI();
+  // }
+  // case 2 -> {
+  // quanLyNhapHangUI();
+  // }
+  // case 3 -> {
+  // quanLyCauHinhUI();
+  // }
+  // case 4 -> {
+  // quanLyNhaCungCapUI();
+  // }
+  // case 0 -> {
+  // System.out.println("\nThoát chương trình quản lý khách hàng thành công");
+  // }
+  // default -> {
+  // System.out.println("\nNhập sai chức năng, vui lòng nhập lại!\n");
+  // }
+  // }
+  // } while (check != 0);
+  // }
+}
