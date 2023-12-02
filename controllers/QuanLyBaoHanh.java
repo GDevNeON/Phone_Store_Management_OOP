@@ -348,9 +348,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Delete() {
     try {
-      // Nhập và kiểm tra ID sản phẩm có tồn tại không
-      // Nếu có thì xóa luôn và thông báo thành công
-      // Còn không thì thông báo ID không tồn tại
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN BẢO HÀNH----+");
       System.out.print("Nhập ID sản phẩm cần xóa: ");
       String ID_Product = sc.nextLine();

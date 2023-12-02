@@ -10,7 +10,7 @@ import models.ChiTietPhieuNhapHang;
 import models.PhieuNhapHang;
 import models.SanPham;
 
-public class QuanLyChiTietPhieuNhapHang extends QuanLyPhieuNhapHang implements ControllerInterface {
+public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
   private static QuanLyChiTietPhieuNhapHang instance;
   private ChiTietPhieuNhapHang[] dsct;
   private static Scanner sc = new Scanner(System.in);

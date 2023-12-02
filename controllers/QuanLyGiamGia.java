@@ -2,21 +2,27 @@ package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.GiamGia;
+import models.SanPham;
 
 public class QuanLyGiamGia implements ControllerInterface {
-    public GiamGia[] DSGG;
+    private static final String Discount_ID = null;
+    private static QuanLyGiamGia instance;
     Scanner input = new Scanner(System.in);
-
-    public QuanLyGiamGia() {
-        super();
-        getListGiamGia();
+    private GiamGia[] discount;
+    public static QuanLyGiamGia getInstance() {
+        if(instance == null){
+            instance = new QuanLyGiamGia();
+    } return instance;
+}
+    private QuanLyGiamGia(){
+            getListGiamGia();
     }
-
     public GiamGia[] getListGiamGia() {
         String[] result = new String[0];
         try {
@@ -24,12 +30,13 @@ public class QuanLyGiamGia implements ControllerInterface {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        DSGG = new GiamGia[result.length];
+
+        discount = new GiamGia[result.length];
         for (int i = 0; i < result.length; i++) {
             String[] row = result[i].split(";");
-            DSGG[i] = new GiamGia(row[0], row[1], row[2], row[3], row[4], row[5], row[6]);
+            discount[i] = new GiamGia(row[0], row[1], row[2], row[3], row[4], LocalDate.parse(row[5]),  LocalDate.parse(row[6]));
         }
-        return DSGG;
+        return discount;
     }
 
     public void waitConsole() {
@@ -51,10 +58,10 @@ public class QuanLyGiamGia implements ControllerInterface {
 
         getListGiamGia();
 
-        for (int i = 0; i < DSGG.length; i++) {
+        for (int i = 0; i < discount.length; i++) {
             String read = String.format("| %-5s | %-25s | %-15s | %-10s | %-10s | %-15s | %-15s |",
-                    DSGG[i].getDiscount_ID(), DSGG[i].getKindOfCustomer(), DSGG[i].getProduct_name(),
-                    DSGG[i].getDiscount_rate(), DSGG[i].getStatus(), DSGG[i].getStartDate(), DSGG[i].getEndDate());
+                    discount[i].getDiscountId(), discount[i].getKindOfCustomer(), discount[i].getProductName(),
+                    discount[i].getDiscountRate(), discount[i].getStatus(), discount[i].getStartDate(), discount[i].getEndDate());
             System.out.println(read);
         }
         System.out.format(
@@ -64,14 +71,15 @@ public class QuanLyGiamGia implements ControllerInterface {
 
     @Override
     public void Create() {
-        try {
             System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN GIẢM GIÁ----+");
+            GiamGia discountModel = new GiamGia();
             System.out.println("Nhập ID giảm giá (gg_): ");
-            setDiscount_ID(input.nextLine());
+            discountModel.setDiscountId(input.nextLine());
 
             int check = 0;
-            for (GiamGia giamGia : DSGG) {
-                if (getDiscount_ID().equals(giamGia.getDiscount_ID())) {
+            GiamGia[] dclist = QuanLyGiamGia.getInstance().getListGiamGia();
+            for (GiamGia giamgia : dclist) {
+                if (discountModel.getDiscountId().equals(giamgia.getDiscountId())) {
                     check = 1;
                     break;
                 }
@@ -83,56 +91,55 @@ public class QuanLyGiamGia implements ControllerInterface {
             }
 
             System.out.println("Nhập loại khách hàng:");
-            setKindOfCustomer(input.nextLine());
+            discountModel.setKindOfCustomer(input.nextLine());
 
             System.out.println("Nhập tên sản phẩm: ");
-            setProduct_name(input.nextLine());
+            discountModel.setProductName(input.nextLine());
 
             System.out.println("Nhập % giảm giá: ");
-            setDiscount_rate(input.nextLine());
+            discountModel.setDiscountRate(input.nextLine());
 
             System.out.println("Nhập trạng thái: ");
-            setStatus(input.nextLine());
+            discountModel.setStatus(input.nextLine());
 
             System.out.println("Nhập ngày bắt đầu giảm giá: ");
-            setStartDate(input.nextLine());
+            discountModel.setStartDate(LocalDate.parse(input.nextLine()));
 
             System.out.println("Nhập ngày kết thúc giảm giá: ");
-            setEndDate(input.nextLine());
+            discountModel.setEndDate(LocalDate.parse(input.nextLine()));
 
             try {
-                String input = getDiscount_ID() + ";" + getKindOfCustomer() + ";" + getProduct_name() + ";"
-                        + getDiscount_rate() + ";" + getStatus() + ";" + getStartDate() + ";" + getEndDate();
+                String input = discountModel.getDiscountId() + ";" + discountModel.getKindOfCustomer() + ";" +
+                        discountModel.getProductName() + ";" + discountModel.getDiscountRate() + ";" +
+                        discountModel.getStatus() + ";" + discountModel.getStartDate() + ";" +
+                        discountModel.getEndDate();
                 Stream.addOneLine("Database/GiamGia.txt", input);
                 System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN GIẢM GIÁ THÀNH CÔNG----+");
                 waitConsole();
+                getListGiamGia(); // Assuming this method returns the updated list
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (InputMismatchException ei) {
-            System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
-        getListGiamGia();
-    }
+            
+
 
     @Override
     public void Update() {
         try {
             System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT LẠI THÔNG TIN GIẢM GIÁ----+");
             System.out.print("- Mời bạn nhập ID giảm giá cần chỉnh sửa: ");
-            String Discount_ID = input.nextLine();
-            GiamGia g_gia = null;
+            String DiscountId = input.nextLine();
+            GiamGia id = null;
 
-            for (GiamGia giamGia : DSGG) {
-                if (giamGia.getDiscount_ID().equals(Discount_ID)) {
-                    g_gia = giamGia;
+            for (GiamGia discountModel : discount) {
+                if (discountModel.getDiscountId().equals(DiscountId)) {
+                    id = discountModel;
                     break;
                 }
             }
 
-            if (g_gia == null) {
+            if (id == null) {
                 System.out.println("\t\t\t\t\t\t\t\t +----MÃ GIẢM GIÁ KHÔNG TỒN TẠI----+");
                 return;
             }
@@ -159,8 +166,8 @@ public class QuanLyGiamGia implements ControllerInterface {
             System.out.format(
                     "+-------+---------------------------+-----------------+------------+------------+-----------------+-----------------+%n");
             String row = String.format("| %-5s | %-25s | %-15s | %-10s | %-10s | %-15s | %-15s |",
-                    g_gia.getDiscount_ID(), g_gia.getKindOfCustomer(), g_gia.getProduct_name(),
-                    g_gia.getDiscount_rate(), g_gia.getStatus(), g_gia.getStartDate(), g_gia.getEndDate());
+                    id.getDiscountId(), id.getKindOfCustomer(), id.getProductName(),
+                    id.getDiscountRate(), id.getStatus(), id.getStartDate(), id.getEndDate());
             System.out.println(row);
             System.out.format(
                     "+-------+---------------------------+-----------------+------------+------------+-----------------+-----------------+%n");
@@ -187,10 +194,9 @@ public class QuanLyGiamGia implements ControllerInterface {
                     }
                 }
 
-                String[] data = new String[DSGG.length];
-
-                for (int i = 0; i < DSGG.length; i++) {
-                    if (Discount_ID.equals(DSGG[i].getDiscount_ID())) {
+                String[] data = new String[discount.length];
+                for (int i = 0; i < discount.length; i++) {
+                    if (discount[i].getDiscountId().equals(Discount_ID)) {
                         System.out.println("Nhập thông tin giảm giá:");
 
                         switch (index) {
@@ -199,62 +205,63 @@ public class QuanLyGiamGia implements ControllerInterface {
                             case 1:
                                 System.out.println("Nhập ID giảm giá:");
                                 input.nextLine();
-                                setDiscount_ID(input.nextLine());
+                                id.setDiscountId(input.nextLine());
                                 int check = 0;
-                                for (GiamGia giamGia : DSGG) {
-                                    if (getDiscount_ID().equals(giamGia.getDiscount_ID())) {
+                                GiamGia[] DSGG = QuanLyGiamGia.getInstance().getListGiamGia();
+                                for (GiamGia giamgia : DSGG) {
+                                    if (id.getDiscountId().equals(giamgia.getDiscountId())) {
                                         check = 1;
                                         break;
                                     }
                                 }
-                                if (check == 1) {
-                                    System.out.println("\t\t\t\t\t\t\t\t +-----MÃ GIẢM GIÁ BỊ TRÙNG-----+");
+                                if (check == 0) {
+                                    System.out.println("\t\t\t\t\t\t\t\t +-----MÃ GIẢM GIÁ KHÔNG TỒN TẠI-----+");
                                     return;
                                 }
-                                DSGG[i].setDiscount_ID(getDiscount_ID());
+                                discount[i].setDiscountId(id.getDiscountId());
                                 break;
                             case 2:
                                 System.out.println("Nhập loại khách hàng: ");
                                 input.nextLine();
-                                setKindOfCustomer(input.nextLine());
-                                DSGG[i].setKindOfCustomer(getKindOfCustomer());
+                                id.setKindOfCustomer(input.nextLine());
+                                discount[i].setKindOfCustomer(id.getKindOfCustomer());
                                 break;
                             case 3:
                                 System.out.println("Nhập tên sản phẩm: ");
                                 input.nextLine();
-                                setProduct_name(input.nextLine());
-                                DSGG[i].setProduct_name(getProduct_name());
+                                id.setProductName(input.nextLine());
+                                discount[i].setProductName(id.getProductName());
                                 break;
                             case 4:
                                 System.out.println("Nhập % giảm giá: ");
                                 input.nextLine();
-                                setDiscount_rate(input.nextLine());
-                                DSGG[i].setDiscount_rate(getDiscount_rate());
+                                id.setDiscountRate(input.nextLine());
+                                discount[i].setDiscountRate(id.getDiscountRate());
                                 break;
                             case 5:
                                 System.out.println("Nhập trạng thái: ");
                                 input.nextLine();
-                                setStatus(input.nextLine());
-                                DSGG[i].setStatus(getStatus());
+                                id.setStatus(input.nextLine());
+                                discount[i].setStatus(id.getStatus());
                                 break;
                             case 6:
                                 System.out.println("Nhập ngày bắt đầu giảm giá: ");
                                 input.nextLine();
-                                setStartDate(input.nextLine());
-                                DSGG[i].setStartDate(getStartDate());
+                                id.setStartDate(LocalDate.parse(input.nextLine()));
+                                discount[i].setStartDate(id.getStartDate());
                                 break;
                             case 7:
                                 System.out.println("Nhập ngày kết thúc giảm giá: ");
                                 input.nextLine();
-                                setEndDate(input.nextLine());
-                                DSGG[i].setEndDate(getEndDate());
+                                id.setEndDate(LocalDate.parse(input.nextLine()));
+                                discount[i].setEndDate(id.getEndDate());
                                 break;
                         }
                     }
-                    data[i] = DSGG[i].getDiscount_ID() + ";" + DSGG[i].getKindOfCustomer() + ";"
-                            + DSGG[i].getProduct_name() + ";" + DSGG[i].getDiscount_rate() + ";" + DSGG[i].getStatus()
+                    data[i] = discount[i].getDiscountId() + ";" + discount[i].getKindOfCustomer() + ";"
+                            + discount[i].getProductName() + ";" + discount[i].getDiscountRate() + ";" + discount[i].getStatus()
                             + ";"
-                            + DSGG[i].getStartDate() + ";" + DSGG[i].getEndDate();
+                            + discount[i].getStartDate() + ";" + discount[i].getEndDate();
                 }
                 try {
                     Stream.addAll("Database/GiamGia.txt", data);
@@ -264,16 +271,18 @@ public class QuanLyGiamGia implements ControllerInterface {
                     e.printStackTrace();
                 }
             } else {
-                String[] data = new String[DSGG.length];
+                String[] data = new String[discount.length];
 
-                for (int i = 0; i < DSGG.length; i++) {
-                    if (Discount_ID.equals(DSGG[i].getDiscount_ID())) {
+                for (int i = 0; i < discount.length; i++) {
+                    if (Discount_ID.equals(discount[i].getDiscountId())) {
+                        System.out.println("Nhập thông tin giảm giá:");
                         System.out.println("Nhập ID giảm giá:");
-                        setDiscount_ID(input.nextLine());
+                        input.nextLine();
+                        id.setDiscountId(input.nextLine());
 
                         int check = 0;
-                        for (GiamGia giamGia : DSGG) {
-                            if (getDiscount_ID().equals(giamGia.getDiscount_ID())) {
+                        for (GiamGia giamGia : discount) {
+                            if (id.getDiscountId().equals(giamGia.getDiscountId())) {
                                 check = 1;
                                 break;
                             }
@@ -285,36 +294,36 @@ public class QuanLyGiamGia implements ControllerInterface {
                         }
 
                         System.out.println("Nhập loại khách hàng: ");
-                        setKindOfCustomer(input.nextLine());
+                        id.setKindOfCustomer(input.nextLine());
 
                         System.out.println("Nhập tên sản phẩm: ");
-                        setProduct_name(input.nextLine());
+                        id.setProductName(input.nextLine());
 
                         System.out.println("Nhập % giảm giá: ");
-                        setDiscount_rate(input.nextLine());
+                        id.setDiscountRate(input.nextLine());
 
                         System.out.println("Nhập trạng thái: ");
-                        setStatus(input.nextLine());
+                        id.setStatus(input.nextLine());
 
                         System.out.println("Nhập ngày bắt đầu giảm giá: ");
-                        setStartDate(input.nextLine());
+                        id.setStartDate(LocalDate.parse(input.nextLine()));
 
                         System.out.println("Nhập ngày kết thúc giảm giá: ");
-                        setEndDate(input.nextLine());
+                        id.setEndDate(LocalDate.parse(input.nextLine()));
 
-                        DSGG[i].setDiscount_ID(getDiscount_ID());
-                        DSGG[i].setKindOfCustomer(getKindOfCustomer());
-                        DSGG[i].setProduct_name(getProduct_name());
-                        DSGG[i].setDiscount_rate(getDiscount_rate());
-                        DSGG[i].setStatus(getStatus());
-                        DSGG[i].setStartDate(getStartDate());
-                        DSGG[i].setEndDate(getEndDate());
+                        discount[i].setDiscountId(id.getDiscountId());
+                        discount[i].setKindOfCustomer(id.getKindOfCustomer());
+                        discount[i].setProductName(id.getProductName());
+                        discount[i].setDiscountRate(id.getDiscountRate());
+                        discount[i].setStatus(id.getStatus());
+                        discount[i].setStartDate(id.getStartDate());
+                        discount[i].setEndDate(id.getEndDate());
                     }
-                    data[i] = DSGG[i].getDiscount_ID() + ";" + DSGG[i].getKindOfCustomer() + ";"
-                            + DSGG[i].getProduct_name()
-                            + ";" + DSGG[i].getDiscount_rate() + ";" + DSGG[i].getStatus() + ";"
-                            + DSGG[i].getStartDate()
-                            + ";" + DSGG[i].getEndDate();
+                    data[i] = discount[i].getDiscountId() + ";" + discount[i].getKindOfCustomer() + ";"
+                            + discount[i].getProductName()
+                            + ";" + discount[i].getDiscountRate() + ";" + discount[i].getStatus() + ";"
+                            + discount[i].getStartDate()
+                            + ";" + discount[i].getEndDate();
                 }
                 try {
                     Stream.addAll("Database/GiamGia.txt", data);
@@ -340,8 +349,8 @@ public class QuanLyGiamGia implements ControllerInterface {
             String Discount_ID = input.nextLine();
 
             GiamGia giam_gia = null;
-            for (GiamGia giamGia : DSGG) {
-                if (giamGia.getDiscount_ID().equals(Discount_ID)) {
+            for (GiamGia giamGia : discount) {
+                if (giamGia.getDiscountId().equals(Discount_ID)) {
                     giam_gia = giamGia;
                     break;
                 }
@@ -352,17 +361,17 @@ public class QuanLyGiamGia implements ControllerInterface {
                 return;
             }
 
-            for (int i = 0; i < DSGG.length; i++) {
-                if (Discount_ID.equals(DSGG[i].getDiscount_ID())) {
-                    DSGG = deleteGiamGia(DSGG, i);
+            for (int i = 0; i < discount.length; i++) {
+                if (Discount_ID.equals(discount[i].getDiscountId())) {
+                    discount = deleteGiamGia(discount, i);
                     break;
                 }
             }
-            String[] data = new String[DSGG.length];
-            for (int i = 0; i < DSGG.length; i++) {
-                data[i] = DSGG[i].getDiscount_ID() + ";" + DSGG[i].getKindOfCustomer() + ";" + DSGG[i].getProduct_name()
-                        + ";" + DSGG[i].getDiscount_rate() + ";" + DSGG[i].getStatus() + ";" + DSGG[i].getStartDate()
-                        + ";" + DSGG[i].getEndDate();
+            String[] data = new String[discount.length];
+            for (int i = 0; i < discount.length; i++) {
+                data[i] = discount[i].getDiscountId() + ";" + discount[i].getKindOfCustomer() + ";" + discount[i].getProductName()
+                        + ";" + discount[i].getDiscountRate() + ";" + discount[i].getStatus() + ";" + discount[i].getStartDate()
+                        + ";" + discount[i].getEndDate();
             }
             try {
                 Stream.addAll("Database/GiamGia.txt", data);
@@ -388,7 +397,7 @@ public class QuanLyGiamGia implements ControllerInterface {
         GiamGia[] newGg = new GiamGia[DSGG.length - 1];
         for (int i = 0, j = 0; i < DSGG.length; i++) {
             if (i != index) {
-                newGg[j++] = DSGG[i];
+                newGg[j++] = discount[i];
             }
         }
         return newGg;
@@ -417,8 +426,8 @@ public class QuanLyGiamGia implements ControllerInterface {
                 input.nextLine();
                 System.out.print("Nhập mã giảm giá: ");
                 String Discount_ID = input.nextLine();
-                for (GiamGia giamGia : DSGG) {
-                    if (Discount_ID.contains(giamGia.getDiscount_ID())) {
+                for (GiamGia giamGia : discount) {
+                    if (Discount_ID.contains(giamGia.getDiscountId())) {
                         result = addGiamGia(result, giamGia);
                     }
                 }
@@ -427,7 +436,7 @@ public class QuanLyGiamGia implements ControllerInterface {
                 input.nextLine();
                 System.out.print("Nhập loại khách hàng: ");
                 String KindOfCustomer = input.nextLine();
-                for (GiamGia giamGia : DSGG) {
+                for (GiamGia giamGia : discount) {
                     if (giamGia.getKindOfCustomer().toLowerCase().contains(KindOfCustomer.toLowerCase())) {
                         result = addGiamGia(result, giamGia);
                     }
@@ -437,8 +446,8 @@ public class QuanLyGiamGia implements ControllerInterface {
                 input.nextLine();
                 System.out.print("Nhập tên sản phẩm: ");
                 String Product_name = input.nextLine();
-                for (GiamGia giamGia : DSGG) {
-                    if (giamGia.getProduct_name().toLowerCase().contains(Product_name.toLowerCase())) {
+                for (GiamGia giamGia : discount) {
+                    if (giamGia.getProductName().toLowerCase().contains(Product_name.toLowerCase())) {
                         result = addGiamGia(result, giamGia);
                     }
                 }
@@ -447,8 +456,8 @@ public class QuanLyGiamGia implements ControllerInterface {
                 input.nextLine();
                 System.out.print("Nhập % giảm giá: ");
                 String Discount_rate = input.nextLine();
-                for (GiamGia giamGia : DSGG) {
-                    if (Discount_rate.contains(giamGia.getDiscount_rate())) {
+                for (GiamGia giamGia : discount) {
+                    if (Discount_rate.contains(giamGia.getDiscountRate())) {
                         result = addGiamGia(result, giamGia);
                     }
                 }
@@ -457,7 +466,7 @@ public class QuanLyGiamGia implements ControllerInterface {
                 input.nextLine();
                 System.out.print("Nhập trạng thái: ");
                 String Status = input.nextLine();
-                for (GiamGia giamGia : DSGG) {
+                for (GiamGia giamGia : discount) {
                     if (Status.contains(giamGia.getStatus())) {
                         result = addGiamGia(result, giamGia);
                     }
@@ -479,8 +488,8 @@ public class QuanLyGiamGia implements ControllerInterface {
 
         for (GiamGia giamGia : result) {
             String row = String.format("| %-5s | %-25s | %-15s | %-10s | %-10s | %-15s | %-15s |",
-                    giamGia.getDiscount_ID(), giamGia.getKindOfCustomer(), giamGia.getProduct_name(),
-                    giamGia.getDiscount_rate(), giamGia.getStatus(), giamGia.getStartDate(), giamGia.getEndDate());
+                    giamGia.getDiscountId(), giamGia.getKindOfCustomer(), giamGia.getProductName(),
+                    giamGia.getDiscountRate(), giamGia.getStatus(), giamGia.getStartDate(), giamGia.getEndDate());
             System.out.println(row);
         }
         System.out.format(
