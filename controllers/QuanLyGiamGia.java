@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import models.GiamGia;
 
-public class QuanLyGiamGia extends GiamGia implements ControllerInterface {
+public class QuanLyGiamGia implements ControllerInterface {
     public GiamGia[] DSGG;
     Scanner input = new Scanner(System.in);
 

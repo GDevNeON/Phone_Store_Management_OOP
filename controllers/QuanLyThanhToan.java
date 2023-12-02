@@ -7,39 +7,42 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import models.Payment;
+import models.KhachHang;
+import models.ThanhToan;
 
+public class QuanLyThanhToan implements ControllerInterface {
+    private static QuanLyThanhToan instance;
+    private Scanner sc = new Scanner(System.in);
+    private ThanhToan[] payment;
 
-public class QuanLyThanhToan extends Payment implements ControllerInterface {
-    Scanner sc = new Scanner(System.in);
-    Payment[] payment;
-
-
-    public QuanLyThanhToan(){
-        super();
-        getListPayment();
+    public static QuanLyThanhToan getInstance() {
+        if (instance == null) {
+            instance = new QuanLyThanhToan();
+        }
+        return instance;
     }
 
+    private QuanLyThanhToan() {
+        getListPayments();
+    }
 
-    //Lấy danh sách thanh toán từ file
-    public Payment[] getListPayment(){
+    public ThanhToan[] getListPayments() {
         String[] result = new String[0];
         try {
             result = Stream.read("Database/ThanhToan.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        payment = new Payment[result.length];
+        payment = new ThanhToan[result.length];
         for (int i = 0; i < result.length; i++) {
             String[] row = result[i].split(";");
-            payment[i] = new Payment(row[0], row[1], row[2], row[3], LocalDate.parse(row[4]), row[5], row[6]);
+            payment[i] = new ThanhToan(row[0], row[1], row[2], Integer.parseInt(row[3]), LocalDate.parse(row[4]),
+                    row[5], row[6]);
         }
         return payment;
     }
 
-
-    @Override
+@Override
     public void Read() {
         System.out.println("Danh sách thanh toán:");
         String header = String.format("| %-5s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
@@ -55,21 +58,16 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
         System.out.println(header);
         System.out.format(
                 "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
-
-        try {
-            getListPayment();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        for (Payment p : payment) {
+            getListPayments();
+            
+        for (ThanhToan p : payment) {
             String read = String.format("| %-11s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
-                    p.getPayment_ID(),
-                    p.getCustomer_ID(),
-                    p.getID_Receipt(),
+                    p.getPaymentId(),
+                    p.getCustomerId(),
+                    p.getReceiptId(),
                     p.getAmount(),
-                    p.getPayment_Date(),
-                    p.getPayment_Method(),
+                    p.getPaymentDate(),
+                    p.getPaymentMethod(),
                     p.getStatus());
             System.out.println(read);
         }
@@ -77,76 +75,73 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                 "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
         waitConsole();
     }
-
-
     @Override
     public void Create() {
-        System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN THANH TOÁN----+");
+    System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN THANH TOÁN----+");
+    ThanhToan thanhToanModel = new ThanhToan();
 
-        System.out.println("Nhập mã thanh toán (tt_): ");
-        setPayment_ID(sc.nextLine());
-        int check = 0;
-        for (Payment p : payment) {
-            if (getPayment_ID().equals(p.getPayment_ID())) {
-                check = 1;
-                break;
-            }
-        }
-        if (check == 1) {
-            System.out.println("\t\t\t\t\t\t\t\t +----MÃ THANH TOÁN BỊ TRÙNG----+");
-            return;
-        }
+    System.out.println("Nhập mã thanh toán (tt_): ");
+    thanhToanModel.setPaymentId(sc.nextLine());
 
-        System.out.println("Nhập mã khách hàng: ");
-        setCustomer_ID(sc.nextLine());
-        check = 0;
-        for (Payment p : payment) {
-            if (getCustomer_ID().equals(p.getCustomer_ID())) {
-                check = 1;
-                break;
-            }
-        }
-        if (check == 1) {
-            System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG BỊ TRÙNG----+");
-            return;
-        }
-
-        System.out.println("Nhập mã đơn hàng: ");
-        setID_Receipt(sc.nextLine());
-        check = 0;
-        for (Payment p : payment) {
-            if (getID_Receipt().equals(p.getID_Receipt())) {
-                check = 1;
-                break;
-            }
-        }
-        if (check == 1) {
-            System.out.println("\t\t\t\t\t\t\t\t +----MÃ ĐƠN HÀNG BỊ TRÙNG----+");
-            return;
-        }
-
-        System.out.println("Nhập số lượng hàng: ");
-        setAmount(sc.nextLine());
-
-        System.out.println("Nhập ngày đặt hàng: ");
-        setPayment_Date(LocalDate.parse(sc.nextLine()));
-
-        System.out.println("Nhập phương thức đặt hàng: ");
-        setPayment_Method(sc.nextLine());
-
-        System.out.println("Nhập trạng thái của đơn hàng: ");
-        setStatus(sc.nextLine());
-
-        //cập nhật file
-        updateList(0, payment);
-
-        try {
-            getListPayment();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    ThanhToan[] ttList = QuanLyThanhToan.getInstance().getListPayments();
+    int check = 0;
+    for (ThanhToan p : ttList) {
+        if (thanhToanModel.getPaymentId().equals(p.getPaymentId())) {
+            check = 1;
+            break;
         }
     }
+    if (check == 1) {
+        System.out.println("\t\t\t\t\t\t\t\t +----MÃ THANH TOÁN ĐÃ TỒN TẠI----+");
+        return;
+    }
 
+    System.out.println("Nhập mã khách hàng: ");
+    thanhToanModel.setCustomerId(sc.nextLine());
+
+    KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
+    check = 0;
+    for (KhachHang customer : customers) {
+        if (customer.getCustomerId().equalsIgnoreCase(thanhToanModel.getCustomerId())) {
+            check = 1;
+            break;
+        }
+    }
+    if (check == 0) {
+        System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI----+");
+        return;
+    }
+
+    System.out.println("Nhập mã đơn hàng: ");
+    thanhToanModel.setReceiptId(sc.nextLine());
+
+    check = 0;
+    for (ThanhToan p : payment) {
+        if (thanhToanModel.getReceiptId().equals(p.getReceiptId())) {
+            check = 1;
+            break;
+        }
+    }
+    if (check == 1) {
+        System.out.println("\t\t\t\t\t\t\t\t +----MÃ ĐƠN HÀNG BỊ TRÙNG----+");
+        return;
+    }
+
+    System.out.println("Nhập số lượng hàng: ");
+    thanhToanModel.setAmount(sc.nextInt());
+
+    System.out.println("Nhập ngày đặt hàng: ");
+    thanhToanModel.setPaymentDate(LocalDate.parse(sc.nextLine()));
+
+    System.out.println("Nhập phương thức đặt hàng: ");
+    thanhToanModel.setPaymentMethod(sc.nextLine());
+
+    System.out.println("Nhập trạng thái của đơn hàng: ");
+    thanhToanModel.setStatus(sc.nextLine());
+
+    updateList(0, payment);
+    getListPayments(); 
+}
 
     @Override
     public void Update() {
@@ -154,10 +149,10 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN THANH TOÁN----+");
             System.out.print("- Mời nhập ID thanh toán cần chỉnh sửa: ");
             String ID_Payment = sc.nextLine();
-            Payment id = null;
+            ThanhToan id = null;
 
-            for (Payment p : payment) {
-                if (p.getPayment_ID().equals(ID_Payment)) {
+            for (ThanhToan p : payment) {
+                if (p.getPaymentId().equals(ID_Payment)) {
                     id = p;
                     break;
                 }
@@ -195,12 +190,12 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
             System.out.format(
                     "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
             String row = String.format("| %-11s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
-                    id.getPayment_ID(),
-                    id.getCustomer_ID(),
-                    id.getID_Receipt(),
+                    id.getPaymentId(),
+                    id.getCustomerId(),
+                    id.getReceiptId(),
                     id.getAmount(),
-                    id.getPayment_Date(),
-                    id.getPayment_Method(),
+                    id.getPaymentDate(),
+                    id.getPaymentMethod(),
                     id.getStatus());
             System.out.println(row);
             System.out.format(
@@ -231,7 +226,7 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                 String[] data = new String[payment.length];
 
                 for (int i = 0; i < payment.length; i++) {
-                    if (payment[i].getPayment_ID().equals(ID_Payment)) {
+                    if (payment[i].getPaymentId().equals(ID_Payment)) {
                         System.out.println("Nhập thông tin thanh toán:");
 
                         switch (index) {
@@ -240,10 +235,11 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                             case 1:
                                 System.out.println("Nhập mã thanh toán (tt_): ");
                                 sc.nextLine();
-                                setPayment_ID(sc.nextLine());
+                                id.setPaymentId(sc.nextLine());
                                 int check = 0;
-                                for (Payment p : payment) {
-                                    if (getPayment_ID().equals(p.getPayment_ID())) {
+                                ThanhToan[] ttList  = QuanLyThanhToan.getInstance().getListPayments();
+                                for (ThanhToan p : payment) {
+                                    if (id.getPaymentId().equals(p.getPaymentId())) {
                                         check = 1;
                                         break;
                                     }
@@ -252,32 +248,31 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                                     System.out.println("\t\t\t\t\t\t\t\t +----MÃ THANH TOÁN BỊ TRÙNG----+");
                                     return;
                                 }
-                                payment[i].setPayment_ID(getPayment_ID());
+                                payment[i].setPaymentId(id.getPaymentId());
                                 break;
                             case 2:
-                                System.out.println("Nhập mã khách hàng: ");
-                                sc.nextLine();
-                                setCustomer_ID(sc.nextLine());
-                                check = 0;
-                                for (Payment p : payment) {
-                                    if (getCustomer_ID().equals(p.getCustomer_ID())) {
-                                        check = 1;
-                                        break;
-                                    }
-                                }
-                                if (check == 1) {
-                                    System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG BỊ TRÙNG----+");
-                                    return;
-                                }
-                                payment[i].setCustomer_ID(getCustomer_ID());
+                            System.out.println("Nhập ID Khách hàng: ");
+                            boolean foundCustomer = false;
+                            do {
+                            sc.nextLine();
+                            id.setCustomerId(sc.nextLine());
+                            KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
+                            for (KhachHang customer : customers) {
+                                if (customer.getCustomerId().equals(id.getCustomerId())) {
+                                foundCustomer = true;
+                                payment[i].setCustomerId(id.getCustomerId());
                                 break;
-                            case 3:
+                                }
+                            }
+                            } while (foundCustomer == false);
+                            break;   
+                            case 3:                  
                                 System.out.println("Nhập mã đơn hàng: ");
                                 sc.nextLine();
-                                setID_Receipt(sc.nextLine());
+                                id.setReceiptId(sc.nextLine());
                                 check = 0;
-                                for (Payment p : payment) {
-                                    if (getID_Receipt().equals(p.getID_Receipt())) {
+                                for (ThanhToan p : payment) {
+                                    if (id.getReceiptId().equals(p.getReceiptId())) {
                                         check = 1;
                                         break;
                                     }
@@ -286,40 +281,40 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                                     System.out.println("\t\t\t\t\t\t\t\t +----MÃ ĐƠN HÀNG BỊ TRÙNG----+");
                                     return;
                                 }
-                                payment[i].setID_Receipt(getID_Receipt());
+                                payment[i].setReceiptId(id.getReceiptId());
                                 break;
                             case 4:
                                 System.out.println("Nhập số lượng hàng: ");
-                                sc.nextLine();
-                                setAmount(sc.nextLine());
-                                payment[i].setAmount(getAmount());
+                                sc.nextInt();
+                                id.setAmount(sc.nextInt());
+                                payment[i].setAmount(id.getAmount());
                                 break;
                             case 5:
                                 System.out.println("Nhập ngày đặt hàng: ");
                                 sc.nextLine();
-                                setPayment_Date(LocalDate.parse(sc.nextLine()));
-                                payment[i].setPayment_Date(getPayment_Date());
+                                id.setPaymentDate(LocalDate.parse(sc.nextLine()));
+                                payment[i].setPaymentDate(id.getPaymentDate());
                                 break;
                             case 6:
                                 System.out.println("Nhập phương thức đặt hàng: ");
                                 sc.nextLine();
-                                setPayment_Method(sc.nextLine());
-                                payment[i].setPayment_Method(getPayment_Method());
+                                id.setPaymentMethod(sc.nextLine());
+                                payment[i].setPaymentMethod(id.getPaymentMethod());
                                 break;
                             case 7:
                                 System.out.println("Nhập trạng thái của đơn hàng: ");
                                 sc.nextLine();
-                                setStatus(sc.nextLine());
-                                payment[i].setStatus(getStatus());
+                                id.setStatus(sc.nextLine());
+                                payment[i].setStatus(id.getStatus());
                                 break;
                         }
                     }
-                    data[i] = payment[i].getPayment_ID() + ";" +
-                            payment[i].getCustomer_ID() + ";" +
-                            payment[i].getID_Receipt() + ";" +
+                    data[i] = payment[i].getPaymentId() + ";" +
+                            payment[i].getCustomerId() + ";" +
+                            payment[i].getReceiptId() + ";" +
                             payment[i].getAmount() + ";" +
-                            payment[i].getPayment_Date() + ";" +
-                            payment[i].getPayment_Method() + ";" +
+                            payment[i].getPaymentDate() + ";" +
+                            payment[i].getPaymentMethod() + ";" +
                             payment[i].getStatus();
                 }
                 try {
@@ -333,15 +328,15 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                 String[] data = new String[payment.length];
 
                 for (int i = 0; i < payment.length; i++) {
-                    if (payment[i].getPayment_ID().equals(ID_Payment)) {
+                    if (payment[i].getPaymentId().equals(ID_Payment)) {
                         System.out.println("Nhập thông tin thanh toán:");
 
                         System.out.println("Nhập mã thanh toán (tt_): ");
                         sc.nextLine();
-                        setPayment_ID(sc.nextLine());
+                        id.setPaymentId(sc.nextLine());
                         int check = 0;
-                        for (Payment p : payment) {
-                            if (getPayment_ID().equals(p.getPayment_ID())) {
+                        for (ThanhToan p : payment) {
+                            if (id.getPaymentId().equals(p.getPaymentId())) {
                                 check = 1;
                                 break;
                             }
@@ -352,10 +347,10 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                         }
 
                         System.out.println("Nhập mã khách hàng: ");
-                        setCustomer_ID(sc.nextLine());
+                        id.setCustomerId(sc.nextLine());
                         check = 0;
-                        for (Payment p : payment) {
-                            if (getCustomer_ID().equals(p.getCustomer_ID())) {
+                        for (ThanhToan p : payment) {
+                            if (id.getCustomerId().equals(p.getCustomerId())) {
                                 check = 1;
                                 break;
                             }
@@ -366,10 +361,10 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                         }
 
                         System.out.println("Nhập mã đơn hàng: ");
-                        setID_Receipt(sc.nextLine());
+                        id.setReceiptId(sc.nextLine());
                         check = 0;
-                        for (Payment p : payment) {
-                            if (getID_Receipt().equals(p.getID_Receipt())) {
+                        for (ThanhToan p : payment) {
+                            if (id.getReceiptId().equals(p.getReceiptId())) {
                                 check = 1;
                                 break;
                             }
@@ -380,31 +375,31 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                         }
 
                         System.out.println("Nhập số lượng hàng: ");
-                        setAmount(sc.nextLine());
+                        id.setAmount(sc.nextInt());
 
                         System.out.println("Nhập ngày đặt hàng: ");
-                        setPayment_Date(LocalDate.parse(sc.nextLine()));
+                        id.setPaymentDate(LocalDate.parse(sc.nextLine()));
 
                         System.out.println("Nhập phương thức đặt hàng: ");
-                        setPayment_Method(sc.nextLine());
+                        id.setPaymentMethod(sc.nextLine());
 
                         System.out.println("Nhập trạng thái của đơn hàng: ");
-                        setStatus(sc.nextLine());
+                        id.setStatus(sc.nextLine());
 
-                        payment[i].setPayment_ID(getPayment_ID());
-                        payment[i].setCustomer_ID(getCustomer_ID());
-                        payment[i].setID_Receipt(getID_Receipt());
-                        payment[i].setAmount(getAmount());
-                        payment[i].setPayment_Date(getPayment_Date());
-                        payment[i].setPayment_Method(getPayment_Method());
-                        payment[i].setStatus(getStatus());
+                        payment[i].setPaymentId(id.getPaymentId());
+                        payment[i].setCustomerId(id.getCustomerId());
+                        payment[i].setReceiptId(id.getReceiptId());
+                        payment[i].setAmount(id.getAmount());
+                        payment[i].setPaymentDate(id.getPaymentDate());
+                        payment[i].setPaymentMethod(id.getPaymentMethod());
+                        payment[i].setStatus(id.getStatus());
                     }
-                    data[i] = payment[i].getPayment_ID() + ";" +
-                            payment[i].getCustomer_ID() + ";" +
-                            payment[i].getID_Receipt() + ";" +
+                    data[i] = payment[i].getPaymentId() + ";" +
+                            payment[i].getCustomerId() + ";" +
+                            payment[i].getReceiptId() + ";" +
                             payment[i].getAmount() + ";" +
-                            payment[i].getPayment_Date() + ";" +
-                            payment[i].getPayment_Method() + ";" +
+                            payment[i].getPaymentDate() + ";" +
+                            payment[i].getPaymentMethod() + ";" +
                             payment[i].getStatus();
                 }
                 try {
@@ -430,9 +425,9 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
             System.out.print("Nhập ID thanh toán cần xóa: ");
             String ID_Payment = sc.nextLine();
 
-            Payment id = null;
-            for (Payment p : payment) {
-                if (p.getPayment_ID().equals(ID_Payment)) {
+            ThanhToan id = null;
+            for (ThanhToan p : payment) {
+                if (p.getPaymentId().equals(ID_Payment)) {
                     id = p;
                     break;
                 }
@@ -444,7 +439,7 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
             }
 
             for (int i = 0; i < payment.length; i++) {
-                if (ID_Payment.equals(payment[i].getPayment_ID())) {
+                if (ID_Payment.equals(payment[i].getPaymentId())) {
                     payment = deletePayment(payment, i);
                     break;
                 }
@@ -462,8 +457,8 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
 
 
     // Xóa phần tử khỏi mảng
-    public Payment[] deletePayment(Payment[] payment, int index) {
-        Payment[] newCs = new Payment[payment.length - 1];
+    public ThanhToan[] deletePayment(ThanhToan[] payment, int index) {
+        ThanhToan[] newCs = new ThanhToan[payment.length - 1];
         for (int i = 0, j = 0; i < payment.length; i++) {
             if (i != index) {
                 newCs[j++] = payment[i];
@@ -474,7 +469,7 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
 
 
     // Thêm phần tử vào mảng
-    public Payment[] addPayment(Payment[] payment, Payment sanpham) {
+    public ThanhToan[] addPayment(ThanhToan[] payment, ThanhToan sanpham) {
         payment = Arrays.copyOf(payment, payment.length + 1);
         payment[payment.length - 1] = sanpham;
         return payment;
@@ -482,7 +477,7 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
 
 
     @Override
-    public void Search_byCategory() {
+    public void searchByCategory() {
         String find;
         System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
         System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
@@ -530,27 +525,27 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
                 case 0:
                     return;
                 case 1:
-                    if (payment[i].getPayment_ID().equalsIgnoreCase(find))
+                    if (payment[i].getPaymentId().contains(find))
                         OutputData(i);
                     break;
                 case 2:
-                    if (payment[i].getCustomer_ID().equalsIgnoreCase(find))
+                    if (payment[i].getCustomerId().equals(find))
                         OutputData(i);
                     break;
                 case 3:
-                    if (payment[i].getID_Receipt().equalsIgnoreCase(find))
+                    if (payment[i].getReceiptId().equals(find))
                         OutputData(i);
                     break;
                 case 4:
-                    if (payment[i].getAmount().equalsIgnoreCase(find))
-                        OutputData(i);
+                    if (String.valueOf(payment[i].getAmount()).equalsIgnoreCase(find))
+                    OutputData(i);
                     break;
                 case 5:
-                    if (payment[i].getPayment_Date().equals(LocalDate.parse(find)))
+                    if (payment[i].getPaymentDate().equals(LocalDate.parse(find)))
                         OutputData(i);
                     break;
                 case 6:
-                    if (payment[i].getPayment_Method().equalsIgnoreCase(find))
+                    if (payment[i].getPaymentMethod().equalsIgnoreCase(find))
                         OutputData(i);
                     break;
                 case 7:
@@ -566,27 +561,27 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
 
     public void OutputData(int i) {
         String row = String.format("| %-11s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
-                payment[i].getPayment_ID(),
-                payment[i].getCustomer_ID(),
-                payment[i].getID_Receipt(),
+                payment[i].getPaymentId(),
+                payment[i].getCustomerId(),
+                payment[i].getReceiptId(),
                 payment[i].getAmount(),
-                payment[i].getPayment_Date(),
-                payment[i].getPayment_Method(),
+                payment[i].getPaymentDate(),
+                payment[i].getPaymentMethod(),
                 payment[i].getStatus());
         System.out.println(row);
     }
 
 
-    public String[] stringToInputInFile(Payment[] payment) {
+    public String[] stringToInputInFile(ThanhToan[] payment) {
         String[] data = new String[payment.length];
 
         for (int i = 0; i < payment.length; i++) {
-            data[i] = payment[i].getPayment_ID() + ";" +
-                    payment[i].getCustomer_ID() + ";" +
-                    payment[i].getID_Receipt() + ";" +
+            data[i] = payment[i].getPaymentId() + ";" +
+                    payment[i].getCustomerId() + ";" +
+                    payment[i].getReceiptId() + ";" +
                     payment[i].getAmount() + ";" +
-                    payment[i].getPayment_Date() + ";" +
-                    payment[i].getPayment_Method() + ";" +
+                    payment[i].getPaymentDate() + ";" +
+                    payment[i].getPaymentMethod() + ";" +
                     payment[i].getStatus();
         }
 
@@ -594,29 +589,21 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
     }
 
 
-    public void updateList(int select, Payment[] payment) {
+    public void updateList(int select, ThanhToan[]payment) {
         switch (select) {
             case 0:
                 try {
-                    String inputStringData = getPayment_ID() + ";" +
-                            getCustomer_ID() + ";" +
-                            getID_Receipt() + ";" +
-                            getAmount() + ";" +
-                            getPayment_Date() + ";" +
-                            getPayment_Method() + ";" +
-                            getStatus();
-                    Stream.addOneLine("Database/ThanhToan.txt", inputStringData);
+                    String[] inputStringData = stringToInputInFile(payment);
+                    Stream.addAll("Database/ThanhToan.txt", inputStringData);
                     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN THANH TOÁN THÀNH CÔNG----+");
                     waitConsole();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-
             case 1 :
+            try {
                 String[] data = stringToInputInFile(payment);
-
-                try {
                     Stream.addAll("Database/ThanhToan.txt", data);
                     System.out.println("\t\t\t\t\t\t\t\t +----SỬA THÔNG TIN THANH TOÁN THÀNH CÔNG----+");
                     waitConsole();
@@ -628,13 +615,12 @@ public class QuanLyThanhToan extends Payment implements ControllerInterface {
     }
 
 
-    public int getListLength(Payment[] payment) {
-        return payment.length;
-    }
+    //public int getListLength(Payment[] payment) {
+    //    return payment.length;
+    //}
 
 
     public void waitConsole() {
         System.out.println("\t\t\t\t\t\t\t\t - Ấn Enter để tiếp tục");
-        sc.nextLine();
     }
 }
