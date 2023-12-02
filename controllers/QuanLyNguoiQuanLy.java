@@ -44,21 +44,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
   @Override
   public void Read() {
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH NGƯỜI QUẢN LÝ----+");
-    String header = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-10s | %-20s | %-11s |",
-        "ID",
-        "Họ tên",
-        "Tuổi",
-        "Giới Tính",
-        "Địa chỉ",
-        "Email",
-        "Số điện thoại",
-        "Chức vụ",
-        "Ca trực");
-    System.out.format(
-        "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
-    System.out.println(header);
-    System.out.format(
-        "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+    OutputHeader();
     getListManagers();
     for (QuanLy m : manager) {
       String read = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
@@ -80,10 +66,19 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
 
   @Override
   public void Create() {
+    String test;
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NGƯỜI QUẢN LÝ----+");
     QuanLy qly = new QuanLy();
     System.out.println("Nhập ID người quản lý (ql_): ");
-    qly.setManagerId(sc.nextLine());
+    while (true) {
+        test = sc.nextLine();
+        if (test.isBlank() || (!Validation.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+        } else {
+            break;
+        }
+    }
+    qly.setManagerId(test);
     int check = 0;
     for (QuanLy m : manager) {
       if (qly.getManagerId().equals(m.getManagerId())) {
@@ -121,9 +116,18 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
   @Override
   public void Update() {
     try {
+      String test;
       System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN NGƯỜI QUẢN LÝ----+");
       System.out.print("-Mời nhập ID của người quản lý cần sửa: ");
-      String ID_Manager = sc.nextLine();
+      String ID_Manager;
+      while (true) {
+				ID_Manager = sc.nextLine();
+				if (ID_Manager.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+						System.out.println("Mã người quản lý không được để trống. Nhập lại: ");
+				} else {
+						break;
+				}
+			}
       QuanLy id = null;
 
       for (QuanLy m : manager) {
@@ -151,21 +155,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
       }
 
       System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NGƯỜI QUẢN LÝ TRƯỚC KHI CHỈNH SỬA----+");
-      String header = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
-          "ID",
-          "Họ tên",
-          "Tuổi",
-          "Giới Tính",
-          "Địa chỉ",
-          "Email",
-          "Số điện thoại",
-          "Chức vụ",
-          "Ca trực");
-      System.out.format(
-          "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
-      System.out.println(header);
-      System.out.format(
-          "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+      OutputHeader();
       String row = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
           id.getManagerId(),
           id.getName(),
@@ -210,7 +200,15 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
               case 1:
                 System.out.println("Nhập ID người quản lý (ql_): ");
                 sc.nextLine();
-                id.setManagerId(sc.nextLine());
+                while (true) {
+                    test = sc.nextLine();
+                    if (test.isBlank() || (!Validation.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                      System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
+                    } else {
+                        break;
+                    }
+                }
+                id.setManagerId(test);
                 int check = 0;
                 for (QuanLy m : manager) {
                   if (id.getManagerId().equals(m.getManagerId())) {
@@ -227,13 +225,29 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
               case 2:
                 System.out.println("Nhập vai trò: ");
                 sc.nextLine();
-                id.setRole(sc.nextLine());
+                while (true) {
+                    test = sc.nextLine();
+                    if (test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                      System.out.println("Không hợp lệ. Nhập lại: ");
+                    } else {
+                        break;
+                    }
+                }
+                id.setRole(test);
                 manager[i].setRole(id.getRole());
                 break;
               case 3:
                 System.out.println("Nhập ca làm: ");
                 sc.nextLine();
-                id.setShift(sc.nextLine());
+                while (true) {
+                    test = sc.nextLine();
+                    if (test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                      System.out.println("Không hợp lệ. Nhập lại: ");
+                    } else {
+                        break;
+                    }
+                }
+                id.setShift(test);
                 manager[i].setShift(id.getShift());
                 break;
             }
@@ -314,7 +328,15 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
     try {
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN NGƯỜI QUẢN LÝ----+");
       System.out.println("Nhập ID người quản lý cần xóa: ");
-      String ID_Manager = sc.nextLine();
+      String ID_Manager;
+      while (true) {
+				ID_Manager = sc.nextLine();
+				if (ID_Manager.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+						System.out.println("Mã người quản lý không được để trống. Nhập lại: ");
+				} else {
+						break;
+				}
+			}
 
       QuanLy id = null;
       for (QuanLy m : manager) {
@@ -385,25 +407,17 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
 
     System.out.print("Nhập nội dung cần tìm: ");
     sc.nextLine();
-    find = sc.nextLine();
+    while (true) {
+        find = sc.nextLine();
+        if (find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+          System.out.println("Không được để trống. Nhập lại: ");
+        } else {
+            break;
+        }
+    }
 
     System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NGƯỜI QUẢN LÝ TÌM ĐƯỢC----+");
-    String header = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
-        "ID",
-        "Họ tên",
-        "Tuổi",
-        "Giới Tính",
-        "Địa chỉ",
-        "Email",
-        "Số điện thoại",
-        "Chức vụ",
-        "Ca trực",
-        "SLNVQL");
-    System.out.format(
-        "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
-    System.out.println(header);
-    System.out.format(
-        "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+    OutputHeader();
 
     for (int i = 0; i < manager.length; i++) {
       switch (index) {
@@ -439,6 +453,24 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         manager[i].getRole(),
         manager[i].getShift());
     System.out.println(row);
+  }
+
+  public void OutputHeader() {
+    String header = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
+          "ID",
+          "Họ tên",
+          "Tuổi",
+          "Giới Tính",
+          "Địa chỉ",
+          "Email",
+          "Số điện thoại",
+          "Chức vụ",
+          "Ca trực");
+      System.out.format(
+          "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+      System.out.println(header);
+      System.out.format(
+          "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
   }
 
   public String[] stringToInputInFile(QuanLy[] manager) {

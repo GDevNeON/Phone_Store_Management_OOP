@@ -47,19 +47,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Read() {
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH BẢO HÀNH----+");
-    String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-13s | %-25s | %-12s |",
-        "ID sản phẩm",
-        "Ngày bảo hành",
-        "Số lượng",
-        "Phương thức bảo hành",
-        "ID khách hàng",
-        "Tên khách hàng",
-        "SĐT");
-    System.out.format(
-        "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
-    System.out.println(header);
-    System.out.format(
-        "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+    OutputHeader();
     getListWarranties();
 
     for (BaoHanh w : warranty) {
@@ -82,8 +70,18 @@ public class QuanLyBaoHanh implements ControllerInterface {
   public void Create() {
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN BẢO HÀNH----+");
     BaoHanh warrantyModel = new BaoHanh();
+    String test;
+
     System.out.println("Nhập ID Sản phẩm (sp_): ");
-    warrantyModel.setProductId(sc.nextLine());
+		while (true) {
+			test = sc.nextLine();
+			if (test.isBlank() || (!Validation.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+					System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+			} else {
+				break;
+			}
+		}
+    warrantyModel.setProductId(test);
     int check = 0;
     SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
     for (SanPham sp : spList) {
@@ -97,21 +95,75 @@ public class QuanLyBaoHanh implements ControllerInterface {
       return;
     }
 
-    System.out.println("Nhập Ngày sản xuất: ");
-    warrantyModel.setProductDate(LocalDate.parse(sc.nextLine()));
+    System.out.println("Nhập Ngày sản xuất (yyyy-MM-dd): ");
+    while (true) {
+        test = sc.nextLine();
+        if (test.isBlank() || test.length() != 10) {
+            System.out.println("Ngày không hợp lệ. Nhập lại: ");
+        } else {
+            if (Validation.isValidDate(test)) {
+                warrantyModel.setProductDate(LocalDate.parse(test));
+                break;
+            } else {
+                System.out.println("Ngày không hợp lệ. Nhập lại: ");
+            }
+        }
+    }
 
-    System.out.println("Nhập Năm bảo hành: ");
-    warrantyModel.setYearsOfWarranty(sc.nextLine());
+    System.out.println("Nhập số năm bảo hành (1 -> 5): ");
+    while (true) {
+        test = sc.nextLine();
+        if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+            System.out.println("Phải nhập số nguyên!. Nhập lại: ");
+        } else {
+            if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
+                System.out.println("Số năm bảo hành không hợp lệ");
+            } else {
+                warrantyModel.setYearsOfWarranty(test);
+                break;
+            }
+        }
+    }
 
-    System.out.println(" Phương thức bảo hành: ");
-    warrantyModel.setWarrantyMethod(sc.nextLine());
+    System.out.println("Nhập Phương thức bảo hành (tối đa 20 kí tự): ");
+    System.out.println("Các Phương thức bảo hành gồm: chinh hang, mo rong, tu nha ban le, tu ben thu ba");
+		String verify[] = {"chinh hang", "mo rong", "tu nha ban le", "tu ben thu ba"};
+    while (true) {
+        test = sc.nextLine();
+        if (test.isBlank() || test.length() > 20) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+            System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+        } else {
+            boolean flag = false;
+              for (String v : verify) {
+                if (test.equals(v)) {
+                  flag = true;
+                  break;
+                }
+                flag = false;
+              }
+            if (flag) {
+              warrantyModel.setWarrantyMethod(test);
+							break;
+            }
+            else {
+              System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+            }
+        }
+    }
 
-    System.out.println("Nhập ID Khách hàng: ");
-    warrantyModel.setCustomerId(sc.nextLine());
+		System.out.println("Nhập ID Khách hàng (kh_): ");
+		sc.nextLine();
+		while (true) {
+			test = sc.nextLine();
+			if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+					System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
+			} else {
+				break;
+			}
+		}
+    warrantyModel.setCustomerId(test);
     KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
 
-    // TODO: check ràng buộc khách hàng, có thông tin khách hàng auto nhập vào tên +
-    // sdt
     for (KhachHang customer : customers) {
       if (customer.getCustomerId().equalsIgnoreCase(warrantyModel.getCustomerId())) {
         warrantyModel.setCustomerName(customer.getName());
@@ -129,8 +181,17 @@ public class QuanLyBaoHanh implements ControllerInterface {
     try {
       System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN BẢO HÀNH----+");
       System.out.println("Nhập ID của sản phẩm cần sửa: ");
-      String ID_Product = sc.nextLine();
+      String ID_Product;
       BaoHanh id = null;
+
+			while (true) {
+				ID_Product = sc.nextLine();
+				if (ID_Product.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+						System.out.println("Mã sản phẩm không được để trống. Nhập lại: ");
+				} else {
+						break;
+				}
+			}
 
       for (BaoHanh warrantyModel : warranty) {
         if (warrantyModel.getProductId().equals(ID_Product)) {
@@ -158,19 +219,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
       }
 
       System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN BẢO HÀNH TRƯỚC KHI CHỈNH SỬA----+");
-      String header = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
-          "ID sản phẩm",
-          "Ngày bảo hành",
-          "Số lượng",
-          "Phương thức bảo hành",
-          "ID khách hàng",
-          "Tên khách hàng",
-          "SĐT");
-      System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
-      System.out.println(header);
-      System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+      OutputHeader();
       String row = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
           id.getProductId(),
           id.getProductDate(),
@@ -209,11 +258,23 @@ public class QuanLyBaoHanh implements ControllerInterface {
           if (warranty[i].getProductId().equals(ID_Product)) {
             System.out.println("Nhập thông tin bảo hành:");
             switch (index) {
-              case 0:
+              case 0 -> {
                 return;
-              case 1:
-                System.out.println("Nhập ID sản phẩm: ");
-                sc.nextLine();
+              }
+
+              case 1 -> {
+								String test;
+								System.out.println("Nhập ID Sản phẩm (sp_): ");
+								sc.nextLine();
+								while (true) {
+									test = sc.nextLine();
+									if (test.isBlank() || !Validation.isValidIDproduct(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+											System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+									} else {
+										break;
+									}
+								}
+
                 id.setProductId(sc.nextLine());
                 int check = 0;
                 SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
@@ -229,30 +290,98 @@ public class QuanLyBaoHanh implements ControllerInterface {
                 }
                 warranty[i].setProductId(id.getProductId());
                 break;
-              case 2:
-                System.out.println("Nhập Ngày sản xuất: ");
+              }
+                
+              case 2 -> {
+                String test;
+                System.out.println("Nhập Ngày sản xuất (yyyy-MM-dd): ");
                 sc.nextLine();
-                id.setProductDate(LocalDate.parse(sc.nextLine()));
+                while (true) {
+                    test = sc.nextLine();
+                    if (test.isBlank() || test.length() != 10) {
+                        System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                    } else {
+                        if (Validation.isValidDate(test)) {
+                            id.setProductDate(LocalDate.parse(test));
+                            break;
+                        } else {
+                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                        }
+                    }
+                }
                 warranty[i].setProductDate(id.getProductDate());
                 break;
-              case 3:
-                System.out.println("Nhập Năm bảo hành: ");
-                sc.nextLine();
-                id.setYearsOfWarranty(sc.nextLine());
+              }
+                
+              case 3 -> {
+								String test;
+                System.out.println("Nhập số năm bảo hành (1 -> 5): ");
+								while (true) {
+										test = sc.nextLine();
+										if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("Phải nhập số nguyên!. Nhập lại: ");
+										} else {
+												if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
+														System.out.println("Số năm bảo hành không hợp lệ");
+												} else {
+														id.setYearsOfWarranty(test);
+														break;
+												}
+										}
+								}
                 warranty[i].setYearsOfWarranty(id.getYearsOfWarranty());
                 break;
-              case 4:
-                System.out.println("Nhập Phương thức bảo hành: ");
+              }
+                
+              case 4 -> {
+								String test;
                 sc.nextLine();
-                id.setWarrantyMethod(sc.nextLine());
+								System.out.println("Nhập Phương thức bảo hành (tối đa 20 kí tự): ");
+								System.out.println("Các Phương thức bảo hành gồm: chinh hang, mo rong, tu nha ban le, tu ben thu ba");
+								String verify[] = {"chinh hang", "mo rong", "tu nha ban le", "tu ben thu ba"};
+								while (true) {
+										test = sc.nextLine();
+										if (test.isBlank() || test.length() > 20) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+										} else {
+												boolean flag = false;
+													for (String v : verify) {
+														if (test.equals(v)) {
+															flag = true;
+															break;
+														}
+														flag = false;
+													}
+												if (flag) {
+													id.setWarrantyMethod(test);
+													break;
+												}
+												else {
+													System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+												}
+										}
+								}       
                 warranty[i].setWarrantyMethod(id.getWarrantyMethod());
                 break;
-              case 5:
-                System.out.println("Nhập ID Khách hàng: ");
+              }
+                
+              case 5 -> {
+								String test;
+
                 boolean foundCustomer = false;
                 do {
-                  sc.nextLine();
-                  id.setCustomerId(sc.nextLine());
+                  System.out.println("Nhập ID Khách hàng: ");
+									sc.nextLine();
+									while (true) {
+										test = sc.nextLine();
+										if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
+										} else {
+											break;
+										}
+									}
+
+                  id.setCustomerId(test);
                   KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
                   for (KhachHang customer : customers) {
                     if (customer.getCustomerId().equals(id.getCustomerId())) {
@@ -263,6 +392,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                   }
                 } while (foundCustomer == false);
                 break;
+              }
             }
           }
 
@@ -288,32 +418,132 @@ public class QuanLyBaoHanh implements ControllerInterface {
         for (int i = 0; i < warranty.length; i++) {
           if (warranty[i].getProductId().equals(ID_Product)) {
             System.out.println("Nhập thông tin bảo hành:");
-
-            System.out.println("Nhập Ngày sản xuất: ");
-            sc.nextLine();
-            id.setProductDate(LocalDate.parse(sc.nextLine()));
-
-            System.out.println("Nhập Năm bảo hành: ");
-            id.setYearsOfWarranty(sc.nextLine());
-
-            System.out.println("Nhập Phương thức bảo hành: ");
-            id.setWarrantyMethod(sc.nextLine());
-
-            System.out.println("Nhập ID Khách hàng: ");
-            boolean foundCustomer = false;
-            do {
-              sc.nextLine();
-              id.setCustomerId(sc.nextLine());
-              KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
-              for (KhachHang customer : customers) {
-                if (customer.getCustomerId().equals(id.getCustomerId())) {
-                  foundCustomer = true;
-                  id.setCustomerName(customer.getName());
-                  id.setSdt(customer.getSdt());
-                  break;
+            	{
+								String test;
+                System.out.println("Nhập ID Sản phẩm (sp_): ");
+								sc.nextLine();
+								while (true) {
+									test = sc.nextLine();
+									if (test.isBlank() || (!Validation.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+											System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+									} else {
+										break;
+									}
+								}
+        
+                id.setProductId(sc.nextLine());
+                int check = 0;
+                SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+                for (SanPham sp : spList) {
+                  if (id.getProductId().equals(sp.getProductId())) {
+                    check = 1;
+                    break;
+                  }
                 }
+                if (check == 0) {
+                  System.out.println("\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI----+");
+                  return;
+                }
+                warranty[i].setProductId(id.getProductId());
               }
-            } while (foundCustomer == false);
+                
+              {
+                String test;
+                System.out.println("Nhập Ngày sản xuất (yyyy-MM-dd): ");
+                sc.nextLine();
+                while (true) {
+                    test = sc.nextLine();
+                    if (test.isBlank() || test.length() != 10) {
+                        System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                    } else {
+                        if (Validation.isValidDate(test)) {
+                            id.setProductDate(LocalDate.parse(test));
+                            break;
+                        } else {
+                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                        }
+                    }
+                }
+                warranty[i].setProductDate(id.getProductDate());
+              }
+                
+              {
+                String test;
+                System.out.println("Nhập số năm bảo hành (1 -> 5): ");
+								while (true) {
+										test = sc.nextLine();
+										if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("Phải nhập số nguyên!. Nhập lại: ");
+										} else {
+												if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
+														System.out.println("Số năm bảo hành không hợp lệ");
+												} else {
+														id.setYearsOfWarranty(test);
+														break;
+												}
+										}
+								}
+                warranty[i].setYearsOfWarranty(id.getYearsOfWarranty());
+              }
+                
+              {
+								String test;
+                sc.nextLine();
+								System.out.println("Nhập Phương thức bảo hành (tối đa 20 kí tự): ");
+								System.out.println("Các Phương thức bảo hành gồm: chinh hang, mo rong, tu nha ban le, tu ben thu ba");
+								String verify[] = {"chinh hang", "mo rong", "tu nha ban le", "tu ben thu ba"};
+								while (true) {
+										test = sc.nextLine();
+										if (test.isBlank() || test.length() > 20) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+										} else {
+												boolean flag = false;
+													for (String v : verify) {
+														if (test.equals(v)) {
+															flag = true;
+															break;
+														}
+														flag = false;
+													}
+												if (flag) {
+													id.setWarrantyMethod(test);
+													break;
+												}
+												else {
+													System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+												}
+										}
+								}       
+                warranty[i].setWarrantyMethod(id.getWarrantyMethod());
+              }
+                
+              {
+                System.out.println("Nhập ID Khách hàng: ");
+                boolean foundCustomer = false;
+                do {
+                  String test;
+									System.out.println("Nhập ID Khách hàng: ");
+									sc.nextLine();
+									while (true) {
+										test = sc.nextLine();
+										if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+												System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
+										} else {
+											break;
+										}
+									}
+
+                  id.setCustomerId(test);
+                  KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
+                  for (KhachHang customer : customers) {
+                    if (customer.getCustomerId().equals(id.getCustomerId())) {
+                      foundCustomer = true;
+                      warranty[i].setCustomerId(id.getCustomerId());
+                      break;
+                    }
+                  }
+                } while (foundCustomer == false);
+              }
 
             warranty[i].setProductDate(id.getProductDate());
             warranty[i].setYearsOfWarranty(id.getYearsOfWarranty());
@@ -350,7 +580,16 @@ public class QuanLyBaoHanh implements ControllerInterface {
     try {
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN BẢO HÀNH----+");
       System.out.print("Nhập ID sản phẩm cần xóa: ");
-      String ID_Product = sc.nextLine();
+      String ID_Product;
+
+			while (true) {
+				ID_Product = sc.nextLine();
+				if (ID_Product.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+						System.out.println("Mã sản phẩm không được để trống. Nhập lại: ");
+				} else {
+						break;
+				}
+			}
 
       BaoHanh product = null;
       for (BaoHanh w : warranty) {
@@ -402,17 +641,18 @@ public class QuanLyBaoHanh implements ControllerInterface {
 
   @Override
   public void searchByCategory() {
-    String find;
+    String find = null;
     System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM-------------+");
     System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
     System.out.println("\t\t\t\t\t\t\t\t |2. Ngày sản xuất                         |");
-    System.out.println("\t\t\t\t\t\t\t\t |3. Năm bảo hành                          |");
+    System.out.println("\t\t\t\t\t\t\t\t |3. Số năm bảo hành                       |");
     System.out.println("\t\t\t\t\t\t\t\t |4. Phương thức bảo hành                  |");
     System.out.println("\t\t\t\t\t\t\t\t |5. ID Khách hàng                         |");
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
+
     int index = sc.nextInt();
 
     while (true) {
@@ -425,21 +665,98 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
 
     System.out.print("Nhập nội dung cần tìm: ");
-    sc.nextLine();
-    find = sc.nextLine();
+
+		switch (index) {
+        case 1 -> {
+					sc.nextLine();
+					while (true) {
+						find = sc.nextLine();
+						if (find.isBlank() || !Validation.isValidIDproduct(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+								System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+						} else {
+							break;
+						}
+					}
+					break;
+				}
+					
+				case 2 -> {
+					sc.nextLine();
+					while (true) {
+							find = sc.nextLine();
+							if (find.isBlank() || find.length() != 10) {
+									System.out.println("Ngày không hợp lệ. Nhập lại: ");
+							} else {
+									if (Validation.isValidDate(find)) {
+											break;
+									} else {
+											System.out.println("Ngày không hợp lệ. Nhập lại: ");
+									}
+							}
+					}
+					break;
+				}
+					
+				case 3 -> {
+					while (true) {
+							find = sc.nextLine();
+							if (!Validation.isInteger(find) || find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+									System.out.println("Phải nhập số nguyên!. Nhập lại: ");
+							} else {
+									if (Integer.parseInt(find) < 1 || Integer.parseInt(find) > 5) {
+											System.out.println("Số năm bảo hành không hợp lệ");
+									} else {
+											break;
+									}
+							}
+					}
+					break;
+				}
+					
+				case 4 -> {
+					sc.nextLine();
+					System.out.println("Các Phương thức bảo hành gồm: chinh hang, mo rong, tu nha ban le, tu ben thu ba");
+					String verify[] = {"chinh hang", "mo rong", "tu nha ban le", "tu ben thu ba"};
+					while (true) {
+							find = sc.nextLine();
+							if (find.isBlank() || find.length() > 20) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+									System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+							} else {
+									boolean flag = false;
+										for (String v : verify) {
+											if (find.equals(v)) {
+												flag = true;
+												break;
+											}
+											flag = false;
+										}
+									if (flag) {
+										break;
+									}
+									else {
+										System.out.println("Phương thức bảo hành không hợp lệ. Nhập lại: ");
+									}
+							}
+					}       
+					break;
+				}
+					
+				case 5 -> {
+					sc.nextLine();
+					while (true) {
+						find = sc.nextLine();
+						if (find.isBlank() || !Validation.isValidIDcustomer(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+								System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
+						} else {
+							break;
+						}
+					}
+					break;
+				}
+    }
 
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH BẢO HÀNH----+");
-    String header = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
-        "ID sản phẩm",
-        "Ngày bảo hành",
-        "Số lượng",
-        "Phương thức bảo hành",
-        "ID khách hàng",
-        "Tên khách hàng",
-        "SĐT");
-    System.out.format(
-        "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
-    System.out.println(header);
+    OutputHeader();
 
     for (int i = 0; i < warranty.length; i++) {
       switch (index) {
@@ -450,7 +767,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
             OutputData(i);
           break;
         case 2:
-          if (warranty[i].getProductDate().getYear() == Integer.parseInt(find))
+          if (warranty[i].getProductDate().equals(LocalDate.parse(find)))
             OutputData(i);
           break;
         case 3:
@@ -481,6 +798,22 @@ public class QuanLyBaoHanh implements ControllerInterface {
         warranty[i].getCustomerName(),
         warranty[i].getSdt());
     System.out.println(row);
+  }
+
+  public void OutputHeader() {
+    String header = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
+          "ID sản phẩm",
+          "Ngày bảo hành",
+          "Số lượng",
+          "Phương thức bảo hành",
+          "ID khách hàng",
+          "Tên khách hàng",
+          "SĐT");
+      System.out.format(
+          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+      System.out.println(header);
+      System.out.format(
+          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
   }
 
   public String[] stringToInputInFile(BaoHanh[] warranty) {
