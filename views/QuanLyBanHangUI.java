@@ -127,42 +127,40 @@ public class QuanLyBanHangUI {
   }
 
   public static void quanlyGiamGia() {
-
-    QuanLyGiamGia qlgg = new QuanLyGiamGia();
-    int subCheck = 0;
-    do {
-      System.out.println("Danh Sách chức năng:");
-      System.out.println("1.Xem danh sách sản phẩm được giảm giá");
-      System.out.println("2.Thêm sản phẩm bạn muốn giảm giá");
-      System.out.println("3.Sửa sản phẩm trạng thái giảm giá");
-      System.out.println("4.Xóa sản phẩm");
-      System.out.println("5.Tìm kiếm");
-      System.out.println("0.Thoát");
-      System.out.println("Mời nhập: ");
-      subCheck = input.nextInt();
-      switch (subCheck) {
-        case 1 -> {
-          qlgg.Read();
-        }
-        case 2 -> {
-          qlgg.Create();
-        }
-        case 3 -> {
-          qlgg.Update();
-        }
-        case 4 -> {
-          qlgg.Delete();
-        }
-        case 5 -> {
-          qlgg.Search_byCategory();
-        }
-        case 0 -> {
-          System.out.println("\nThoát quản lý bảo hành\n");
-        }
-        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
-      }
-    } while (subCheck != 0);
-  }
+        int subCheck = 0;
+        do {
+            System.out.println("Danh Sách chức năng:");
+            System.out.println("1.Xem danh sách sản phẩm được giảm giá");
+            System.out.println("2.Thêm sản phẩm bạn muốn giảm giá");
+            System.out.println("3.Sửa sản phẩm được giảm giá");
+            System.out.println("4.Xóa sản phẩm");
+            System.out.println("5.Tìm kiếm");
+            System.out.println("0.Thoát");
+            System.out.println("Mời nhập: ");
+            subCheck = input.nextInt();
+            switch (subCheck) {
+                case 1 -> {
+                    QuanLyGiamGia.getInstance().Read();
+                }
+                case 2 -> {
+                    QuanLyGiamGia.getInstance().Create();
+                }
+                case 3 -> {
+                    QuanLyGiamGia.getInstance().Update();
+                }
+                case 4 -> {
+                    QuanLyGiamGia.getInstance().Delete();
+                }
+                case 5 -> {
+                    QuanLyGiamGia.getInstance().searchByCategory();
+                }
+                case 0 -> {
+                    System.out.println("\nThoát quản lý giảm giá\n");
+                }
+                default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+            }
+        } while (subCheck != 0);
+    }
 
   public static void quanlyThanhToan() {
 
