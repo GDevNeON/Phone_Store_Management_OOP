@@ -45,6 +45,14 @@ public class Validation {
     return SDT.matches("^0\\d{9}$") && SDT.length() <= MAX_PHONE_NUMBER_LENGTH;
   }
 
+  // Hàm validation cho số fax
+  public static boolean isValidFax(String Fax) {
+        String regex = "^84\\d{8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(Fax);
+        return matcher.matches();
+    }
+
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
   public static boolean isInteger(String input) {
     try {
