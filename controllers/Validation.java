@@ -48,4 +48,33 @@ public class Validation {
       return false;
     }
   }
+
+  //Hàm validation cho account id
+  public boolean isValidAccountId(String id){
+    return id.startsWith("QL") || id.startsWith("ADMIN") || id.startsWith("NV");
+  }
+  //Hàm validation cho username
+  public boolean isValidUsername(String name){
+      return name.startsWith("manager") || name.startsWith("Admin") || name.startsWith("employee");
+  }
+  //Hàm validation cho position
+  public boolean isValidPosition(String position){
+      return position.equalsIgnoreCase("manager") || position.equalsIgnoreCase("admin") || position.equalsIgnoreCase("employee");
+  }
+  //Hàm validation cho id_worker
+  public boolean isValidIDWorker(String id){
+      return id.startsWith("nv");
+  } 
+  //Hàm validation cho id_phieunhap
+  public boolean isValidIDPN(String id){
+      return id.startsWith("pn");
+  }
+  //Hàm validation cho id_chitietphieu
+  public boolean isValidIDCTP(String id){
+      return id.startsWith("ctpn");
+  }
+  //Hàm validation cho id_sanpham
+  public boolean isValidIDproduct(String id){
+      return id.startsWith("sp");
+  }
 }

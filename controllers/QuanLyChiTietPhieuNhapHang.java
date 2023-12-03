@@ -102,7 +102,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     chiTietPhieuNhapHang.setAmount(sc.nextInt());
 
     System.out.println("Nhập giá: ");
-    setPrice(sc.nextInt());
+    chiTietPhieuNhapHang.setPrice(sc.nextInt());
 
     System.out.println("Nhập mã sản phẩm: ");
     chiTietPhieuNhapHang.setProductId(sc.nextLine());
@@ -132,7 +132,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     try {
       String sc = chiTietPhieuNhapHang.getPhieuNhapId() + ";" + chiTietPhieuNhapHang.getProductId() + ";"
           + chiTietPhieuNhapHang.getAmount()
-          + ";" + getPrice();
+          + ";" + chiTietPhieuNhapHang.getPrice();
       Stream.addOneLine("Database/ChiTietPhieuNhap.txt", sc);
       System.out.println("\t\t\t\t\t\t\t\t +-----NHẬP CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
       waitConsole();
@@ -291,8 +291,8 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập giá tiền: ");
-                setPrice(sc.nextInt());
-                dsct[i].setPrice(getPrice());
+                ctpnh.setPrice(sc.nextInt());
+                dsct[i].setPrice(ctpnh.getPrice());
               }
               data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
                   + dsct[i].getPrice();
@@ -368,7 +368,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
                   ctpnh.setAmount(sc.nextInt());
 
                   System.out.print("Nhập giá: ");
-                  setPrice(sc.nextInt());
+                  ctpnh.setPrice(sc.nextInt());
 
                   dsct[i].setPhieuNhapId(ctpnh.getPhieuNhapId());
                   dsct[i].setProductId(ctpnh.getProductId());

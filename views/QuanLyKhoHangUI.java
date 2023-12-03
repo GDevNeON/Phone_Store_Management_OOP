@@ -60,7 +60,6 @@ public class QuanLyKhoHangUI {
 
   // Hàm xuất danh sách chức năng và gọi hàm từ lớp quản lý phiếu nhập
   public static void quanLyNhapHangUI() {
-    QuanLyPhieuNhapHang qlpn = new QuanLyPhieuNhapHang();
     int subCheck = 0;
     do {
       System.out.println("Quản lý nhập hàng:");
@@ -73,11 +72,11 @@ public class QuanLyKhoHangUI {
       System.out.println("Mời nhập: ");
       subCheck = input.nextInt();
       switch (subCheck) {
-        case 1 -> qlpn.Read();
-        case 2 -> qlpn.Create();
-        case 3 -> qlpn.Update();
-        case 4 -> qlpn.Delete();
-        case 5 -> qlpn.Search_byCategory();
+        case 1 -> QuanLyPhieuNhapHang.getInstance().Read();
+        case 2 -> QuanLyPhieuNhapHang.getInstance().Create();
+        case 3 -> QuanLyPhieuNhapHang.getInstance().Update();
+        case 4 -> QuanLyPhieuNhapHang.getInstance().Delete();
+        case 5 -> QuanLyPhieuNhapHang.getInstance().searchByCategory();
         case 0 -> System.out.println("Thoát quản lý phiếu nhập");
         default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
       }

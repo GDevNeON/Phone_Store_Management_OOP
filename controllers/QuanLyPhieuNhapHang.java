@@ -40,8 +40,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     dsp = new PhieuNhapHang[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      dsp[i] = new PhieuNhapHang(Integer.parseInt(row[0]), row[1], row[2], row[3],
-          LocalDate.parse(row[4]));
+      dsp[i] = new PhieuNhapHang(row[0], row[1], row[2], LocalDate.parse(row[3]), Integer.parseInt(row[4]));
     }
     return dsp;
   }

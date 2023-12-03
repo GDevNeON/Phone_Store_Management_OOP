@@ -11,7 +11,7 @@ public class PhieuNhapHang {
   public PhieuNhapHang() {
   }
 
-  public PhieuNhapHang(int price, String workerId, String supplierName, String receiptId, LocalDate inputDate) {
+  public PhieuNhapHang(String receiptId, String workerId, String supplierName, LocalDate inputDate,int price) {
     this.price = price;
     this.workerId = workerId;
     this.supplierName = supplierName;
