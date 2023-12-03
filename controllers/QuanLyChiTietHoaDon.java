@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import models.ChiTietHoaDon;
-import models.HoaDon;
-import models.SanPham;
+// import models.HoaDon;
+// import models.SanPham;
 
 public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInterface {
   private static QuanLyChiTietHoaDon instance;
@@ -29,7 +29,7 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
   public ChiTietHoaDon[] getListReceiptDetail() {
     String[] result = new String[0];
     try {
-      Stream.read("Database/ChiTietHoaDon.txt");
+    result= Stream.read("Database/ChiTietHoaDon.txt");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -44,50 +44,69 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
   @Override
   public void Read() {
     System.out.println("Danh sách chi tiết hóa đơn:");
-    String header = String.format("| %-10s | %-13s | %-10s | %-10s | ", "ID Hóa Đơn", "ID Sản Phẩm", "Số lượng",
-        "Giá");
+    String header = String.format("| %-10s | %-13s | %-10s | %-10s | ", "ID Hóa Đơn", "ID Sản Phẩm", "Số lượng", "Giá");
     System.out.format("+------------+---------------+------------+------------+%n");
     System.out.println(header);
     System.out.format("+------------+---------------+------------+------------+%n");
 
     getListReceiptDetail();
-    for (int i = 0; i < rd.length; i++) {
-      String read = String.format("| %-10s | %-13s | %-10s | %-10s |", rd[i].getReceiptId(),
-          rd[i].getProductId(), rd[i].getAmount(), rd[i].getPrice());
-      System.out.println(read);
+    for(int i = 0; i < rd.length; i++) {
+        String read = String.format("| %-10s | %-13s | %-10s | %-10s |", rd[i].getReceiptId(), rd[i].getProductId(), rd[i].getAmount(), rd[i].getPrice());
+        System.out.println(read);
     }
     System.out.format("+------------+---------------+------------+------------+%n");
     waitConsole();
-  }
+
+}
 
   @Override
   public void Create() {
-    ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
-    HoaDon[] hoaDons = QuanLyHoaDon.getInstance().getListHoaDon();
-    System.out.print("Nhập mã hóa đơn: ");
-    chiTietHoaDon.setReceiptId(input.nextLine());
+    // ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
+    System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN CHI TIẾT HÓA ĐƠN----+");
 
-    boolean foundReceipt = false;
-    for (HoaDon hoaDon : hoaDons) {
-      if (hoaDon.getReceiptId().equals(chiTietHoaDon.getReceiptId())) {
-        foundReceipt = true;
-        break;
-      }
-    }
-    if (foundReceipt == false) {
-      System.out.println("Không tìm thấy hóa đơn.");
-      return;
-    }
+        String HD;
+        do {
+			System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
+			HD = input.nextLine();
+			if(HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
+		setReceiptId(HD);
 
-    System.out.print("Nhập mã Sản Phẩm: ");
-    chiTietHoaDon.setProductId(input.nextLine());
 
-    System.out.print("Nhập mã Số lượng: ");
-    chiTietHoaDon.setAmount(Integer.parseInt(input.next()));
+        String SP;
+        do {
+			System.out.print("Nhập mã sản phẩm:(sp[0-n])--sp1->sp999 :");
+			SP = input.nextLine();
+			if(SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5);
+	setProductId(SP);
 
-    System.out.print("Nhập giá:");
-    chiTietHoaDon.setPrice(Integer.parseInt(input.next()));
+        System.out.println("enter để tiếp tục");
+        String Amount;
+		int Amount_int;
+		Amount = input.nextLine();
+		while (!Amount.matches("^[0-9]+$") ||Amount.length()>4) {
+			System.out.print("Nhập số lượng: (<9999) :");
+			Amount = input.nextLine();
+		}
+		Amount_int = Integer.parseInt(Amount);
+		setAmount(Amount_int);
 
+
+        String Price;
+		int Price_int;
+		Price = input.nextLine();
+		while (!Price.matches("^[0-9]+$")||Price.length()>9) {
+			System.out.print("Nhập giá: (<=999.999.999) :");
+			Price = input.nextLine();
+            System.out.println("enter để tiếp tục :");
+		}
+		Price_int = Integer.parseInt(Price);
+		setPrice(Price_int);
     try {
       String input = getReceiptId() + ";" + getProductId() + ";" + getAmount() + ";" + getPrice();
       Stream.addOneLine("Database/ChiTietHoaDon.txt", input);
@@ -100,35 +119,39 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
 
   @Override
   public void Update() {
-    System.out.print("Nhập ID hóa đơn cần chỉnh sửa: ");
-    String ID_Receipt = input.nextLine();
+    String HD;
+        do {
+			System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
+			HD = input.nextLine();
+			if(HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
+	 String SP;
+        do {
+			System.out.print("Nhập mã sản phẩm:(sp[0-n])--sp1->sp999 :");
+			SP = input.nextLine();
+			if(SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5);
+
     ChiTietHoaDon cthd = null;
 
-    for (int i = 0; i < rd.length; i++) {
-      if (ID_Receipt.equals(rd[i].getReceiptId())) {
-        cthd = rd[i];
+    for (ChiTietHoaDon receipt : rd) {
+
+      if (HD.equals(receipt.getReceiptId()) && SP.equals(receipt.getProductId())) {
+          cthd = receipt;
+          break;
       }
-    }
+  }
 
     if (cthd == null) {
-      System.out.println("\t\t\t\t\t\t\t\t +-----MÃ HÓA ĐƠN KHÔNG TỒN TẠI-----+");
+      System.out.println("\t\t\t\t\t\t\t\t +-----MÃ HÓA ĐƠN HOẶC SẢN PHẨM KHÔNG TỒN TẠI-----+");
       return;
     }
 
-    System.out.println("Nhập ID sản phẩm:");
-    String ID_Product = input.nextLine();
-
-    SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
-    boolean foundProduct = false;
-    do {
-      for (SanPham sp : spList) {
-        if (ID_Product.equals(sp.getProductId())) {
-          foundProduct = true;
-          break;
-        }
-      }
-    } while (foundProduct == false);
-
+  
     System.out.println("Thông tin hóa đơn cho sản phẩm có id " + cthd.getProductId() + " là:");
     String header = String.format("| %-10s | %-12s | %-10s | %-10s | ", "ID Hóa Đơn", "ID Sản Phẩm", "Số lượng",
         "Giá");
@@ -143,15 +166,30 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
     String[] data = new String[rd.length];
     input.nextLine();
     for (int i = 0; i < rd.length; i++) {
-      if (ID_Receipt.equals(rd[i].getReceiptId()) && ID_Product.equals(rd[i].getProductId())) {
+      if (HD.equals(rd[i].getReceiptId()) && SP.equals(rd[i].getProductId())) {
         System.out.println("Nhập lại thông tin chi tiết hóa đơn:");
 
-        System.out.print("Nhập số lượng: ");
-        setAmount(input.nextInt());
+          String Amount;
+		int Amount_int;
+		Amount = input.nextLine();
+		while (!Amount.matches("^[0-9]+$") ||Amount.length()>4) {
+			System.out.print("Nhập số lượng: (<9999) :");
+			Amount = input.nextLine();
+		}
+		Amount_int = Integer.parseInt(Amount);
+		setAmount(Amount_int);
 
-        System.out.print("Nhập giá: ");
-        setPrice(input.nextInt());
 
+        String Price;
+		int Price_int;
+		Price = input.nextLine();
+		while (!Price.matches("^[0-9]+$")||Price.length()>9) {
+			System.out.print("Nhập giá: (<=999.999.999) :");
+			Price = input.nextLine();
+            System.out.println("enter để tiếp tục :");
+		}
+		Price_int = Integer.parseInt(Price);
+		setPrice(Price_int);
         rd[i].setAmount(getAmount());
         rd[i].setPrice(getPrice());
 
@@ -208,7 +246,6 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
     return rd;
   }
 
-  //TODO: Fix tìm kiếm
   @Override
   public void searchByCategory() {
     ChiTietHoaDon[] result = new ChiTietHoaDon[0];
@@ -216,24 +253,36 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
     System.out.println("1.Mã hóa đơn");
     System.out.println("2.Mã Sản Phẩm");
     System.out.println("Mời nhập:");
-    int choose = input.nextInt();
-    input.nextLine();
+    String choose = input.nextLine();
     switch (choose) {
-      case 1 -> {
-        System.out.print("Nhập ID hóa đơn: ");
-        String id = input.nextLine();
+      case "1" -> {
+        String HD;
+        do {
+			System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
+			HD = input.nextLine();
+			if(HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
+
         for (int i = 0; i < rd.length; i++) {
-          if (id.equals(rd[i].getReceiptId())) {
+          if (HD.equals(rd[i].getReceiptId())) {
             result = addReceiptDetail(result, rd[i]);
           }
         }
       }
-      case 2 -> {
-        input.nextLine();
-        System.out.print("Nhập Mã Sản Phẩm: ");
-        String id = input.nextLine();
+      case "2" -> {
+       String SP;
+        do {
+			System.out.print("Nhập mã sản phẩm:(sp[0-n])--sp1->sp999 :");
+			SP = input.nextLine();
+			if(SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") ||SP.length()>5);
+
         for (int i = 0; i < rd.length; i++) {
-          if (id.equals(rd[i].getProductId())) {
+          if (SP.equals(rd[i].getProductId())) {
             result = addReceiptDetail(result, rd[i]);
           }
         }
