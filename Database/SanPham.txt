@@ -1,6 +1,5 @@
-sp1;Nokia;nokia C20;66;30;2000000;0
-sp2;iphone;Iphone 12;48;30;15000000;1
-sp3;oppo;Oppo Reno Update 6;30;20;2000000;1
-sp4;Xiaomi;Xiaomi Redmi Note 11;25;23;4490000;1
-sp5;vsmart;Vsmart Joy 4;26;23;1500000;1
-sp6;updated;Updated Phone;20;12;2000000;1
+sp1;Nokia;nokia C20;50;2000000;0
+sp2;iphone;Iphone 12;30;15000000;1
+sp3;oppo;Oppo Reno Update 6;20;2000000;1
+sp4;Xiaomi;Xiaomi Redmi Note 11;23;4490000;1
+sp5;vsmart;Vsmart Joy 4;26;1500000;1
