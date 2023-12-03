@@ -385,60 +385,66 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
 
   @Override
   public void searchByCategory() {
-    String find;
-    System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
-    System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
-    System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-    System.out.println("\t\t\t\t\t\t\t\t |1. ID người quản lý                      |");
-    System.out.println("\t\t\t\t\t\t\t\t |2. Vai trò                               |");
-    System.out.println("\t\t\t\t\t\t\t\t |3. Ca làm                                |");
-    System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-    System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-    int index = sc.nextInt();
+    try {
+      String find;
+      System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
+      System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
+      System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
+      System.out.println("\t\t\t\t\t\t\t\t |1. ID người quản lý                      |");
+      System.out.println("\t\t\t\t\t\t\t\t |2. Vai trò                               |");
+      System.out.println("\t\t\t\t\t\t\t\t |3. Ca làm                                |");
+      System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
+      System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
+      int index = sc.nextInt();
 
-    while (true) {
-      if (index < 1 || index > 3) {
-        System.out.print("Nhập lại: ");
-        index = sc.nextInt();
-      } else {
-        break;
-      }
-    }
-
-    System.out.print("Nhập nội dung cần tìm: ");
-    sc.nextLine();
-    while (true) {
-        find = sc.nextLine();
-        if (find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-          System.out.println("Không được để trống. Nhập lại: ");
+      while (true) {
+        if (index < 1 || index > 3) {
+          System.out.print("Nhập lại: ");
+          index = sc.nextInt();
         } else {
+          break;
+        }
+      }
+
+      System.out.print("Nhập nội dung cần tìm: ");
+      sc.nextLine();
+      while (true) {
+          find = sc.nextLine();
+          if (find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+            System.out.println("Không được để trống. Nhập lại: ");
+          } else {
+              break;
+          }
+      }
+
+      System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NGƯỜI QUẢN LÝ TÌM ĐƯỢC----+");
+      OutputHeader();
+
+      for (int i = 0; i < manager.length; i++) {
+        switch (index) {
+          case 0:
+            return;
+          case 1:
+            if (manager[i].getManagerId().equals(find))
+              OutputData(i);
+            break;
+          case 2:
+            if (manager[i].getRole().equals(find))
+              OutputData(i);
+            break;
+          case 3:
+            if (manager[i].getShift().equals(find))
+              OutputData(i);
             break;
         }
-    }
-
-    System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NGƯỜI QUẢN LÝ TÌM ĐƯỢC----+");
-    OutputHeader();
-
-    for (int i = 0; i < manager.length; i++) {
-      switch (index) {
-        case 0:
-          return;
-        case 1:
-          if (manager[i].getManagerId().equals(find))
-            OutputData(i);
-          break;
-        case 2:
-          if (manager[i].getRole().equals(find))
-            OutputData(i);
-          break;
-        case 3:
-          if (manager[i].getShift().equals(find))
-            OutputData(i);
-          break;
       }
+      System.out.format(
+          "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+    } catch (InputMismatchException ei) {
+      System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
-    System.out.format(
-        "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
   }
 
   public void OutputData(int i) {
