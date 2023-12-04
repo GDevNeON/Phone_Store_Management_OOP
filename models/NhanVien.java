@@ -73,6 +73,6 @@ public class NhanVien extends ConNguoi {
     String[] validShifts = { "morning", "afternoon", "night" };
     setShift(validate.validateInput(sc, validShifts, 10));
 
-    sc.close();
+    // Do not close the Scanner here
   }
 }

@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.NhanVien;
+import models.QuanLy;
 
 public class QuanLyNhanVien implements ControllerInterface {
   private static Scanner input = new Scanner(System.in);
@@ -40,11 +41,6 @@ public class QuanLyNhanVien implements ControllerInterface {
     return nv;
   }
 
-  public void waitConsole() {
-    System.out.println("\t\t\t\t\t\t\t\t -Ấn Enter để tiếp tục");
-    input.nextLine();
-  }
-
   @Override
   public void Read() {
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH NHÂN VIÊN----+");
@@ -72,37 +68,54 @@ public class QuanLyNhanVien implements ControllerInterface {
 
   @Override
   public void Create() {
+    String test;
     NhanVien nvien = new NhanVien();
-    boolean checkIDexist = false;
-    do {
-      System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NHÂN VIÊN----+");
-      System.out.print("Nhập ID nhân viên:");
-      nvien.setWorkerId(input.nextLine());
-      for (NhanVien employee : nv) {
-        // if (employee != null) {
-        if (nvien.getWorkerId().equals(employee.getWorkerId())) {
-          System.out.println("\t\t\t\t\t\t\t\t -MÃ NHÂN VIÊN BỊ TRÙNG!");
-          checkIDexist = true;
-          break;
-        }
-        // }
+    Validation validate = new Validation();
+    System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NHÂN VIÊN----+");
+    NhanVien nhanVien = new NhanVien();
+    System.out.println("Nhập ID nhân viên (nv_): ");
+    while (true) {
+      test = input.nextLine();
+      if (test.isBlank() || (!validate.isValidIDWorker(test))) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng,
+                                                                 // NHẬP LẠI ĐEEEEEEEE!!!!
+        System.out.println("ID không hợp lệ. Nhập lại: ");
+      } else {
+        break;
       }
-    } while (checkIDexist);
+    }
+    nvien.setWorkerId(test);
+    int check = 0;
+    for (NhanVien n : nv) {
+      if (nvien.getWorkerId().equals(n.getWorkerId())) {
+        check = 1;
+        break;
+      }
+    }
+    if (check == 1) {
+      System.out.println("\t\t\t\t\t\t\t\t +-----MÃ NHÂN VIÊN BỊ TRÙNG-----+");
+      return;
+    }
 
-    input.nextLine();
     nvien.AddThongTin();
 
     try {
-      String input = nvien.getWorkerId() + ";" + nvien.getName() + ";" + nvien.getAge() + ";" + nvien.getGender() + ";"
-          + nvien.getAddress() + ";" + nvien.getEmail() + ";" + nvien.getSdt() + ";" + nvien.getRole() + ";"
-          + nvien.getShift();
-      Stream.addOneLine("Database/NhanVien.txt", input); // database here
-      System.out.println("\t\t\t\t\t\t\t\t -NHẬP NHÂN VIÊN THÀNH CÔNG");
+      String inputStringData = nvien.getWorkerId() + ";" +
+          nvien.getName() + ";" +
+          nvien.getAge() + ";" +
+          nvien.getGender() + ";" +
+          nvien.getAddress() + ";" +
+          nvien.getEmail() + ";" +
+          nvien.getSdt() + ";" +
+          nvien.getRole() + ";" +
+          nvien.getShift();
+      Stream.addOneLine("Database/NhanVien.txt", inputStringData);
+      System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NHÂN VIÊN THÀNH CÔNG----+");
       waitConsole();
     } catch (IOException e) {
       e.printStackTrace();
     }
 
+    getListEmployee();
   }
 
   @Override
@@ -253,11 +266,11 @@ public class QuanLyNhanVien implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t |6.Ca trực của nhân viên                  |");
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-    int choose = input.nextInt();
-    if (choose == 0) {
+    String choose = input.nextLine();
+    if (choose == null) {
     } else {
       switch (choose) {
-        case 1 -> {
+        case "1" -> {
           input.nextLine();
           System.out.print("Nhập mã nhân viên: ");
           String ID_Worker = input.nextLine();
@@ -267,7 +280,7 @@ public class QuanLyNhanVien implements ControllerInterface {
             }
           }
         }
-        case 2 -> {
+        case "2" -> {
           input.nextLine();
           System.out.print("Nhập họ tên nhân viên: ");
           String nameWorker = input.nextLine();
@@ -277,7 +290,7 @@ public class QuanLyNhanVien implements ControllerInterface {
             }
           }
         }
-        case 3 -> {
+        case "3" -> {
           input.nextLine();
           System.out.print("Nhập địa chỉ của nhân viên: ");
           String address = input.nextLine();
@@ -287,7 +300,7 @@ public class QuanLyNhanVien implements ControllerInterface {
             }
           }
         }
-        case 4 -> {
+        case "4" -> {
           input.nextLine();
           System.out.print("Nhập số điện thoại của nhân viên: ");
           String phoneNumber = input.nextLine();
@@ -297,7 +310,7 @@ public class QuanLyNhanVien implements ControllerInterface {
             }
           }
         }
-        case 5 -> {
+        case "5" -> {
           input.nextLine();
           System.out.print("Nhập chức vụ của nhân viên: ");
           String Role = input.nextLine();
@@ -307,7 +320,7 @@ public class QuanLyNhanVien implements ControllerInterface {
             }
           }
         }
-        case 6 -> {
+        case "6" -> {
           input.nextLine();
           System.out.print("Nhập ca trực của nhân viên: ");
           String Shift = input.nextLine();
@@ -350,5 +363,10 @@ public class QuanLyNhanVien implements ControllerInterface {
 
       System.out.println(row);
     }
+  }
+
+  public void waitConsole() {
+    System.out.println("\t\t\t\t\t\t\t\t -Ấn Enter để tiếp tục");
+    input.nextLine();
   }
 }
