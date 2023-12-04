@@ -174,10 +174,16 @@ public class QuanLyKhoHangUI {
 
         case 4 -> {
           input.nextLine();
-          String id;
-          System.out.println("Nhập ID hóa đơn muốn xóa");
-          id = input.nextLine();
-          QuanLyChiTietHoaDon.getInstance().Delete(id);
+          String HD;
+        do {
+			System.out.print("Nhập mã hoá đơn muốn xóa:(hd[0-n])--hd1->hd999 :");
+			HD = input.nextLine();
+			if(HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5){
+				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+			}
+		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
+
+          QuanLyChiTietHoaDon.getInstance().Delete(HD);
 
         }
         case 5 -> QuanLyChiTietHoaDon.getInstance().searchByCategory();
