@@ -34,7 +34,7 @@ public class QuanLyNhanVien implements ControllerInterface {
     nv = new NhanVien[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      nv[i] = new NhanVien(row[0], row[1],  Integer.parseInt(row[2]), row[3], row[4],row[5], row[6], row[7],
+      nv[i] = new NhanVien(row[0], row[1], Integer.parseInt(row[2]), row[3], row[4], row[5], row[6], row[7],
           row[8]);
     }
     return nv;
@@ -48,13 +48,13 @@ public class QuanLyNhanVien implements ControllerInterface {
   @Override
   public void Read() {
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH NHÂN VIÊN----+");
-    String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s | ", "ID",
-        "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
+    String header = String.format("| %-10s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s | ",
+        "Worker ID", "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+        "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
     System.out.println(header);
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+        "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
     getListEmployee();
     for (NhanVien emPloyee : nv) {
       if (nv[0].getWorkerId().indexOf("nv") >= 0) {
@@ -94,8 +94,8 @@ public class QuanLyNhanVien implements ControllerInterface {
 
     try {
       String input = nvien.getWorkerId() + ";" + nvien.getName() + ";" + nvien.getAge() + ";" + nvien.getGender() + ";"
-          + nvien.getAddress()
-          + ";" + nvien.getEmail() + ";" + nvien.getSdt() + ";" + nvien.getRole() + ";" + nvien.getShift();
+          + nvien.getAddress() + ";" + nvien.getEmail() + ";" + nvien.getSdt() + ";" + nvien.getRole() + ";"
+          + nvien.getShift();
       Stream.addOneLine("Database/NhanVien.txt", input); // database here
       System.out.println("\t\t\t\t\t\t\t\t -NHẬP NHÂN VIÊN THÀNH CÔNG");
       waitConsole();
@@ -127,19 +127,21 @@ public class QuanLyNhanVien implements ControllerInterface {
       }
 
       System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NHÂN VIÊN TRƯỚC KHI ĐƯỢC CHỈNH SỬA----+");
-      String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |", "ID",
-          "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
+      String header = String.format("| %-10s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |",
+          "Worker ID", "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
+
       System.out.format(
-          "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+          "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
       System.out.println(header);
       System.out.format(
-          "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
-      String row = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |",
+          "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+
+      String row = String.format("| %-10s | %-25s | %-4d | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |",
           employee.getWorkerId(), employee.getName(), employee.getAge(), employee.getGender(),
           employee.getAddress(), employee.getEmail(), employee.getSdt(), employee.getRole(),
           employee.getShift());
-      System.out.println(row);
 
+      System.out.println(row);
       String[] data = new String[nv.length];
 
       for (int i = 0; i < nv.length; i++) {
@@ -153,6 +155,7 @@ public class QuanLyNhanVien implements ControllerInterface {
           nv[i].setEmail(employee.getEmail());
           nv[i].setAge(employee.getAge());
           nv[i].setSdt(employee.getSdt());
+          nv[1].setRole(employee.getRole());
           nv[i].setShift(employee.getShift());
         }
         data[i] = nv[i].getWorkerId() + ";" + nv[i].getName() + ";" + nv[i].getAge() + ";" + nv[i].getGender()
@@ -316,19 +319,17 @@ public class QuanLyNhanVien implements ControllerInterface {
         }
       }
       System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NHÂN VIÊN TÌM ĐƯỢC----+");
-      String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |", "ID",
-          "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
+      String header = String.format("| %-10s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s | ",
+          "Worker ID", "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
       System.out.format(
-          "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+          "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
       System.out.println(header);
       System.out.format(
-          "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
-
+          "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
       for (NhanVien DSNV : result) {
         String row = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |",
-            DSNV.getName(), DSNV.getAge(), DSNV.getGender(),
-            DSNV.getAddress(), DSNV.getEmail(), DSNV.getWorkerId(), DSNV.getRole(), DSNV.getShift(),
-            DSNV.getSdt());
+            DSNV.getWorkerId(), DSNV.getName(), DSNV.getAge(), DSNV.getGender(), DSNV.getAddress(), DSNV.getEmail(),
+            DSNV.getSdt(), DSNV.getRole(), DSNV.getShift());
         System.out.println(row);
         waitConsole();
       }
@@ -340,13 +341,13 @@ public class QuanLyNhanVien implements ControllerInterface {
     String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |", "ID",
         "Họ tên", "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Chức vụ", "Ca trực");
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
+        "+------------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+----------+%n");
     System.out.println(header);
     for (NhanVien DSNV : nv) {
       String row = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s | %-9s |",
-          DSNV.getName(), DSNV.getAge(), DSNV.getGender(),
-          DSNV.getAddress(), DSNV.getEmail(), DSNV.getWorkerId(), DSNV.getRole(), DSNV.getShift(),
-          DSNV.getSdt());
+          DSNV.getWorkerId(), DSNV.getName(), DSNV.getAge(), DSNV.getGender(),
+          DSNV.getAddress(), DSNV.getEmail(), DSNV.getSdt(), DSNV.getRole(), DSNV.getShift());
+
       System.out.println(row);
     }
   }

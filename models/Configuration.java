@@ -6,8 +6,9 @@ public class Configuration {
   public Configuration() {
   }
 
-  public Configuration(String screen, String os, String chip, String ram, String rom, String battery,
-      String frontCamera, String rearCamera, String imeiCode) {
+  public Configuration(String imeiCode, String screen, String os, String chip, String ram, String rom, String battery,
+      String frontCamera, String rearCamera) {
+    this.imeiCode = imeiCode;
     this.screen = screen;
     this.os = os;
     this.chip = chip;
@@ -16,6 +17,13 @@ public class Configuration {
     this.battery = battery;
     this.frontCamera = frontCamera;
     this.rearCamera = rearCamera;
+  }
+
+  public String getImeiCode() {
+    return this.imeiCode;
+  }
+
+  public void setImeiCode(String imeiCode) {
     this.imeiCode = imeiCode;
   }
 
@@ -83,12 +91,9 @@ public class Configuration {
     this.rearCamera = rearCamera;
   }
 
-  public String getImeiCode() {
-    return this.imeiCode;
-  }
-
-  public void setImeiCode(String imeiCode) {
-    this.imeiCode = imeiCode;
+  public Configuration imeiCode(String imeiCode) {
+    setImeiCode(imeiCode);
+    return this;
   }
 
   public Configuration screen(String screen) {
@@ -131,8 +136,4 @@ public class Configuration {
     return this;
   }
 
-  public Configuration imeiCode(String imeiCode) {
-    setImeiCode(imeiCode);
-    return this;
-  }
 }

@@ -1,4 +1,5 @@
 cfg4;5.5 inch;Android 11;Exynos 7870 8 nhân;3 GB;3 GB;3600 mAh;13 MP;Chính 13 MP & Phụ 4 MP
 cfg5;6.67 inch;Android 11;Snapdragon 695 5G 8 nhân;8 GB;8 GB;5000 mAh;16 MP;Chính 108 MP & Phụ 8 MP
 cfg6;6.5 inch;Android 10;Snapdragon 675 8 nhân;6 GB;6 GB;5000 mAh;13 MP;Chính 48 MP & Phụ 8 MP1
-cfg1;6.5 inch;IOS;Apple A9;32GB;128GB;5000mAH;32MP;16MP
+cfg1;6.5 inch;IOS;Apple A9;32GB;32GB;5000mAH;32MP;16MP
+cfg2;9.99 inch;Android;Apple M8;4 GB;4 GB;10000 mAh;16 MP;8 MP
