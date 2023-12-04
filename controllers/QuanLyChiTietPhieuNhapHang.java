@@ -14,6 +14,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
   private static QuanLyChiTietPhieuNhapHang instance;
   private ChiTietPhieuNhapHang[] dsct;
   private static Scanner sc = new Scanner(System.in);
+  private Validation kiemTra = new Validation();
 
   private QuanLyChiTietPhieuNhapHang() {
     super();
@@ -69,8 +70,13 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
   public void Create() {
     System.out.println("\t\t\t\t\t\t\t\t +-----NHẬP THÔNG TIN CHI TIẾT PHIẾU NHẬP-----+");
     ChiTietPhieuNhapHang chiTietPhieuNhapHang = new ChiTietPhieuNhapHang();
-    System.out.println("Nhập mã phiếu nhập: ");
-    chiTietPhieuNhapHang.setPhieuNhapId(sc.nextLine());
+    System.out.println("Nhập mã chi tiết phiếu nhập: ");
+    String ID_chiTiet = sc.nextLine();
+    while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+        ID_chiTiet = sc.nextLine();
+    }
+    chiTietPhieuNhapHang.setPhieuNhapId(ID_chiTiet);
     int check = 0;
     for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
       if (chiTietPhieuNhapHang.getPhieuNhapId().equals(chiTietPhieu.getPhieuNhapId())) {
@@ -105,12 +111,17 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     chiTietPhieuNhapHang.setPrice(sc.nextInt());
 
     System.out.println("Nhập mã sản phẩm: ");
-    chiTietPhieuNhapHang.setProductId(sc.nextLine());
+    String ID_sanPham = sc.nextLine();
+    while (ID_sanPham.isEmpty() || !kiemTra.isValidIDproduct(ID_sanPham)) {
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID sản phẩm: ");
+        ID_sanPham = sc.nextLine();
+    }
+    chiTietPhieuNhapHang.setProductId(ID_sanPham);
     boolean foundProduct = false;
     SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
     for (SanPham sp : spList) {
       if (chiTietPhieuNhapHang.getProductId().equals(sp.getProductId())) {
-        //sp.setAmountRemaining(chiTietPhieuNhapHang.getAmount() + sp.getAmountRemaining());
+        sp.setAmount(chiTietPhieuNhapHang.getAmount() + sp.getAmount());
         foundProduct = true;
         break;
       }
@@ -121,10 +132,10 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
       System.out.println("1. Có");
       System.out.println("2. Không");
-      int choose = sc.nextInt();
-      if (choose == 1) {
+      String choose = sc.nextLine();
+      if (choose == "1") {
         QuanLySanPham.getInstance().Create();
-      } else if (choose == 2) {
+      } else if (choose == "2") {
         return;
       }
     }
@@ -147,6 +158,10 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP-----+");
       System.out.print("Nhập mã phiếu nhập cần chỉnh sửa: ");
       String ID_PhieuNhap = sc.nextLine();
+      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)){
+          System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+          ID_PhieuNhap = sc.nextLine();
+      }
       ChiTietPhieuNhapHang ctpnh = null;
 
       for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
@@ -184,16 +199,21 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t |5.Sửa tất cả thông tin                |");
       System.out.println("\t\t\t\t\t\t\t\t +--------------------------------------+");
       System.out.print("\t\t\t\t\t\t\t\t Mời bạn nhập lựa chọn: ");
-      int choose = sc.nextInt();
-      sc.nextLine();
-      if (choose == 0) {
-      } else {
+      String choose = sc.nextLine();
         switch (choose) {
-          case 1 -> {
+          case "0" ->{
+            System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
+          }
+          case "1" -> {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập ID chi tiết phiếu nhập: ");
-                ctpnh.setPhieuNhapId(sc.nextLine());
+                String ID_chiTiet = sc.nextLine();
+                while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+                    ID_chiTiet = sc.nextLine();
+                }
+                ctpnh.setPhieuNhapId(ID_chiTiet);
                 int check = 0;
                 for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
                   if (ctpnh.getPhieuNhapId().equals(chiTietPhieu.getPhieuNhapId())) {
@@ -219,11 +239,16 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 2 -> {
+          case "2" -> {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập ID sản phẩm: ");
-                ctpnh.setProductId(sc.nextLine());
+                String ID_product = sc.nextLine();
+                while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)){
+                    System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
+                    ID_product = sc.nextLine();
+                }
+                ctpnh.setProductId(ID_product);
                 SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
                 boolean foundProduct = false;
                 for (SanPham sp : spList) {
@@ -261,7 +286,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
               }
             }
           }
-          case 3 -> {
+          case "3" -> {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập số lượng sản phẩm: ");
@@ -287,7 +312,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 4 -> {
+          case "4" -> {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập giá tiền: ");
@@ -305,11 +330,16 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 5 -> {
+          case "5" -> {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập ID chi tiết phiếu nhập: ");
-                ctpnh.setPhieuNhapId(sc.nextLine());
+                String ID_chiTiet = sc.nextLine();
+                while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+                    ID_chiTiet = sc.nextLine();
+                }
+                ctpnh.setPhieuNhapId(ID_chiTiet);
                 int check = 0;
                 for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
                   if (ctpnh.getPhieuNhapId().equals(chiTietPhieu.getPhieuNhapId())) {
@@ -339,7 +369,12 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
                 }
 
                 System.out.print("Nhập ID sản phẩm: ");
-                ctpnh.setProductId(sc.nextLine());
+                String ID_product = sc.nextLine();
+                while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)){
+                    System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
+                    ID_product = sc.nextLine();
+                }
+                ctpnh.setProductId(ID_product);
                 SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
                 boolean foundProduct = false;
                 for (SanPham sp : spList) {
@@ -354,11 +389,11 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
                         "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
                     System.out.println("1. Có");
                     System.out.println("2. Không");
-                    int choose1 = sc.nextInt();
-                    if (choose1 == 1) {
+                    String choose1 = sc.nextLine();
+                    if (choose1 == "1") {
                       QuanLySanPham.getInstance().Create();
                       dsct[i].setProductId(spList[spList.length - 1].getProductId());
-                    } else if (choose1 == 2) {
+                    } else if (choose1 == "2") {
                       System.out.println(
                           "\t\t\t\t\t\t\t\t +-----CẬP NHẬT THẤT BẠI-----+");
                       return;
@@ -389,7 +424,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           }
           default -> System.out.println("\t\t\t\t\t\t\t\t +-----LỰA CHỌN KHÔNG HỢP LỆ-----+");
         }
-      }
+      
     } catch (InputMismatchException ei) {
       System.out.println("\t\t\t\t\t\t\t\t +-----GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI-----+");
     } catch (Exception e) {
@@ -402,6 +437,10 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +-----XÓA CHI TIẾT PHIẾU NHẬP HÀNG-----+");
       System.out.print("Nhập mã chi tiết phiếu nhập cần xóa: ");
       String ID_PhieuNhap = sc.nextLine();
+      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)){
+          System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+          ID_PhieuNhap = sc.nextLine();
+      }
 
       ChiTietPhieuNhapHang xoachiTiet = null;
       for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
@@ -469,12 +508,12 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t |4.Giá tiền                               |");
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.print("\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-    int choose = sc.nextInt();
-    if (choose == 0)
-      return;
-    else {
+    String choose = sc.nextLine();
       switch (choose) {
-        case 1 -> {
+        case "0" -> {
+          System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
+        }
+        case "1" -> {
           sc.nextLine();
           System.out.print("Nhập mã phiếu nhập hàng: ");
           String id = sc.nextLine();
@@ -484,7 +523,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             }
           }
         }
-        case 2 -> {
+        case "2" -> {
           sc.nextLine();
           System.out.print("Nhập mã sản phẩm: ");
           String id = sc.nextLine();
@@ -494,7 +533,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             }
           }
         }
-        case 3 -> {
+        case "3" -> {
           sc.nextLine();
           System.out.print("Nhập số lượng: ");
           Integer amount = sc.nextInt();
@@ -504,7 +543,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             }
           }
         }
-        case 4 -> {
+        case "4" -> {
           sc.nextLine();
           System.out.print("Nhập giá tiền: ");
           Integer price = sc.nextInt();
@@ -517,7 +556,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
         default -> {
           System.out.println("Lựa chọn không hợp lệ!");
         }
-      }
     }
     String header = String.format("| %-15s | %-15s | %-10s | %-25s |", "ID Phiếu nhập", "ID Sản phẩm", "Số lượng",
         "Giá");

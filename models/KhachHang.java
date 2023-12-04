@@ -52,11 +52,11 @@ public class KhachHang extends ConNguoi {
     do {
       System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
       value = input.nextLine();
-      if (value.isBlank() || !Validation.isValidCustomer(value)) {
+      if (value.isBlank() || !Validation.isValidIDcustomer(value)) {
         System.out.println("Loại khách hàng không hợp lệ. Nhập lại: ");
       } else {
         setKindOfCustomer(value);
       }
-    } while (!Validation.isValidCustomer(value));
+    } while (!Validation.isValidIDcustomer(value));
   }
 }

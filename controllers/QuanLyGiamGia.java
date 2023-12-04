@@ -332,13 +332,13 @@ public class QuanLyGiamGia implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t |4. % giảm giá                            |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int choose = input.nextInt();
+            String choose = input.nextLine();
 
             switch (choose) {
-                case 0 -> {
+                case "0" -> {
                     return;
                 }
-                case 1 -> {
+                case "1" -> {
                     input.nextLine();
                     System.out.println("Nhập ID giảm giá: ");
                     String DiscountId = input.nextLine();
@@ -348,7 +348,7 @@ public class QuanLyGiamGia implements ControllerInterface {
                         }
                     }
                 }
-                case 2 -> {
+                case "2" -> {
                     input.nextLine();
                     System.out.println("Nhập loại khách hàng: ");
                     String KindOfCustomer = input.nextLine();
@@ -358,7 +358,7 @@ public class QuanLyGiamGia implements ControllerInterface {
                         }
                     }
                 }
-                case 3 -> {
+                case "3" -> {
                     input.nextLine();
                     System.out.println("Nhập tên sản phẩm: ");
                     String Product_name = input.nextLine();
@@ -368,7 +368,7 @@ public class QuanLyGiamGia implements ControllerInterface {
                         }
                     }
                 }
-                case 4 -> {
+                case "4" -> {
                     input.nextLine();
                     System.out.println("Nhập % giảm giá từ: ");
                     int begin = input.nextInt();
