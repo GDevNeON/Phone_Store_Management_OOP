@@ -163,8 +163,6 @@ public class QuanLyBanHangUI {
     }
 
   public static void quanlyThanhToan() {
-
-    QuanLyThanhToan qltt = new QuanLyThanhToan();
     int subCheck = 0;
     do {
       System.out.println("Danh Sách chức năng:");
@@ -178,19 +176,19 @@ public class QuanLyBanHangUI {
       subCheck = input.nextInt();
       switch (subCheck) {
         case 1 -> {
-          qltt.Read();
+          QuanLyThanhToan.getInstance().Read();
         }
         case 2 -> {
-          qltt.Create();
+          QuanLyThanhToan.getInstance().Create();
         }
         case 3 -> {
-          qltt.Update();
+          QuanLyThanhToan.getInstance().Update();
         }
         case 4 -> {
-          qltt.Delete();
+          QuanLyThanhToan.getInstance().Delete();
         }
         case 5 -> {
-          qltt.Search_byCategory();
+          QuanLyThanhToan.getInstance().searchByCategory();
         }
         case 0 -> {
           System.out.println("\nThoát quản lý thanh toán\n");

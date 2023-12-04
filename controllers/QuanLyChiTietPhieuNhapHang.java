@@ -110,7 +110,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
     for (SanPham sp : spList) {
       if (chiTietPhieuNhapHang.getProductId().equals(sp.getProductId())) {
-        sp.setAmountRemaining(chiTietPhieuNhapHang.getAmount() + sp.getAmountRemaining());
+        //sp.setAmountRemaining(chiTietPhieuNhapHang.getAmount() + sp.getAmountRemaining());
         foundProduct = true;
         break;
       }

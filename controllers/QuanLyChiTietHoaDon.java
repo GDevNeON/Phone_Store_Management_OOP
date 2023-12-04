@@ -29,7 +29,7 @@ public class QuanLyChiTietHoaDon extends ChiTietHoaDon implements ControllerInte
   public ChiTietHoaDon[] getListReceiptDetail() {
     String[] result = new String[0];
     try {
-     result= Stream.read("Database/ChiTietHoaDon.txt");
+    result= Stream.read("Database/ChiTietHoaDon.txt");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
