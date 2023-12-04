@@ -2,44 +2,43 @@ package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import models.GiamGia;
+import models.SanPham;
 
-public class QuanLyGiamGia implements ControllerInterface {
-    public GiamGia[] DSGG;
+public class QuanLySanPham implements ControllerInterface {
+    public SanPham[] DSSP;
     Scanner input = new Scanner(System.in);
-    private static QuanLyGiamGia instance;
-    GiamGia giamGia = new GiamGia();
+    private static QuanLySanPham instance;
+    SanPham sanPham = new SanPham();
 
-    private QuanLyGiamGia() {
-        getListGiamGia();
+    private QuanLySanPham() {
+        getListSanPham();
     }
 
-    public static QuanLyGiamGia getInstance() {
+    public static QuanLySanPham getInstance() {
         if (instance == null) {
-            instance = new QuanLyGiamGia();
+            instance = new QuanLySanPham();
         }
         return instance;
     }
 
-    public GiamGia[] getListGiamGia() {
+    public SanPham[] getListSanPham() {
         String[] result = new String[0];
         try {
-            result = Stream.read("Database/GiamGia.txt");
+            result = Stream.read("Database/SanPham.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        DSGG = new GiamGia[result.length];
+        DSSP = new SanPham[result.length];
         for (int i = 0; i < result.length; i++) {
             String[] row = result[i].split(";");
-            DSGG[i] = new GiamGia(row[0], row[1], row[2], row[3], LocalDate.parse(row[4]), LocalDate.parse(row[5]));
+            DSSP[i] = new SanPham(row[0], row[1], row[2], Integer.parseInt(row[3]), Integer.parseInt(row[4]),
+                    Integer.parseInt(row[5]));
         }
-        return DSGG;
+        return DSSP;
     }
 
     public void waitConsole() {
@@ -49,70 +48,68 @@ public class QuanLyGiamGia implements ControllerInterface {
 
     @Override
     public void Read() {
-        System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH GIẢM GIÁ----+");
-        String header = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |", "ID",
-                "Loại khách hàng",
-                "Tên sản phẩm", "% Giảm giá", "Ngày bắt đầu", "Ngày kết thúc");
+        System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH SẢN PHẨM----+");
+        String header = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |", "ID Sản phẩm", "Loại",
+                "Tên sản phẩm", "Số lượng", "Giá tiền", "Trạng thái");
         System.out.format(
-                "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
         System.out.println(header);
         System.out.format(
-                "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
 
-        getListGiamGia();
+        getListSanPham();
 
-        for (int i = 0; i < DSGG.length; i++) {
-            String read = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |",
-                    DSGG[i].getDiscountId(), DSGG[i].getKindOfCustomer(), DSGG[i].getProductName(),
-                    DSGG[i].getDiscountRate(), DSGG[i].getStartDate(), DSGG[i].getEndDate());
+        for (SanPham sanpham : DSSP) {
+            String read = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |",
+                    sanpham.getProductId(), sanpham.getTypeOfProductId(), sanpham.getName(),
+                    sanpham.getAmount(), sanpham.getPrice(), sanpham.getStatus());
             System.out.println(read);
         }
         System.out.format(
-                "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
         waitConsole();
     }
 
     @Override
     public void Create() {
-        System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN GIẢM GIÁ----+");
+        System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN SẢN PHẨM----+");
 
-        giamGia.nhapDiscountId(DSGG);
-        giamGia.nhapKindOfCustomer(DSGG);
-        giamGia.nhapProductName(DSGG);
-        giamGia.nhapDiscountRate(DSGG);
-        giamGia.nhapStartDate(DSGG);
-        giamGia.nhapEndDate(DSGG);
+        sanPham.nhapProductId(DSSP);
+        sanPham.nhapTypeOfProductId(DSSP);
+        sanPham.nhapName(DSSP);
+        sanPham.nhapAmount(DSSP);
+        sanPham.nhapPrice(DSSP);
+        sanPham.nhapStatus(DSSP);
 
         try {
-            String input = giamGia.getDiscountId() + ";" + giamGia.getKindOfCustomer() + ";" +
-                    giamGia.getProductName() + ";" + giamGia.getDiscountRate() + ";" + giamGia.getStartDate() + ";"
-                    + giamGia.getEndDate();
-            Stream.addOneLine("Database/GiamGia.txt", input);
-            System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN GIẢM GIÁ THÀNH CÔNG----+");
+            String input = sanPham.getProductId() + ";" + sanPham.getTypeOfProductId() + ";" + sanPham.getName() + ";"
+                    + sanPham.getAmount() + ";" + sanPham.getPrice() + ";" + sanPham.getStatus();
+            Stream.addOneLine("Database/SanPham.txt", input);
+            System.out.println("\t\t\t\t\t\t\t\t +----NHẬP SẢN PHẨM THÀNH CÔNG----+");
             waitConsole();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getListGiamGia();
+        getListSanPham();
     }
 
     @Override
     public void Update() {
         try {
-            System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT LẠI THÔNG TIN GIẢM GIÁ----+");
-            System.out.print("- Mời bạn nhập ID giảm giá cần chỉnh sửa: ");
-            String DiscountId = input.nextLine();
-            GiamGia g_gia = null;
+            System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN SẢN PHẨM----+");
+            System.out.print("- Mời nhập ID sản phẩm cần chỉnh sửa: ");
+            String ID_Product = input.nextLine();
+            SanPham s_pham = null;
 
-            for (GiamGia giamgia : DSGG) {
-                if (giamgia.getDiscountId().equals(DiscountId)) {
-                    g_gia = giamgia;
+            for (SanPham sanpham : DSSP) {
+                if (sanpham.getProductId().equals(ID_Product)) {
+                    s_pham = sanpham;
                     break;
                 }
             }
 
-            if (g_gia == null) {
-                System.out.println("\t\t\t\t\t\t\t\t +----MÃ GIẢM GIÁ KHÔNG TỒN TẠI----+");
+            if (s_pham == null) {
+                System.out.println("\t\t\t\t\t\t\t\t +-----MÃ SẢN PHẨM KHÔNG TỒN TẠI-----+");
                 return;
             }
 
@@ -129,31 +126,32 @@ public class QuanLyGiamGia implements ControllerInterface {
                 }
             }
 
-            System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN GIẢM GIÁ TRƯỚC KHI ĐƯỢC CHỈNH SỬA----+");
-            String header = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |", "ID",
-                    "Loại khách hàng", "Tên sản phẩm", "% Giảm giá", "Ngày bắt đầu", "Ngày kết thúc");
+            System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN SẢN PHẨM TRƯỚC KHI CHỈNH SỬA----+");
+            String header = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |", "ID Sản phẩm", "Loại",
+                    "Tên sản phẩm", "Số lượng", "Giá tiền", "Trạng thái");
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
             System.out.println(header);
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
-            String row = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |",
-                    g_gia.getDiscountId(), g_gia.getKindOfCustomer(), g_gia.getProductName(),
-                    g_gia.getDiscountRate(), g_gia.getStartDate(), g_gia.getEndDate());
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
+
+            String row = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |",
+                    s_pham.getProductId(), s_pham.getTypeOfProductId(), s_pham.getName(),
+                    s_pham.getAmount(), s_pham.getPrice(), s_pham.getStatus());
             System.out.println(row);
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
 
             if (choose == 1) {
                 System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN SỬA-------------+");
                 System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
                 System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-                System.out.println("\t\t\t\t\t\t\t\t |1. Mã giảm giá                           |");
-                System.out.println("\t\t\t\t\t\t\t\t |2. Loại khách hàng                       |");
+                System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
+                System.out.println("\t\t\t\t\t\t\t\t |2. Loại sản phẩm                         |");
                 System.out.println("\t\t\t\t\t\t\t\t |3. Tên sản phẩm                          |");
-                System.out.println("\t\t\t\t\t\t\t\t |4. % giảm giá                            |");
-                System.out.println("\t\t\t\t\t\t\t\t |5. Ngày bắt đầu giảm giá                 |");
-                System.out.println("\t\t\t\t\t\t\t\t |6. Ngày kết thúc giảm giá                |");
+                System.out.println("\t\t\t\t\t\t\t\t |4. Số lượng                              |");
+                System.out.println("\t\t\t\t\t\t\t\t |5. Giá tiền                              |");
+                System.out.println("\t\t\t\t\t\t\t\t |6. Trạng thái                            |");
                 System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
                 System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
                 int index = input.nextInt();
@@ -167,83 +165,84 @@ public class QuanLyGiamGia implements ControllerInterface {
                     }
                 }
 
-                String[] data = new String[DSGG.length];
-                for (int i = 0; i < DSGG.length; i++) {
-                    if (DSGG[i].getDiscountId().equals(DiscountId)) {
-                        System.out.println("Nhập thông tin giảm giá:");
+                String[] data = new String[DSSP.length];
+
+                for (int i = 0; i < DSSP.length; i++) {
+                    if (DSSP[i].getProductId().equals(ID_Product)) {
+                        System.out.println("Nhập thông tin sản phẩm:");
 
                         switch (index) {
                             case 0:
                                 return;
                             case 1:
                                 input.nextLine();
-                                giamGia.nhapDiscountId(DSGG);
-                                DSGG[i].setDiscountId(giamGia.getDiscountId());
+                                sanPham.nhapProductId(DSSP);
+                                DSSP[i].setProductId(sanPham.getProductId());
                                 break;
                             case 2:
-                                giamGia.nhapKindOfCustomer(DSGG);
-                                DSGG[i].setKindOfCustomer(giamGia.getKindOfCustomer());
+                                sanPham.nhapTypeOfProductId(DSSP);
+                                DSSP[i].setTypeOfProductId(sanPham.getTypeOfProductId());
                                 break;
                             case 3:
-                                giamGia.nhapProductName(DSGG);
-                                DSGG[i].setProductName(giamGia.getProductName());
+                                sanPham.nhapName(DSSP);
+                                DSSP[i].setName(sanPham.getName());
                                 break;
                             case 4:
-                                giamGia.nhapDiscountRate(DSGG);
-                                DSGG[i].setDiscountRate(giamGia.getDiscountRate());
+                                sanPham.nhapAmount(DSSP);
+                                DSSP[i].setAmount(sanPham.getAmount());
                                 break;
                             case 5:
-                                giamGia.nhapStartDate(DSGG);
-                                DSGG[i].setStartDate(giamGia.getStartDate());
+                                sanPham.nhapPrice(DSSP);
+                                DSSP[i].setPrice(sanPham.getPrice());
                                 break;
                             case 6:
-                                giamGia.nhapEndDate(DSGG);
-                                DSGG[i].setEndDate(giamGia.getEndDate());
+                                sanPham.nhapStatus(DSSP);
+                                DSSP[i].setStatus(sanPham.getStatus());
                                 break;
-                            default:
-                                System.out.println("Lựa chọn không hợp lệ!");
                         }
                     }
-                    data[i] = DSGG[i].getDiscountId() + ";" + DSGG[i].getKindOfCustomer() + ";"
-                            + DSGG[i].getProductName() + ";" + DSGG[i].getDiscountRate() + ";" + DSGG[i].getStartDate()
-                            + ";" + DSGG[i].getEndDate();
+                    data[i] = DSSP[i].getProductId() + ";" + DSSP[i].getTypeOfProductId() + ";" + DSSP[i].getName()
+                            + ";" + DSSP[i].getAmount() + ";" + DSSP[i].getPrice() + ";" + DSSP[i].getStatus();
                 }
                 try {
-                    Stream.addAll("Database/GiamGia.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t +----SỬA THÔNG TIN GIẢM GIÁ THÀNH CÔNG----+");
+                    Stream.addAll("Database/SanPham.txt", data);
+                    System.out.println("\t\t\t\t\t\t\t\t+----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
                     waitConsole();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                String[] data = new String[DSGG.length];
+                String[] data = new String[DSSP.length];
 
-                for (int i = 0; i < DSGG.length; i++) {
-                    if (DSGG[i].getDiscountId().equals(DiscountId)) {
-                        System.out.println("Nhập thông tin giảm giá:");
+                for (int i = 0; i < DSSP.length; i++) {
+                    if (DSSP[i].getProductId().equals(ID_Product)) {
+                        System.out.println("Nhập thông tin sản phẩm:");
                         input.nextLine();
 
-                        giamGia.nhapDiscountId(DSGG);
-                        giamGia.nhapKindOfCustomer(DSGG);
-                        giamGia.nhapProductName(DSGG);
-                        giamGia.nhapDiscountRate(DSGG);
-                        giamGia.nhapStartDate(DSGG);
-                        giamGia.nhapEndDate(DSGG);
+                        sanPham.nhapProductId(DSSP);
+                        sanPham.nhapTypeOfProductId(DSSP);
+                        sanPham.nhapName(DSSP);
+                        sanPham.nhapAmount(DSSP);
+                        sanPham.nhapPrice(DSSP);
+                        sanPham.nhapStatus(DSSP);
 
-                        DSGG[i].setDiscountId(giamGia.getDiscountId());
-                        DSGG[i].setKindOfCustomer(giamGia.getKindOfCustomer());
-                        DSGG[i].setProductName(giamGia.getProductName());
-                        DSGG[i].setDiscountRate(giamGia.getDiscountRate());
-                        DSGG[i].setStartDate(giamGia.getStartDate());
-                        DSGG[i].setEndDate(giamGia.getEndDate());
+                        DSSP[i].setProductId(sanPham.getProductId());
+                        DSSP[i].setTypeOfProductId(sanPham.getTypeOfProductId());
+                        DSSP[i].setName(sanPham.getName());
+                        DSSP[i].setAmount(sanPham.getAmount());
+                        DSSP[i].setPrice(sanPham.getPrice());
+                        DSSP[i].setStatus(sanPham.getStatus());
                     }
-                    data[i] = DSGG[i].getDiscountId() + ";" + DSGG[i].getKindOfCustomer() + ";"
-                            + DSGG[i].getProductName() + ";" + DSGG[i].getDiscountRate() + ";"
-                            + DSGG[i].getStartDate() + ";" + DSGG[i].getEndDate();
+                    data[i] = DSSP[i].getProductId() + ";" + DSSP[i].getTypeOfProductId() + ";" + DSSP[i].getName()
+                            + ";"
+                            + DSSP[i].getAmount() + ";" + DSSP[i].getPrice() + ";"
+                            + DSSP[i].getStatus();
                 }
+
+                // Cập nhật lại cả danh sách vào file
                 try {
-                    Stream.addAll("Database/GiamGia.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t +----SỬA THÔNG TIN GIẢM GIÁ THÀNH CÔNG----+");
+                    Stream.addAll("Database/SanPham.txt", data);
+                    System.out.println("\t\t\t\t\t\t\t\t +----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
                     waitConsole();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -260,38 +259,39 @@ public class QuanLyGiamGia implements ControllerInterface {
     @Override
     public void Delete() {
         try {
-            System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN GIẢM GIÁ----+");
-            System.out.print("Nhập ID giảm giá cần xóa: ");
-            String Discount_ID = input.nextLine();
+            System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN SẢN PHẨM----+");
+            System.out.print("Nhập ID sản phẩm cần xóa: ");
+            String ID_Product = input.nextLine();
 
-            GiamGia giam_gia = null;
-            for (GiamGia giamGia : DSGG) {
-                if (giamGia.getDiscountId().equals(Discount_ID)) {
-                    giam_gia = giamGia;
+            SanPham product = null;
+            for (SanPham sanpham : DSSP) {
+                if (sanpham.getProductId().equals(ID_Product)) {
+                    product = sanpham;
                     break;
                 }
             }
 
-            if (giam_gia == null) {
-                System.out.println("\t\t\t\t\t\t\t\t +----MÃ GIẢM GIÁ KHÔNG TỒN TẠI----+");
+            if (product == null) {
+                System.out.println("\t\t\t\t\t\t\t\t +-----MÃ SẢN PHẨM KHÔNG TỒN TẠI-----+");
                 return;
             }
 
-            for (int i = 0; i < DSGG.length; i++) {
-                if (Discount_ID.equals(DSGG[i].getDiscountId())) {
-                    DSGG = deleteGiamGia(DSGG, i);
+            for (int i = 0; i < DSSP.length; i++) {
+                if (ID_Product.equals(DSSP[i].getProductId())) {
+                    DSSP = deleteSanPham(DSSP, i);
                     break;
                 }
             }
-            String[] data = new String[DSGG.length];
-            for (int i = 0; i < DSGG.length; i++) {
-                data[i] = DSGG[i].getDiscountId() + ";" + DSGG[i].getKindOfCustomer() + ";"
-                        + DSGG[i].getProductName() + ";" + DSGG[i].getDiscountRate() + ";"
-                        + DSGG[i].getStartDate() + ";" + DSGG[i].getEndDate();
+            String[] data = new String[DSSP.length];
+            for (int i = 0; i < DSSP.length; i++) {
+                data[i] = DSSP[i].getProductId() + ";" + DSSP[i].getTypeOfProductId() + ";" + DSSP[i].getName() + ";"
+                        + DSSP[i].getAmount() + ";" + DSSP[i].getPrice() + ";"
+                        + DSSP[i].getStatus();
             }
+
             try {
-                Stream.addAll("Database/GiamGia.txt", data);
-                System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN GIẢM GIÁ THÀNH CÔNG----+");
+                Stream.addAll("Database/SanPham.txt", data);
+                System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
                 waitConsole();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -303,88 +303,93 @@ public class QuanLyGiamGia implements ControllerInterface {
         }
     }
 
-    public GiamGia[] addGiamGia(GiamGia[] DSGG, GiamGia giamGia) {
-        DSGG = Arrays.copyOf(DSGG, DSGG.length + 1);
-        DSGG[DSGG.length - 1] = giamGia;
-        return DSGG;
-    }
-
-    public GiamGia[] deleteGiamGia(GiamGia[] DSGG, int index) {
-        GiamGia[] newGg = new GiamGia[DSGG.length - 1];
-        for (int i = 0, j = 0; i < DSGG.length; i++) {
+    public SanPham[] deleteSanPham(SanPham[] DSSP, int index) {
+        SanPham[] newSp = new SanPham[DSSP.length - 1];
+        for (int i = 0, j = 0; i < DSSP.length; i++) {
             if (i != index) {
-                newGg[j++] = DSGG[i];
+                newSp[j++] = DSSP[i];
             }
         }
-        return newGg;
+        return newSp;
+    }
+
+    public SanPham[] addSanPham(SanPham[] DSSP, SanPham sanpham) {
+        DSSP = Arrays.copyOf(DSSP, DSSP.length + 1);
+        DSSP[DSSP.length - 1] = sanpham;
+        return DSSP;
     }
 
     @Override
     public void searchByCategory() {
         try {
-            GiamGia[] result = new GiamGia[0];
+            SanPham[] result = new SanPham[0];
             System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
             System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-            System.out.println("\t\t\t\t\t\t\t\t |1. Mã giảm giá                           |");
-            System.out.println("\t\t\t\t\t\t\t\t |2. Loại khách hàng                       |");
+            System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
+            System.out.println("\t\t\t\t\t\t\t\t |2. Loại sản phẩm                         |");
             System.out.println("\t\t\t\t\t\t\t\t |3. Tên sản phẩm                          |");
-            System.out.println("\t\t\t\t\t\t\t\t |4. % giảm giá                            |");
+            System.out.println("\t\t\t\t\t\t\t\t |4. Số lượng                              |");
+            System.out.println("\t\t\t\t\t\t\t\t |5. Giá tiền                              |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int choose = input.nextInt();
+            String choose = input.nextLine();
 
             switch (choose) {
-                case 0 -> {
+                case "0" -> {
                     return;
                 }
-                case 1 -> {
+                case "1" -> {
                     input.nextLine();
-                    System.out.println("Nhập ID giảm giá: ");
-                    String DiscountId = input.nextLine();
-                    for (GiamGia giamGia : DSGG) {
-                        if (giamGia.getDiscountId().contains(DiscountId)) {
-                            result = addGiamGia(result, giamGia);
+                    System.out.println("Nhập ID sản phẩm: ");
+                    String ID_Product = input.nextLine();
+                    for (SanPham sanPham : DSSP) {
+                        if (sanPham.getProductId().toLowerCase().contains(ID_Product.toLowerCase())) {
+                            result = addSanPham(result, sanPham);
                         }
                     }
                 }
-                case 2 -> {
+                case "2" -> {
                     input.nextLine();
-                    System.out.println("Nhập loại khách hàng: ");
-                    String KindOfCustomer = input.nextLine();
-                    for (GiamGia giamGia : DSGG) {
-                        if (giamGia.getKindOfCustomer().toLowerCase().contains(KindOfCustomer.toLowerCase())) {
-                            result = addGiamGia(result, giamGia);
+                    System.out.println("Nhập loại sản phẩm: ");
+                    String ID_Typeofproduct = input.nextLine();
+                    for (SanPham sanPham : DSSP) {
+                        if (sanPham.getTypeOfProductId().toLowerCase().contains(ID_Typeofproduct.toLowerCase())) {
+                            result = addSanPham(result, sanPham);
                         }
                     }
                 }
-                case 3 -> {
+                case "3" -> {
                     input.nextLine();
                     System.out.println("Nhập tên sản phẩm: ");
-                    String Product_name = input.nextLine();
-                    for (GiamGia giamGia : DSGG) {
-                        if (giamGia.getProductName().toLowerCase().contains(Product_name.toLowerCase())) {
-                            result = addGiamGia(result, giamGia);
+                    String name = input.nextLine();
+                    for (SanPham sanPham : DSSP) {
+                        if (sanPham.getName().toLowerCase().contains(name.toLowerCase())) {
+                            result = addSanPham(result, sanPham);
                         }
                     }
                 }
-                case 4 -> {
+                case "4" -> {
                     input.nextLine();
-                    System.out.println("Nhập % giảm giá từ: ");
+                    System.out.println("Nhập số lượng từ: ");
                     int begin = input.nextInt();
                     System.out.println("Đến: ");
                     int end = input.nextInt();
-
-                    for (GiamGia giamGia : DSGG) {
-                        String discountRateString = giamGia.getDiscountRate().replaceAll("%", "");
-
-                        try {
-                            int discountRate = Integer.parseInt(discountRateString);
-                            if (discountRate <= end && discountRate >= begin) {
-                                result = addGiamGia(result, giamGia);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Định dạng không hợp lệ: " + giamGia.getDiscountRate());
+                    for (SanPham sanPham : DSSP) {
+                        if (sanPham.getAmount() <= end && sanPham.getAmount() >= begin) {
+                            result = addSanPham(result, sanPham);
+                        }
+                    }
+                }
+                case "5" -> {
+                    input.nextLine();
+                    System.out.println("Từ giá: ");
+                    int begin = input.nextInt();
+                    System.out.println("Đến giá: ");
+                    int end = input.nextInt();
+                    for (SanPham sanPham : DSSP) {
+                        if (sanPham.getPrice() <= end && sanPham.getPrice() >= begin) {
+                            result = addSanPham(result, sanPham);
                         }
                     }
                 }
@@ -392,24 +397,24 @@ public class QuanLyGiamGia implements ControllerInterface {
                     System.out.println("Lựa chọn không hợp lệ!");
                 }
             }
-
-            System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN GIẢM GIÁ TÌM ĐƯỢC----+");
-            String header = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |", "ID",
-                    "Loại khách hàng", "Tên sản phẩm", "% Giảm giá", "Ngày bắt đầu", "Ngày kết thúc");
+            
+            System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN SẢN PHẨM TÌM ĐƯỢC----+");
+            String header = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |", "ID Sản phẩm", "Loại",
+                    "Tên sản phẩm", "Số lượng", "Giá tiền", "Trạng thái");
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
             System.out.println(header);
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
 
-            for (GiamGia giamGia : result) {
-                String row = String.format("| %-8s | %-25s | %-25s | %-10s | %-15s | %-15s |",
-                        giamGia.getDiscountId(), giamGia.getKindOfCustomer(), giamGia.getProductName(),
-                        giamGia.getDiscountRate(), giamGia.getStartDate(), giamGia.getEndDate());
-                System.out.println(row);
+            for (SanPham sanPham : result) {
+                String read = String.format("| %-15s | %-10s | %-25s | %-9s | %-12s | %-10s |",
+                        sanPham.getProductId(), sanPham.getTypeOfProductId(), sanPham.getName(),
+                        sanPham.getAmount(), sanPham.getPrice(), sanPham.getStatus());
+                System.out.println(read);
             }
             System.out.format(
-                    "+----------+---------------------------+---------------------------+------------+-----------------+-----------------+%n");
+                    "+-----------------+------------+---------------------------+-----------+--------------+------------+%n");
             waitConsole();
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
