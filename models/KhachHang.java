@@ -2,6 +2,8 @@ package models;
 
 import java.util.Scanner;
 
+import controllers.Validation;
+
 public class KhachHang extends ConNguoi {
   private String customerId;
   private String kindOfCustomer;
@@ -44,10 +46,17 @@ public class KhachHang extends ConNguoi {
 
   @Override
   public void AddThongTin() {
-    Scanner input = new Scanner(System.in);
     super.AddThongTin();
-
-    System.out.println("Nhập loại khách hàng:");
-    setKindOfCustomer(input.nextLine());
+    Scanner input = new Scanner(System.in);
+    String value;
+    do {
+      System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
+      value = input.nextLine();
+      if (value.isBlank() || !Validation.isValidCustomer(value)) {
+        System.out.println("Loại khách hàng không hợp lệ. Nhập lại: ");
+      } else {
+        setKindOfCustomer(value);
+      }
+    } while (!Validation.isValidCustomer(value));
   }
 }

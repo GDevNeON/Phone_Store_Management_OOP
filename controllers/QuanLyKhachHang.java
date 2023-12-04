@@ -41,25 +41,25 @@ public class QuanLyKhachHang implements ControllerInterface {
   @Override
   public void Read() {
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH KHÁCH HÀNG----+");
-    String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |", "ID", "Họ tên",
-        "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Loại khách hàng");
+    String header = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |", "Họ tên",
+        "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Tuổi", "ID", "Loại khách hàng");
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     System.out.println(header);
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
 
     getListCustomer();
     for (KhachHang c : cs) {
       if (cs[0].getCustomerId().contains("kh")) {
-        String read = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |",
-            c.getCustomerId(), c.getName(), c.getAge(), c.getGender(), c.getAddress(), c.getEmail(),
-            c.getSdt(), c.getKindOfCustomer());
+        String read = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |",
+            c.getName(), c.getGender(), c.getAddress(), c.getEmail(), c.getSdt(), c.getAge(), c.getCustomerId(),
+            c.getKindOfCustomer());
         System.out.println(read);
       }
     }
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     waitConsole();
   }
 
@@ -87,9 +87,9 @@ public class QuanLyKhachHang implements ControllerInterface {
     khachHang.AddThongTin();
 
     try {
-      String input = khachHang.getCustomerId() + ";" + khachHang.getName() + ";" + khachHang.getAge() + ";"
-          + khachHang.getGender() + ";" + khachHang.getAddress()
-          + ";" + khachHang.getEmail() + ";" + khachHang.getSdt() + ";" + khachHang.getKindOfCustomer();
+      String input = khachHang.getName() + ";" + khachHang.getGender() + ";" + khachHang.getAddress() + ";"
+          + khachHang.getEmail() + ";" + khachHang.getSdt() + ";" + khachHang.getAge() + ";"
+          + khachHang.getCustomerId() + ";" + khachHang.getKindOfCustomer();
       Stream.addOneLine("Database/KhachHang.txt", input); // link database here
       System.out.println("Nhập khách hàng thành công");
       waitConsole();
@@ -100,6 +100,7 @@ public class QuanLyKhachHang implements ControllerInterface {
 
   @Override
   public void Update() {
+
     System.out.print("Nhập ID khách hàng cần chỉnh sửa: ");
     String ID_KhachHang = input.nextLine();
     KhachHang k_hang = null;
@@ -118,19 +119,19 @@ public class QuanLyKhachHang implements ControllerInterface {
 
     System.out.println("Thông tin khách hàng: ");
     System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH KHÁCH HÀNG----+");
-    String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |", "ID", "Họ tên",
-        "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Loại khách hàng");
+    String header = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |", "Họ tên",
+        "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Tuổi", "ID", "Loại khách hàng");
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     System.out.println(header);
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     String row = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |",
         k_hang.getCustomerId(), k_hang.getName(), k_hang.getAge(), k_hang.getGender(),
         k_hang.getAddress(), k_hang.getEmail(), k_hang.getSdt(), k_hang.getKindOfCustomer());
     System.out.println(row);
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
 
     String[] data = new String[cs.length];
 
@@ -269,21 +270,21 @@ public class QuanLyKhachHang implements ControllerInterface {
     }
 
     System.out.println("Danh sách khách hàng tìm được:");
-    String header = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |", "ID", "Họ tên",
-        "Tuổi", "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Loại khách hàng");
+    String header = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |", "Họ tên",
+        "Giới Tính", "Địa chỉ", "Email", "Số điện thoại", "Tuổi", "ID", "Loại khách hàng");
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     System.out.println(header);
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     for (KhachHang customer : result) {
-      String read = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |",
-          customer.getCustomerId(), customer.getName(), customer.getAge(), customer.getGender(),
-          customer.getAddress(), customer.getEmail(), customer.getSdt(), customer.getKindOfCustomer());
+      String read = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |",
+          customer.getName(), customer.getGender(), customer.getAddress(), customer.getEmail(), customer.getSdt(),
+          customer.getAge(), customer.getCustomerId(), customer.getKindOfCustomer());
       System.out.println(read);
     }
     System.out.format(
-        "+-------+---------------------------+------+-----------+--------------------------------+---------------------------+-----------------+----------------------+%n");
+        "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
     waitConsole();
   }
 

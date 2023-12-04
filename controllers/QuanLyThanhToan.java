@@ -702,168 +702,174 @@ public class QuanLyThanhToan implements ControllerInterface {
 
     @Override
     public void searchByCategory() {
-        String find = null;
-        System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
-        System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
-        System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-        System.out.println("\t\t\t\t\t\t\t\t |1. ID thanh toán                         |");
-        System.out.println("\t\t\t\t\t\t\t\t |2. ID khách hàng                         |");
-        System.out.println("\t\t\t\t\t\t\t\t |3. ID đơn hàng                           |");
-        System.out.println("\t\t\t\t\t\t\t\t |4. Số lượng                              |");
-        System.out.println("\t\t\t\t\t\t\t\t |5. Ngày thanh toán                       |");
-        System.out.println("\t\t\t\t\t\t\t\t |6. Phương thức thanh toán                |");
-        System.out.println("\t\t\t\t\t\t\t\t |7. Trạng thái                            |");
-        System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-        System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-        int index = sc.nextInt();
+        try {
+            String find = null;
+            System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM KIẾM--------+");
+            System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
+            System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
+            System.out.println("\t\t\t\t\t\t\t\t |1. ID thanh toán                         |");
+            System.out.println("\t\t\t\t\t\t\t\t |2. ID khách hàng                         |");
+            System.out.println("\t\t\t\t\t\t\t\t |3. ID đơn hàng                           |");
+            System.out.println("\t\t\t\t\t\t\t\t |4. Số lượng                              |");
+            System.out.println("\t\t\t\t\t\t\t\t |5. Ngày thanh toán                       |");
+            System.out.println("\t\t\t\t\t\t\t\t |6. Phương thức thanh toán                |");
+            System.out.println("\t\t\t\t\t\t\t\t |7. Trạng thái                            |");
+            System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
+            System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
+            int index = sc.nextInt();
 
-        while (true) {
-            if (index < 0 || index > 7) {
-                System.out.print ("Nhập lại: ");
-                index = sc.nextInt();
-            }
-            else {
-                break;
-            }
-        }
-
-        System.out.print ("Nhập nội dung cần tìm: ");
-        switch (index) {
-            case 1 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank() || (!Validation.isValidIDpayment(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                            System.out.println("Mã thanh toán không hợp lệ. Nhập lại: ");
-                    } else {
-                        break;
-                    }
+            while (true) {
+                if (index < 0 || index > 7) {
+                    System.out.print ("Nhập lại: ");
+                    index = sc.nextInt();
                 }
-                break;
-            }
-
-            case 2 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank() || (!Validation.isValidIDcustomer(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                            System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                    } else {
-                        break;
-                    }
-                }
-                break;
-            }
-                
-            case 3 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank() || (!Validation.isValidIDreceipt(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                            System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                    } else {
-                        break;
-                    }
-                }
-                break;
-            }            
-            case 4 -> {
-                sc.nextLine();
-                while (sc.hasNextInt()) {
-                    find = sc.nextLine();
+                else {
                     break;
                 }
-                break;
             }
-                
-            case 5 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank() || find.length() != 10) {
-                        System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                    } else {
-                        if (Validation.isValidDate(find)) {
-                            break;
-                        } else {
-                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                        }
-                    }
-                }
-                break;
-            }
-                
-            case 6 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank() || find.length() > 20) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                        System.out.println("Không hợp lệ. Nhập lại: ");
-                    } else {
-                        break;
-                    }
-                }
-                break;
-            }
-                
-            case 7 -> {
-                sc.nextLine();
-                while (true) {
-                    find = sc.nextLine();
-                    if (find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                        System.out.println("Trạng thái không được để trống. Nhập lại: ");
-                    } else {
-                        if (find.compareTo("0") == 0 || find.compareTo("1") == 0) {
-                            break;
-                        }
-                        else {
-                            System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
-                        }
-                    }
-                }
-                break;
-            } 
-        }
 
-        System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH THANH TOÁN----+");
-        OutputHeader();
-
-        for(int i = 0; i < payment.length; i++) {
+            System.out.print ("Nhập nội dung cần tìm: ");
             switch (index) {
-                case 0:
-                    return;
-                case 1:
-                    if (payment[i].getPaymentId().contains(find))
-                        OutputData(i);
+                case 1 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank() || (!Validation.isValidIDpayment(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                                System.out.println("Mã thanh toán không hợp lệ. Nhập lại: ");
+                        } else {
+                            break;
+                        }
+                    }
                     break;
-                case 2:
-                    if (payment[i].getCustomerId().equals(find))
-                        OutputData(i);
+                }
+
+                case 2 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank() || (!Validation.isValidIDcustomer(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                                System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
+                        } else {
+                            break;
+                        }
+                    }
                     break;
-                case 3:
-                    if (payment[i].getReceiptId().equals(find))
-                        OutputData(i);
+                }
+                    
+                case 3 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank() || (!Validation.isValidIDreceipt(find))) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                                System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
+                        } else {
+                            break;
+                        }
+                    }
                     break;
-                case 4:
-                    if (String.valueOf(payment[i].getAmount()).equalsIgnoreCase(find))
-                        OutputData(i);
+                }            
+                case 4 -> {
+                    sc.nextLine();
+                    while (sc.hasNextInt()) {
+                        find = sc.nextLine();
+                        break;
+                    }
                     break;
-                case 5:
-                    if (payment[i].getPaymentDate().equals(LocalDate.parse(find)))
-                        OutputData(i);
+                }
+                    
+                case 5 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank() || find.length() != 10) {
+                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                        } else {
+                            if (Validation.isValidDate(find)) {
+                                break;
+                            } else {
+                                System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                            }
+                        }
+                    }
                     break;
-                case 6:
-                    if (payment[i].getPaymentMethod().equalsIgnoreCase(find))
-                        OutputData(i);
+                }
+                    
+                case 6 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank() || find.length() > 20) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                            System.out.println("Không hợp lệ. Nhập lại: ");
+                        } else {
+                            break;
+                        }
+                    }
                     break;
-                case 7:
-                    if (payment[i].getStatus().equalsIgnoreCase(find))
-                        OutputData(i);
+                }
+                    
+                case 7 -> {
+                    sc.nextLine();
+                    while (true) {
+                        find = sc.nextLine();
+                        if (find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                            System.out.println("Trạng thái không được để trống. Nhập lại: ");
+                        } else {
+                            if (find.compareTo("0") == 0 || find.compareTo("1") == 0) {
+                                break;
+                            }
+                            else {
+                                System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
+                            }
+                        }
+                    }
                     break;
+                } 
             }
+
+            System.out.println("\t\t\t\t\t\t\t\t +----DANH SÁCH THANH TOÁN----+");
+            OutputHeader();
+
+            for(int i = 0; i < payment.length; i++) {
+                switch (index) {
+                    case 0:
+                        return;
+                    case 1:
+                        if (payment[i].getPaymentId().contains(find))
+                            OutputData(i);
+                        break;
+                    case 2:
+                        if (payment[i].getCustomerId().equals(find))
+                            OutputData(i);
+                        break;
+                    case 3:
+                        if (payment[i].getReceiptId().equals(find))
+                            OutputData(i);
+                        break;
+                    case 4:
+                        if (String.valueOf(payment[i].getAmount()).equalsIgnoreCase(find))
+                            OutputData(i);
+                        break;
+                    case 5:
+                        if (payment[i].getPaymentDate().equals(LocalDate.parse(find)))
+                            OutputData(i);
+                        break;
+                    case 6:
+                        if (payment[i].getPaymentMethod().equalsIgnoreCase(find))
+                            OutputData(i);
+                        break;
+                    case 7:
+                        if (payment[i].getStatus().equalsIgnoreCase(find))
+                            OutputData(i);
+                        break;
+                }
+            }
+            System.out.format(
+                    "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
+        } catch (InputMismatchException ei) {
+            System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        System.out.format(
-                "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
     }
 
 

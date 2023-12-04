@@ -100,34 +100,31 @@ public class ConNguoi {
 
   public void AddThongTin() {
     Scanner sc = new Scanner(System.in);
-    try {
-      do {
-        System.out.print("Nhập họ tên: ");
-        setName(sc.nextLine());
-      } while (!Validation.isValidName(name));
-      do {
-        System.out.print("Nhập tuổi: ");
-        setAge(sc.nextInt());
-      } while (!Validation.isValidAge(age));
-      do {
-        System.out.print("Nhập giới tính: ");
-        setGender(sc.nextLine());
-      } while (!Validation.isValidGender(gender));
-      do {
-        System.out.print("Nhập địa chỉ: ");
-        setAddress(sc.nextLine());
-      } while (!Validation.isValidAddress(address));
-      do {
-        System.out.print("Nhập Email: ");
-        setEmail(sc.nextLine());
-      } while (!Validation.isValidEmail(email));
-      do {
-        System.out.print("Nhập số điện thoại: ");
-        sdt = sc.nextLine();
-      } while (!Validation.isValidPhoneNumber(sdt));
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
-    sc.close();
+
+    do {
+      System.out.print("Nhập họ tên: ");
+      setName(sc.nextLine());
+    } while (!Validation.isValidName(name));
+    do {
+      System.out.print("Nhập tuổi: ");
+      setAge(sc.nextInt());
+    } while (!Validation.isValidAge(age));
+    sc.nextLine();
+    do {
+      System.out.print("Nhập giới tính: ");
+      setGender(sc.nextLine());
+    } while (!Validation.isValidGender(gender));
+    do {
+      System.out.print("Nhập địa chỉ: ");
+      setAddress(sc.nextLine());
+    } while (!Validation.isValidAddress(address));
+    do {
+      System.out.print("Nhập Email: ");
+      setEmail(sc.nextLine());
+    } while (!Validation.isValidEmail(email));
+    do {
+      System.out.print("Nhập số điện thoại: ");
+      sdt = sc.nextLine();
+    } while (!Validation.isValidPhoneNumber(sdt));
   }
 }
