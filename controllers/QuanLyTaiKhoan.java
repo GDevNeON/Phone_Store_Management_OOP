@@ -12,6 +12,7 @@ public class QuanLyTaiKhoan implements ControllerInterface {
   private static QuanLyTaiKhoan instance;
   private static Scanner sc = new Scanner(System.in);
   private TaiKhoan[] dsAccount;
+  private Validation kiemTra = new Validation();
 
   public static QuanLyTaiKhoan getInstance() {
     if (instance == null) {
@@ -68,7 +69,13 @@ public class QuanLyTaiKhoan implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN TÀI KHOẢN----+");
     TaiKhoan taiKhoan = new TaiKhoan();
     System.out.print("Nhập ID tài khoản: ");
-    taiKhoan.setAccountId(sc.nextLine());
+    String ID_Account = sc.nextLine();
+    while (ID_Account.isEmpty() || !kiemTra.isValidAccountId(ID_Account) ){
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID tài khoản: ");
+        ID_Account = sc.nextLine();
+        
+    }
+    taiKhoan.setAccountId(ID_Account);
     int check = 0;
     for (TaiKhoan ac : dsAccount) {
       if (taiKhoan.getAccountId().equals(ac.getAccountId())) {
@@ -83,13 +90,31 @@ public class QuanLyTaiKhoan implements ControllerInterface {
     }
 
     System.out.print("Nhập tên tài khoản: ");
-    taiKhoan.setUsername(sc.nextLine());
+    String name;
+    name = sc.nextLine();
+    while (name.isEmpty() || !kiemTra.isValidUsername(name)) {
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại tên tài khoản: ");
+        name = sc.nextLine();
+    }
+    taiKhoan.setUsername(name);
 
     System.out.print("Nhập mật khẩu tài khoản: ");
-    taiKhoan.setPassword(sc.nextLine());
+    String password;
+    password = sc.nextLine();
+    while (password.isEmpty()){
+        System.out.print("Không được để trống! Vui lòng nhập mật khẩu: ");
+        password = sc.nextLine();
+    }
+    taiKhoan.setPassword(password);
 
     System.out.print("Nhập chức vụ: ");
-    taiKhoan.setPosition(sc.nextLine());
+    String position;
+    position = sc.nextLine();
+    while (position.isEmpty() || !kiemTra.isValidPosition(position)) {
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại chức vụ:");
+        position = sc.nextLine();
+    }
+    taiKhoan.setPosition(position);
 
     try {
       String sc = taiKhoan.getAccountId() + ";" + taiKhoan.getUsername() + ";" + taiKhoan.getPassword() + ";"
@@ -108,6 +133,10 @@ public class QuanLyTaiKhoan implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT LẠI THÔNG TIN TÀI KHOẢN----+");
       System.out.print("- Mời bạn nhập mã tài khoản chỉnh sửa: ");
       String account_id = sc.nextLine();
+      while (account_id.isEmpty() || !kiemTra.isValidAccountId(account_id)) {
+          System.out.print("Không đúng định dạng! Vui lòng nhập lại ID tài khoản: ");
+          account_id = sc.nextLine();
+      }
       TaiKhoan act = null;
 
       for (TaiKhoan ac : dsAccount) {
@@ -148,16 +177,24 @@ public class QuanLyTaiKhoan implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t |5.Sửa tất cả thông tin           |");
       System.out.println("\t\t\t\t\t\t\t\t +---------------------------------+");
       System.out.print("\t\t\t\t\t\t\t\t Mời bạn nhập lựa chọn: ");
-      int choose = sc.nextInt();
-      sc.nextLine();
-      if (choose == 0) {
-      } else {
+      String choose = sc.nextLine();
         switch (choose) {
-          case 1 -> {
+          case "0" -> {
+            System.out.println("\t\t\t\t\t\t\t\t +----THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!----+");
+            choose = "0";
+          }
+          case "1" -> {
             for (int i = 0; i < dsAccount.length; i++) {
               if (dsAccount[i].getAccountId().equals(account_id)) {
                 System.out.print("Nhập ID tài khoản: ");
-                act.setAccountId(sc.nextLine());
+                String ID_Account;
+                ID_Account = sc.nextLine();
+                while (ID_Account.isEmpty() || !kiemTra.isValidAccountId(ID_Account) ){
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID tài khoản: ");
+                    ID_Account = sc.nextLine();
+                    
+                }
+                act.setAccountId(ID_Account);
                 int check = 0;
                 for (TaiKhoan ac : dsAccount) {
                   if (act.getAccountId().equals(ac.getAccountId())) {
@@ -182,11 +219,17 @@ public class QuanLyTaiKhoan implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 2 -> {
+          case "2" -> {
             for (int i = 0; i < dsAccount.length; i++) {
               if (dsAccount[i].getAccountId().equals(account_id)) {
                 System.out.print("Nhập tên tài khoản: ");
-                act.setUsername(sc.nextLine());
+                String name;
+                name = sc.nextLine();
+                while (name.isEmpty() || !kiemTra.isValidUsername(name)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại tên tài khoản: ");
+                    name = sc.nextLine();
+                }
+                act.setUsername(name);
                 dsAccount[i].setUsername(act.getUsername());
               }
               data[i] = dsAccount[i].getAccountId() + ";" + dsAccount[i].getUsername() + ";"
@@ -200,11 +243,18 @@ public class QuanLyTaiKhoan implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 3 -> {
+          case "3" -> {
             for (int i = 0; i < dsAccount.length; i++) {
               if (dsAccount[i].getAccountId().equals(account_id)) {
                 System.out.print("Nhập mật khẩu tài khoản: ");
-                act.setPassword(sc.nextLine());
+                String password;
+                password = sc.nextLine();
+                while (password.isEmpty()){
+                    System.out.print("Không được để trống! Vui lòng nhập mật khẩu: ");
+                    password = sc.nextLine();
+                }
+                act.setPassword(password);
+
                 dsAccount[i].setPassword(act.getPassword());
               }
               data[i] = dsAccount[i].getAccountId() + ";" + dsAccount[i].getUsername() + ";"
@@ -218,11 +268,17 @@ public class QuanLyTaiKhoan implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 4 -> {
+          case "4" -> {
             for (int i = 0; i < dsAccount.length; i++) {
               if (dsAccount[i].getAccountId().equals(account_id)) {
                 System.out.print("Nhập chức vụ: ");
-                act.setPosition(sc.nextLine());
+                String position;
+                position = sc.nextLine();
+                while (position.isEmpty() || !kiemTra.isValidPosition(position)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại chức vụ:");
+                    position = sc.nextLine();
+                }
+                act.setPosition(position);
                 dsAccount[i].setPosition(act.getPosition());
               }
               data[i] = dsAccount[i].getAccountId() + ";" + dsAccount[i].getUsername() + ";"
@@ -236,11 +292,18 @@ public class QuanLyTaiKhoan implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case 5 -> {
+          case "5" -> {
             for (int i = 0; i < dsAccount.length; i++) {
               if (dsAccount[i].getAccountId().equals(account_id)) {
                 System.out.print("Nhập ID tài khoản: ");
-                act.setAccountId(sc.nextLine());
+                String ID_Account;
+                ID_Account = sc.nextLine();
+                while (ID_Account.isEmpty() || !kiemTra.isValidAccountId(ID_Account) ){
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID tài khoản: ");
+                    ID_Account = sc.nextLine();
+                    
+                }
+                act.setAccountId(ID_Account);
                 int check = 0;
                 for (TaiKhoan ac : dsAccount) {
                   if (act.getAccountId().equals(ac.getAccountId())) {
@@ -255,13 +318,31 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                 }
 
                 System.out.print("Nhập tên tài khoản: ");
+                String name;
+                name = sc.nextLine();
+                while (name.isEmpty() || !kiemTra.isValidUsername(name)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại tên tài khoản: ");
+                    name = sc.nextLine();
+                }
                 act.setUsername(sc.nextLine());
 
                 System.out.print("Nhập mật khẩu tài khoản: ");
-                act.setPassword(sc.nextLine());
+                String password;
+                password = sc.nextLine();
+                while (password.isEmpty()){
+                    System.out.print("Không được để trống! Vui lòng nhập mật khẩu: ");
+                    password = sc.nextLine();
+                }
+                act.setPassword(password);
 
                 System.out.print("Nhập chức vụ: ");
-                act.setPosition(sc.nextLine());
+                String position;
+                position = sc.nextLine();
+                while (position.isEmpty() || !kiemTra.isValidPosition(position)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại chức vụ:");
+                    position = sc.nextLine();
+                }
+                act.setPosition(position);
 
                 dsAccount[i].setAccountId(act.getAccountId());
                 dsAccount[i].setUsername(act.getUsername());
@@ -283,7 +364,6 @@ public class QuanLyTaiKhoan implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t +-----LỰA CHỌN KHÔNG HỢP LỆ-----+");
           }
         }
-      }
     } catch (InputMismatchException ei) {
       System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
     } catch (Exception e) {
@@ -297,6 +377,11 @@ public class QuanLyTaiKhoan implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN TÀI KHOẢN----+");
       System.out.print("Nhập mã tài khoản cần xóa: ");
       String account_id = sc.nextLine();
+      while (account_id.isEmpty() || !kiemTra.isValidAccountId(account_id) ){
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID tài khoản: ");
+        account_id = sc.nextLine();
+        
+      }
 
       TaiKhoan delete_ac = null;
       for (TaiKhoan ac : dsAccount) {
@@ -364,13 +449,13 @@ public class QuanLyTaiKhoan implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t |3.Chức vụ                                |");
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-    int choose = sc.nextInt();
-    if (choose == 0)
-      return;
-    else {
+    String choose = sc.nextLine();
       switch (choose) {
-        case 1 -> {
-          sc.nextLine();
+        case "0" -> {
+          System.out.println("\t\t\t\t\t\t\t\t +----THOÁT CHƯƠNG TRÌNH THÀNH CÔNG----+");
+          break;
+        }
+        case "1" -> {
           System.out.print("Nhập ID tài khoản: ");
           String account_id = sc.nextLine();
           for (TaiKhoan ac : dsAccount) {
@@ -379,8 +464,7 @@ public class QuanLyTaiKhoan implements ControllerInterface {
             }
           }
         }
-        case 2 -> {
-          sc.nextLine();
+        case "2" -> {
           System.out.print("Nhập tên tài khoản: ");
           String name = sc.nextLine();
           for (TaiKhoan ac : dsAccount) {
@@ -389,9 +473,8 @@ public class QuanLyTaiKhoan implements ControllerInterface {
             }
           }
         }
-        case 3 -> {
+        case "3" -> {
           System.out.print("Nhập chức vụ: ");
-          sc.nextLine();
           String position = sc.nextLine();
           for (TaiKhoan ac : dsAccount) {
             if (ac.getPosition().toLowerCase().contains(position.toLowerCase())) {
@@ -400,9 +483,8 @@ public class QuanLyTaiKhoan implements ControllerInterface {
           }
         }
         default -> {
-          System.out.println("Lựa chọn không hợp lệ!");
+          System.out.println("\t\t\t\t\t\t\t\t LỰA CHỌN KHÔNG HỢP LỆ");
         }
-      }
     }
     String header = String.format("| %-8s | %-30s | %-10s | %-25s |", "ID", "Tên", "Mật khẩu", "Chức vụ");
     System.out.format("+----------+--------------------------------+------------+---------------------------+%n");

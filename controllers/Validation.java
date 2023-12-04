@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validation {
 
@@ -92,31 +94,31 @@ public class Validation {
     }
 
   //Hàm validation cho account id
-  public static boolean isValidAccountId(String id){
+  public boolean isValidAccountId(String id){
     return id.startsWith("QL") || id.startsWith("ADMIN") || id.startsWith("NV");
   }
   //Hàm validation cho username
-  public static boolean isValidUsername(String name){
+  public boolean isValidUsername(String name){
       return name.startsWith("manager") || name.startsWith("Admin") || name.startsWith("employee");
   }
   //Hàm validation cho position
-  public static boolean isValidPosition(String position){
+  public boolean isValidPosition(String position){
       return position.equalsIgnoreCase("manager") || position.equalsIgnoreCase("admin") || position.equalsIgnoreCase("employee");
   }
   //Hàm validation cho id_worker
-  public static boolean isValidIDWorker(String id){
+  public boolean isValidIDWorker(String id){
       return id.startsWith("nv") && id.length() <= MAX_ID_LENGTH;
   } 
   //Hàm validation cho id_phieunhap
-  public static boolean isValidIDPN(String id){
+  public boolean isValidIDPN(String id){
       return id.startsWith("pn") && id.length() <= MAX_ID_LENGTH;
   }
   //Hàm validation cho id_chitietphieu
-  public static boolean isValidIDCTP(String id){
+  public boolean isValidIDCTP(String id){
       return id.startsWith("ctpn") && id.length() <= MAX_ID_LENGTH;
   }
   //Hàm validation cho id_sanpham
-  public static boolean isValidIDproduct(String id){
+  public boolean isValidIDproduct(String id){
       return id.startsWith("sp") && id.length() <= MAX_ID_LENGTH;
   }
   //Hàm validation cho id_khachhang

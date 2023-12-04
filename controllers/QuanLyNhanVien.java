@@ -34,7 +34,7 @@ public class QuanLyNhanVien implements ControllerInterface {
     nv = new NhanVien[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      nv[i] = new NhanVien(row[0], row[1], row[2], row[3], row[4], Integer.parseInt(row[5]), row[6], row[7],
+      nv[i] = new NhanVien(row[0], row[1],  Integer.parseInt(row[2]), row[3], row[4],row[5], row[6], row[7],
           row[8]);
     }
     return nv;
