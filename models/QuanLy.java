@@ -15,7 +15,7 @@ public class QuanLy extends ConNguoi {
 
   public QuanLy(String name, String gender, String address, String email, String sdt, int age, String managerId,
       String role, String shift) {
-    super(name, gender, address, email, sdt, age);
+    super(name, age, address, email, sdt, gender);
     this.managerId = managerId;
     this.role = role;
     this.shift = shift;

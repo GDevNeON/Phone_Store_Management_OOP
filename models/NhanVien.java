@@ -12,7 +12,7 @@ public class NhanVien extends ConNguoi {
 
   public NhanVien(String workerId, String name, int age, String gender, String address, String email, String sdt,
       String role, String shift) {
-    super(name, gender, address, email, sdt, age);
+    super(name, age, address, email, sdt, gender);
     this.workerId = workerId;
     this.role = role;
     this.shift = shift;

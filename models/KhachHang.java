@@ -13,7 +13,7 @@ public class KhachHang extends ConNguoi {
 
   public KhachHang(String name, String gender, String address, String email, String sdt, int age, String customerId,
       String kindOfCustomer) {
-    super(name, gender, address, email, sdt, age);
+    super(name, age, address, email, sdt, gender);
     this.customerId = customerId;
     this.kindOfCustomer = kindOfCustomer;
   }
