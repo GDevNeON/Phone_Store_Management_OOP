@@ -1,5 +1,4 @@
-John Doe;Nam;123 Main St;johndoe@example.com;1234567890;30;nv001;Nhân viên bán hàng;Ca sáng
-Jane Smith;Nu;456 Elm St;janesmith@example.com;0987654321;25;nv002;Nhân viên bán hàng;Ca chiều
-Robert Johnson;Nam;789 Pine St;robertjohnson@example.com;1234567891;33;nv003;Nhân viên bán hàng;Ca tối
-Mary Davis;Nu;321 Oak St;marydavis@example.com;0987654322;28;nv004;Nhân viên bán hàng;Ca sáng
-James Miller;Nam;654 Maple St;jamesmiller@example.com;1234567892;35;nv005;Chăm sóc khách hàng;Ca chiều
+nv001;John Doe;30;Nam;123 Main St;johndoe@example.com;1234567890;Nhân viên bán hàng;Ca sáng
+nv002;Jane Smith;25;Nu;456 Elm St;janesmith@example.com;0987654321;Nhân viên bán hàng;Ca chiều
+nv003;Robert Johnson;33;Nam;789 Pine St;robertjohnson@example.com;1234567891;Nhân viên bán hàng;Ca tối
+nv004;Mary Davis;28;Nu;321 Oak St;marydavis@example.com;0987654322;Nhân viên bán hàng;Ca sáng

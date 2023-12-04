@@ -1,5 +1,5 @@
-Nguyen Van A;Male;123 Le Loi;nguyenvana@example.com;0123456789;30;kh1;walk-in customer
-Tran Thi B;Female;456 Nguyen Hue;tranb@example.com;0987654321;25;kh2;regular customer
-Le Van C;Male;789 Tran Hung Dao;levanc@example.com;0123456780;35;kh3;walk-in customer
-Pham Thi D;Female;321 Le Duan;phamthid@example.com;0987654311;28;kh4;regular customer
-Hoang Van E;Male;654 Pham Van Dong;hoangvane@example.com;0123456790;32;kh5;walk-in customerkh10;doggu;12;Nam;123/123;dogg@gmail.com;0123123123;walk-in customer
+Tran Thi B;Nu;456 Nguyen Hue;tranb@example.com;0987654321;25;kh2;regular customer
+Le Van C;Nam;789 Tran Hung Dao;levanc@example.com;0123456780;35;kh3;walk-in customer
+Pham Thi D;Nu;321 Le Duan;phamthid@example.com;0987654311;28;kh4;regular customer
+Hoang Van E;Nam;654 Pham Van Dong;hoangvane@example.com;0123456790;32;kh5;walk-in customer
+doggu;Nam;48/123;doggu@gmail.com;0123123123;12;kh10;regular customeromeromer

@@ -46,21 +46,17 @@ public class KhachHang extends ConNguoi {
 
   @Override
   public void AddThongTin() {
-    Scanner sc = new Scanner(System.in);
-    String value;
     super.AddThongTin();
-
-    System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
-    sc.nextLine();
-    while (true) {
-      value = sc.nextLine();
+    Scanner input = new Scanner(System.in);
+    String value;
+    do {
+      System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
+      value = input.nextLine();
       if (value.isBlank() || !Validation.isValidCustomer(value)) {
-        System.out.println("ID khách hàng không hợp lệ. Nhập lại: ");
+        System.out.println("Loại khách hàng không hợp lệ. Nhập lại: ");
       } else {
         setKindOfCustomer(value);
-        break;
       }
-    }
-    sc.close();
+    } while (!Validation.isValidCustomer(value));
   }
 }

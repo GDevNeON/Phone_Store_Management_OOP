@@ -63,25 +63,12 @@ public class NhanVien extends ConNguoi {
     String value;
     super.AddThongTin();
 
-    System.out.println("Nhập mã nhân viên (nv_): ");
-    sc.nextLine();
+    System.out.println("Nhập vai trò: () ");
+    String verify1[] = { "Sales", "Marketing", "Advertising", "Customer Service" };
     while (true) {
       value = sc.nextLine();
-      if (value.isBlank() || !Validation.isValidIDmanager(value)) {
-
-        System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
-      } else {
-        setWorkerId(value);
-        break;
-      }
-    }
-
-    System.out.println("Nhập chức vụ: () ");
-    String verify1[] = { "", "", "", "" };
-    while (true) {
-      value = sc.nextLine();
-      if (value.isBlank() || value.length() > 20) {
-        System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
+      if (value.isBlank() || value.length() > 30) {
+        System.out.println("Vai trò không hợp lệ. Nhập lại: ");
       } else {
         boolean flag = false;
         for (String v : verify1) {
@@ -95,16 +82,16 @@ public class NhanVien extends ConNguoi {
           setRole(value);
           break;
         } else {
-          System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
+          System.out.println("Vai trò không hợp lệ. Nhập lại: ");
         }
       }
     }
 
-    System.out.println("Nhập ca trực (ca sang, ca trua, ca chieu, ca toi): ");
-    String verify[] = { "ca sang", "ca trua", "ca chieu", "ca toi" };
+    System.out.println("Nhập ca trực (morning, afternoon, night): ");
+    String verify[] = { "morning", "afternoon", "night" };
     while (true) {
       value = sc.nextLine();
-      if (value.isBlank() || value.length() > 5) {
+      if (value.isBlank() || value.length() > 10) {
         System.out.println("Ca trực không hợp lệ. Nhập lại: ");
       } else {
         boolean flag = false;

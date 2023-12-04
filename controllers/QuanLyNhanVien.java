@@ -79,13 +79,13 @@ public class QuanLyNhanVien implements ControllerInterface {
       System.out.print("Nhập ID nhân viên:");
       nvien.setWorkerId(input.nextLine());
       for (NhanVien employee : nv) {
-        if (employee != null) {
-          if (nvien.getWorkerId().equals(employee.getWorkerId())) {
-            System.out.println("\t\t\t\t\t\t\t\t -MÃ NHÂN VIÊN BỊ TRÙNG!");
-            checkIDexist = true;
-            break;
-          }
+        // if (employee != null) {
+        if (nvien.getWorkerId().equals(employee.getWorkerId())) {
+          System.out.println("\t\t\t\t\t\t\t\t -MÃ NHÂN VIÊN BỊ TRÙNG!");
+          checkIDexist = true;
+          break;
         }
+        // }
       }
     } while (checkIDexist);
 
