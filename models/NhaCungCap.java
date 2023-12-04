@@ -5,6 +5,7 @@ import controllers.Validation;
 
 public class NhaCungCap {
     Scanner input = new Scanner(System.in);
+    private Validation validate = new Validation();
     NhaCungCap[] DSNCC;
     private String MaNCC;
     private String TenNCC;
@@ -132,6 +133,6 @@ public class NhaCungCap {
         do {
             System.out.println("Nhập số fax nhà cung cấp (vd: 84_(8số))");
             setFax(input.nextLine());
-        } while (!Validation.isValidFax(getFax()));
+        } while (!validate.isValidFax(getFax()));
     }
 }
