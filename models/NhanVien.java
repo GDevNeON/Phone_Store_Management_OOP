@@ -2,6 +2,8 @@ package models;
 
 import java.util.Scanner;
 
+import controllers.Validation;
+
 public class NhanVien extends ConNguoi {
   private String workerId, role, shift;
 
@@ -57,13 +59,70 @@ public class NhanVien extends ConNguoi {
 
   @Override
   public void AddThongTin() {
-    Scanner input = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
+    String value;
     super.AddThongTin();
 
-    System.out.print("Nhập chức vụ của nhân viên:");
-    setRole(input.nextLine());
+    System.out.println("Nhập mã nhân viên (nv_): ");
+    sc.nextLine();
+    while (true) {
+      value = sc.nextLine();
+      if (value.isBlank() || !Validation.isValidIDmanager(value)) {
 
-    System.out.print("Nhập ca làm việc của nhân viên: ");
-    setShift(input.nextLine());
+        System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
+      } else {
+        setWorkerId(value);
+        break;
+      }
+    }
+
+    System.out.println("Nhập chức vụ: () ");
+    String verify1[] = { "", "", "", "" };
+    while (true) {
+      value = sc.nextLine();
+      if (value.isBlank() || value.length() > 20) {
+        System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
+      } else {
+        boolean flag = false;
+        for (String v : verify1) {
+          if (value.equals(v)) {
+            flag = true;
+            break;
+          }
+          flag = false;
+        }
+        if (flag) {
+          setRole(value);
+          break;
+        } else {
+          System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
+        }
+      }
+    }
+
+    System.out.println("Nhập ca trực (ca sang, ca trua, ca chieu, ca toi): ");
+    String verify[] = { "ca sang", "ca trua", "ca chieu", "ca toi" };
+    while (true) {
+      value = sc.nextLine();
+      if (value.isBlank() || value.length() > 5) {
+        System.out.println("Ca trực không hợp lệ. Nhập lại: ");
+      } else {
+        boolean flag = false;
+        for (String v : verify) {
+          if (value.equals(v)) {
+            flag = true;
+            break;
+          }
+          flag = false;
+        }
+        if (flag) {
+          setShift(value);
+          break;
+        } else {
+          System.out.println("Ca trực không hợp lệ. Nhập lại: ");
+        }
+      }
+    }
+    sc.close();
   }
 }
