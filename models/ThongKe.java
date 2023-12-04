@@ -13,7 +13,6 @@ public class ThongKe {
     private LocalDate date;
 
     public ThongKe() {
-        super();
         totalAmount = 0;
         date = null;
         productId = null;

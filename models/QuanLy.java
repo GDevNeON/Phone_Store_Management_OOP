@@ -6,6 +6,7 @@ import controllers.Validation;
 
 public class QuanLy extends ConNguoi {
   private Validation validate = new Validation();
+  Scanner sc = new Scanner(System.in);
   private String managerId;
   private String role;
   private String shift;
@@ -62,7 +63,6 @@ public class QuanLy extends ConNguoi {
 
   @Override
   public void AddThongTin() {
-    Scanner sc = new Scanner(System.in);
     String test;
     super.AddThongTin();
 

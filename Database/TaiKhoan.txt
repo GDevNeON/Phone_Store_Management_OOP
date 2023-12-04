@@ -2,12 +2,12 @@ QL1;manager1;123;manager
 QL2;manager2;123;manager
 QL3;manager3;123;manager
 QL4;manager4;123;manager
-QL5;manager5;123;manager
+QL5;ql;1;manager
 NV1;employee1;a;employee
 NV2;employee2;b;employee
 NV3;employee3;c;employee
 NV4;employee4;d;employee
-NV5;employee5;e;employee
+NV5;nv;1;employee
 ADMIN1;Admin1;ad;admin
 ADMIN2;Admin2;Ad;admin
-ADMIN3;Admin3;aD;admin
+ADMIN3;ad;1;admin

@@ -325,7 +325,6 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
 
     @Override
     public void Delete() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'Delete'");
     }
 }
