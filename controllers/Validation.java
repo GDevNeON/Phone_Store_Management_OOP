@@ -56,7 +56,7 @@ public class Validation {
   }
 
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
-  public static boolean isInteger(String input) {
+  public boolean isInteger(String input) {
     try {
       Integer.parseInt(input);
       return true;
