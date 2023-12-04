@@ -9,6 +9,7 @@ import models.ThongKe;
 
 public class ThongKeKinhDoanh implements ControllerInterface {
     Scanner input = new Scanner(System.in);
+    private Validation validate = new Validation();
     private static ThongKeKinhDoanh instance;
     private ThongKe[] TK;
 
@@ -88,14 +89,21 @@ public class ThongKeKinhDoanh implements ControllerInterface {
                 }
             }
             case "2" -> {
-                input.nextLine();
-                System.out.println("Nhập ngày bắt đầu (yyyy-MM-dd): ");
-                String startDateString = input.nextLine();
-                System.out.println("Nhập ngày kết thúc (yyyy-MM-dd): ");
-                String endDateString = input.nextLine();
+                String startDateString, endDateString;
+                LocalDate startDate = null, endDate = null;
 
-                LocalDate startDate = LocalDate.parse(startDateString);
-                LocalDate endDate = LocalDate.parse(endDateString);
+                do {
+                    System.out.println("Nhập ngày bắt đầu (yyyy-MM-dd): ");
+                    startDateString = input.nextLine();
+                } while (!validate.isValidDate(startDateString));
+
+                do {
+                    System.out.println("Nhập ngày kết thúc (yyyy-MM-dd): ");
+                    endDateString = input.nextLine();
+                } while (!validate.isValidDate(endDateString));
+
+                startDate = LocalDate.parse(startDateString);
+                endDate = LocalDate.parse(endDateString);
 
                 for (ThongKe thongKe : TK) {
                     LocalDate thongKeDate = thongKe.getDate();
@@ -105,6 +113,7 @@ public class ThongKeKinhDoanh implements ControllerInterface {
                     }
                 }
             }
+
             default -> {
                 System.out.println("Lựa chọn không hợp lệ!");
             }
@@ -113,15 +122,15 @@ public class ThongKeKinhDoanh implements ControllerInterface {
         System.out.println("Danh sách thống kê:");
         String header = String.format("| %-8s | %-10s | %-12s | %-15s | %-15s |", "ID", "Số lượng", "Giá",
                 "Ngày", "Tổng");
-        System.out.format("+----------+------------+--------------+---------------+-------------------+%n");
+        System.out.format("+----------+------------+--------------+-----------------+-----------------+%n");
         System.out.println(header);
-        System.out.format("+----------+------------+--------------+---------------+-------------------+%n");
+        System.out.format("+----------+------------+--------------+-----------------+-----------------+%n");
         for (ThongKe thongKe : result) {
             String read = String.format("| %-8s | %-10s | %-12s | %-15s | %-15s |", thongKe.getProductId(),
                     thongKe.getAmount(), thongKe.getPrice(), thongKe.getDate(), thongKe.getTotalAmount());
             System.out.println(read);
         }
-        System.out.format("+----------+------------+--------------+---------------+-------------------+%n");
+        System.out.format("+----------+------------+--------------+-----------------+-----------------+%n");
         waitConsole();
     }
 }
