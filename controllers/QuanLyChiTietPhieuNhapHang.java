@@ -514,7 +514,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
         }
         case "1" -> {
-          sc.nextLine();
           System.out.print("Nhập mã phiếu nhập hàng: ");
           String id = sc.nextLine();
           for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
@@ -524,7 +523,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           }
         }
         case "2" -> {
-          sc.nextLine();
           System.out.print("Nhập mã sản phẩm: ");
           String id = sc.nextLine();
           for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
@@ -534,7 +532,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           }
         }
         case "3" -> {
-          sc.nextLine();
           System.out.print("Nhập số lượng: ");
           Integer amount = sc.nextInt();
           for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
@@ -544,7 +541,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           }
         }
         case "4" -> {
-          sc.nextLine();
           System.out.print("Nhập giá tiền: ");
           Integer price = sc.nextInt();
           for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
