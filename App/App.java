@@ -7,7 +7,6 @@ import views.QuanLyNhanSuUI;
 import java.util.Scanner;
 
 import controllers.Login;
-import models.PhieuNhapHang;
 
 public class App {
   private static Scanner sc = new Scanner(System.in);
