@@ -6,6 +6,7 @@ import controllers.Validation;
 
 public class GiamGia {
     Scanner input = new Scanner(System.in);
+    private Validation validate = new Validation();
     GiamGia[] DSGG;
     private String discountId;
     private String kindOfCustomer;
@@ -81,36 +82,6 @@ public class GiamGia {
         this.endDate = endDate;
     }
 
-    public GiamGia discountId(String discountId) {
-        setDiscountId(discountId);
-        return this;
-    }
-
-    public GiamGia kindOfCustomer(String kindOfCustomer) {
-        setKindOfCustomer(kindOfCustomer);
-        return this;
-    }
-
-    public GiamGia productName(String productName) {
-        setProductName(productName);
-        return this;
-    }
-
-    public GiamGia discountRate(String discountRate) {
-        setDiscountRate(discountRate);
-        return this;
-    }
-
-    public GiamGia startDate(LocalDate startDate) {
-        setStartDate(startDate);
-        return this;
-    }
-
-    public GiamGia endDate(LocalDate endDate) {
-        setEndDate(endDate);
-        return this;
-    }
-
     public void nhapDiscountId(GiamGia[] DSGG) {
         while (true) {
             System.out.println("Nhập ID giảm giá (gg_): ");
@@ -183,7 +154,7 @@ public class GiamGia {
             if (StartDate.isEmpty()) {
                 System.out.println("Nhập sai định dạng.");
             } else {
-                if (Validation.isValidDate(StartDate)) {
+                if (validate.isValidDate(StartDate) && StartDate.length() == 10) {
                     setStartDate(LocalDate.parse(StartDate));
                     break;
                 } else {
@@ -201,7 +172,7 @@ public class GiamGia {
             if (endDate.isEmpty()) {
                 System.out.println("Nhập sai định dạng.");
             } else {
-                if (Validation.isValidDate(endDate)) {
+                if (validate.isValidDate(endDate) && endDate.length() == 10) {
                     setEndDate(LocalDate.parse(endDate));
                     break;
                 } else {
