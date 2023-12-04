@@ -47,11 +47,8 @@ public class Validation {
 
   // Hàm validation cho số fax
   public static boolean isValidFax(String Fax) {
-        String regex = "^84\\d{8}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(Fax);
-        return matcher.matches();
-    }
+        return Fax.matches("^84\\d{8}$");
+  }
 
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
   public static boolean isInteger(String input) {
