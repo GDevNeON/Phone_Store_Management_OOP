@@ -66,7 +66,7 @@ public class Validation {
   }
 
   //Hàm kiểm tra ngày (NHỚ THÊM ĐIỀU KIỆN ĐỘ DÀI CHUỖI NGÀY NHẬP = 10)
-  public static boolean isValidDate(String inputDate) {
+  public boolean isValidDate(String inputDate) {
         String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         sdf.setLenient(false);
@@ -122,21 +122,21 @@ public class Validation {
       return id.startsWith("sp") && id.length() <= MAX_ID_LENGTH;
   }
   //Hàm validation cho id_khachhang
-  public static boolean isValidIDcustomer(String id){
+  public boolean isValidIDcustomer(String id){
     return id.startsWith("kh") && id.length() <= MAX_ID_LENGTH;
   }
   //Hàm validation cho id_sanpham
-  public static boolean isValidIDmanager(String id){
+  public boolean isValidIDmanager(String id){
     return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH; 
   }
 
   //Hàm validation cho id_thanhtoan
-  public static boolean isValidIDpayment(String id){
+  public boolean isValidIDpayment(String id){
     return id.startsWith("tt") && id.length() <= MAX_ID_LENGTH; 
   }
 
   //Hàm validation cho id_hoadon
-  public static boolean isValidIDreceipt(String id){
+  public boolean isValidIDreceipt(String id){
     return id.startsWith("hd") && id.length() <= MAX_ID_LENGTH; 
   }
 }
