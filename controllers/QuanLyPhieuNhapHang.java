@@ -116,7 +116,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
       System.out.print("Nhập ID nhân viên: ");
       String ID_nhanVien = sc.nextLine();
       while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)){
-        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID phiếu nhập: ");
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID nhân viên: ");
         ID_phieuNhap = sc.nextLine(); 
       }
       phieuNhapHang.setWorkerId(ID_phieuNhap);
@@ -615,9 +615,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
           System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
         }
         case "1" -> {
-          sc.nextLine();
           System.out.print("Nhập tiền nhập hàng: ");
-          Integer price = sc.nextInt();
+          String price = sc.nextLine();
+          while (price.isEmpty() || kiemTra.isInteger(price) == false ) {
+            System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+            price = sc.nextLine();
+          }
           for (PhieuNhapHang pnh : dsp) {
             if (price.equals(pnh.getPrice())) {
               result = addPhieuNhapHang(result, pnh);
@@ -625,7 +628,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
           }
         }
         case "2" -> {
-          sc.nextLine();
           System.out.print("Nhập mã nhân viên nhập hàng: ");
           String id = sc.nextLine();
           for (PhieuNhapHang PhieuNhapHang : dsp) {
@@ -635,7 +637,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
           }
         }
         case "3" -> {
-          sc.nextLine();
           System.out.print("Nhập tên nhà cung cấp: ");
           String name = sc.nextLine();
           for (PhieuNhapHang PhieuNhapHang : dsp) {
@@ -654,7 +655,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
           }
         }
         case "5" -> {
-          sc.nextLine();
           System.out.print("Nhập ngày bắt đầu: ");
           String day1 = sc.nextLine();
           System.out.print("Ngày kết thúc: ");
@@ -666,7 +666,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
             for (PhieuNhapHang pnh : dsp) {
               LocalDate day = LocalDate.parse(sdf.format(pnh.getInputDate()), sdf);
 
-              if (day.isEqual(start) || day.isAfter(start) && day.isBefore(end)) {
+              if (day.isEqual(start) || day.isEqual(end) || day.isAfter(start) && day.isBefore(end)) {
                 result = addPhieuNhapHang(result, pnh);
               }
             }
@@ -678,7 +678,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
 
     System.out.println("Danh sách phiếu nhập tìm được:");
     String header = String.format("| %-5s | %-20s | %-25s | %-15s | %-20s |", "ID", "Nhân viên lập đơn",
-        "Tên nhà cung cấp", "Giá nhập", "Ngày nhập");
+        "Tên nhà cung cấp", "Ngày nhập", "Giá nhập");
     System.out.format(
         "+-------+----------------------+---------------------------+-----------------+----------------------+%n");
     System.out.println(header);
@@ -686,7 +686,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
         "+-------+----------------------+---------------------------+-----------------+----------------------+%n");
     for (PhieuNhapHang pnh : result) {
       String read = String.format("| %-5s | %-20s | %-25s | %-15s | %-20s |", pnh.getReceiptId(),
-          pnh.getWorkerId(), pnh.getSupplierName(), pnh.getPrice(), pnh.getInputDate());
+          pnh.getWorkerId(), pnh.getSupplierName(), pnh.getInputDate(), pnh.getPrice());
       System.out.println(read);
     }
     System.out.format(
