@@ -58,29 +58,4 @@ public class PhieuNhapHang {
   public void setInputDate(LocalDate inputDate) {
     this.inputDate = inputDate;
   }
-
-  public PhieuNhapHang price(String price) {
-    setPrice(price);
-    return this;
-  }
-
-  public PhieuNhapHang workerId(String workerId) {
-    setWorkerId(workerId);
-    return this;
-  }
-
-  public PhieuNhapHang supplierName(String supplierName) {
-    setSupplierName(supplierName);
-    return this;
-  }
-
-  public PhieuNhapHang receiptId(String receiptId) {
-    setReceiptId(receiptId);
-    return this;
-  }
-
-  public PhieuNhapHang inputDate(LocalDate inputDate) {
-    setInputDate(inputDate);
-    return this;
-  }
 }

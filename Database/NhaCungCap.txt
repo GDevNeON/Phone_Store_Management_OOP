@@ -1,8 +1,6 @@
-ncc1;Công ty cung cấp Nokia;19 Đường Phèn, Tân bình;0917294392;8420938493
-ncc2;Nhà phân phối Vsmart;32/12 Đường Cát, Thủ Đức;0817228736;8419857483
-ncc3;Ông Hoàng Iphone;1/3/4 Đường Đen, TP.HCM;0019283948;8427830284
-ncc4;Chúa tể Galaxy;876/12 Xa lộ Hà Nội, Cầu giấy, Hà Nội;0817228736;8454382643
-ncc5;Đệ nhất Oppo;19 Đường Tăng, Q. Phú Nhuận;0817228736;8492717462
-ncc6;Updated Provider;123 Updated st.;0123456789;8412345678
-ncc123;ahkjgakjwaw;gkawjgawjgbaw;0123456789;8412345678
-ncc1234;012345678901234567890123456789;sjsjsjrs;0123456789;8401234567
+ncc1;Cong ty cung cap Nokia;19 Duong Phen, Tan binh;0917294392;20938493
+ncc2;Nha phan phoi Vsmart;32/12 Duong Cat, Thu Duc;0817228736;19857483
+ncc3;Ong Hoang Iphone;1/3/4 Duong Den, TP.HCM;0019283948;27830284
+ncc4;Chua te Galaxy;876/12 Xa lo Ha Noi, Cau giay, Ha Noi;0817228736;54382643
+ncc5;De nhat Oppo;19 Duong Tang, Q. Phu Nhuan;0817228736;92717462
+ncc6;Updated Provider;123 Updated st.;0123456789;12345678
