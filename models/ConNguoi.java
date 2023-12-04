@@ -115,6 +115,7 @@ public class ConNguoi {
                 System.out.print("Nhập tuổi: ");
                 setAge(sc.nextInt());
             } while (!Validation.isValidAge(age));
+            sc.nextLine();
             do {
                 System.out.print("Nhập giới tính: ");
                 setGender(sc.nextLine());
@@ -134,6 +135,5 @@ public class ConNguoi {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        sc.close();
     }
 }
