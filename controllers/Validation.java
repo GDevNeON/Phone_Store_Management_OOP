@@ -10,11 +10,10 @@ import java.util.regex.Pattern;
 public class Validation {
 
   // Các hằng số để quy định độ dài tối đa của các trường thông tin
-  private static final int MAX_NAME_LENGTH = 50;
+  private static final int MAX_NAME_LENGTH = 30;
   private static final int MAX_ADDRESS_LENGTH = 100;
   private static final int MAX_EMAIL_LENGTH = 100;
-  private static final int MAX_PHONE_NUMBER_LENGTH = 10;
-  private static final int MAX_ID_LENGTH = 10;
+  private static final int MAX_ID_LENGTH = 8;
 
   // Hàm validation cho tên
   public static boolean isValidName(String name) {
@@ -44,7 +43,7 @@ public class Validation {
 
   // Hàm validation cho số điện thoại
   public static boolean isValidPhoneNumber(String SDT) {
-    return SDT.matches("^0\\d{9}$") && SDT.length() <= MAX_PHONE_NUMBER_LENGTH;
+    return SDT.matches("^0\\d{9}$");
   }
 
   // Hàm validation cho số fax
@@ -65,19 +64,11 @@ public class Validation {
     }
   }
 
-<<<<<<< HEAD
   // Hàm kiểm tra ngày (NHỚ THÊM ĐIỀU KIỆN ĐỘ DÀI CHUỖI NGÀY NHẬP = 10)
-  public static boolean isValidDate(String inputDate) {
+  public boolean isValidDate(String inputDate) {
     String dateFormat = "yyyy-MM-dd";
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
     sdf.setLenient(false);
-=======
-  //Hàm kiểm tra ngày (NHỚ THÊM ĐIỀU KIỆN ĐỘ DÀI CHUỖI NGÀY NHẬP = 10)
-  public boolean isValidDate(String inputDate) {
-        String dateFormat = "yyyy-MM-dd";
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-        sdf.setLenient(false);
->>>>>>> fa8ab1b0c2896094c00c8cf2a20288d6481eb81b
 
     try {
       Date date = sdf.parse(inputDate);
@@ -132,49 +123,9 @@ public class Validation {
   public boolean isValidIDCTP(String id) {
     return id.startsWith("ctpn") && id.length() <= MAX_ID_LENGTH;
   }
-<<<<<<< HEAD
 
   // Hàm validation cho id_sanpham
-  public static boolean isValidIDproduct(String id) {
+  public boolean isValidIDproduct(String id) {
     return id.startsWith("sp") && id.length() <= MAX_ID_LENGTH;
-  }
-
-  // Hàm validation cho id_khachhang
-  public static boolean isValidIDcustomer(String id) {
-    return id.startsWith("kh") && id.length() <= MAX_ID_LENGTH;
-  }
-
-  // Hàm validation cho id_sanpham
-  public static boolean isValidIDmanager(String id) {
-    return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH;
-  }
-
-  // Hàm validation cho id_thanhtoan
-  public static boolean isValidIDpayment(String id) {
-    return id.startsWith("tt") && id.length() <= MAX_ID_LENGTH;
-  }
-
-  // Hàm validation cho id_hoadon
-  public static boolean isValidIDreceipt(String id) {
-    return id.startsWith("hd") && id.length() <= MAX_ID_LENGTH;
-=======
-  //Hàm validation cho id_khachhang
-  public boolean isValidIDcustomer(String id){
-    return id.startsWith("kh") && id.length() <= MAX_ID_LENGTH;
-  }
-  //Hàm validation cho id_sanpham
-  public boolean isValidIDmanager(String id){
-    return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH; 
-  }
-
-  //Hàm validation cho id_thanhtoan
-  public boolean isValidIDpayment(String id){
-    return id.startsWith("tt") && id.length() <= MAX_ID_LENGTH; 
-  }
-
-  //Hàm validation cho id_hoadon
-  public boolean isValidIDreceipt(String id){
-    return id.startsWith("hd") && id.length() <= MAX_ID_LENGTH; 
->>>>>>> fa8ab1b0c2896094c00c8cf2a20288d6481eb81b
   }
 }
