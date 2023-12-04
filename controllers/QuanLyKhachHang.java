@@ -126,9 +126,9 @@ public class QuanLyKhachHang implements ControllerInterface {
     System.out.println(header);
     System.out.format(
         "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
-    String row = String.format("| %-5s | %-25s | %-4s | %-9s | %-30s | %-25s | %-15s | %-20s |",
-        k_hang.getCustomerId(), k_hang.getName(), k_hang.getAge(), k_hang.getGender(),
-        k_hang.getAddress(), k_hang.getEmail(), k_hang.getSdt(), k_hang.getKindOfCustomer());
+    String row = String.format("| %-25s | %-9s | %-30s | %-25s | %-15s | %-4s | %-5s | %-20s |",
+        k_hang.getName(), k_hang.getGender(), k_hang.getAddress(), k_hang.getEmail(), k_hang.getSdt(), k_hang.getAge(),
+        k_hang.getCustomerId(), k_hang.getKindOfCustomer());
     System.out.println(row);
     System.out.format(
         "+---------------------------+-----------+--------------------------------+---------------------------+-----------------+------+-------+----------------------+%n");
@@ -146,11 +146,11 @@ public class QuanLyKhachHang implements ControllerInterface {
         cs[i].setEmail(k_hang.getEmail());
         cs[i].setAge(k_hang.getAge());
         cs[i].setSdt(k_hang.getSdt());
+        cs[i].setCustomerId(k_hang.getCustomerId());
         cs[i].setKindOfCustomer(k_hang.getKindOfCustomer());
       }
-      data[i] = cs[i].getCustomerId() + ";" + cs[i].getName() + ";" + cs[i].getAge() + ";" + cs[i].getGender()
-          + ";" + cs[i].getAddress() + ";" + cs[i].getEmail() + ";" + cs[i].getSdt() + ";"
-          + cs[i].getKindOfCustomer();
+      data[i] = cs[i].getName() + ";" + cs[i].getGender() + ";" + cs[i].getAddress() + ";" + cs[i].getEmail() + ";"
+          + cs[i].getSdt() + ";" + cs[i].getAge() + ";" + cs[i].getCustomerId() + ";" + cs[i].getKindOfCustomer();
     }
     try {
       Stream.addAll("Database/KhachHang.txt", data); // link database here
@@ -187,9 +187,8 @@ public class QuanLyKhachHang implements ControllerInterface {
     }
     String[] data = new String[cs.length];
     for (int i = 0; i < cs.length; i++) {
-      data[i] = cs[i].getCustomerId() + ";" + cs[i].getName() + ";" + cs[i].getAge() + ";" + cs[i].getGender()
-          + ";" + cs[i].getAddress() + ";" + cs[i].getEmail() + ";" + cs[i].getSdt() + ";"
-          + cs[i].getKindOfCustomer();
+      data[i] = cs[i].getName() + ";" + cs[i].getGender() + ";" + cs[i].getAddress() + ";" + cs[i].getEmail() + ";"
+          + cs[i].getSdt() + ";" + cs[i].getAge() + ";" + cs[i].getCustomerId() + ";" + cs[i].getKindOfCustomer();
     }
     try {
       Stream.addAll("Database/KhachHang.txt", data); // link database here
@@ -225,10 +224,10 @@ public class QuanLyKhachHang implements ControllerInterface {
     System.out.println("3.Địa chỉ khách hàng");
     System.out.println("4.Số điện thoại khách hàng");
     System.out.print("Nhập lựa chọn: ");
-    int choose = input.nextInt();
+    String choose = input.nextLine();
 
     switch (choose) {
-      case 1 -> {
+      case "1" -> {
         System.out.print("Nhập ID khách hàng: ");
         String Customer_ID = input.nextLine();
         for (int i = 0; i < cs.length; i++) {
@@ -237,7 +236,7 @@ public class QuanLyKhachHang implements ControllerInterface {
           }
         }
       }
-      case 2 -> {
+      case "2" -> {
         input.nextLine();
         System.out.print("Nhập tên khách hàng: ");
         String nameCustomer = input.nextLine();
@@ -247,7 +246,7 @@ public class QuanLyKhachHang implements ControllerInterface {
           }
         }
       }
-      case 3 -> {
+      case "3" -> {
         input.nextLine();
         System.out.print("Nhập địa chỉ của khách hàng: ");
         String address = input.nextLine();
@@ -257,7 +256,7 @@ public class QuanLyKhachHang implements ControllerInterface {
           }
         }
       }
-      case 4 -> {
+      case "4" -> {
         input.nextLine();
         System.out.print("Nhập số điện thoại của khách hàng: ");
         String phoneNumber = input.nextLine();

@@ -31,7 +31,7 @@ public class QuanLyBanHangUI {
   }
 
   public static void quanLyKhachHangUI() {
-    int subCheck = 0;
+    String subCheck = null;
     do {
       System.out.println("Danh Sách chức năng:");
       System.out.println("1.Xem danh sách khách hàng");
@@ -41,21 +41,21 @@ public class QuanLyBanHangUI {
       System.out.println("5.Tìm kiếm");
       System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
-      subCheck = input.nextInt();
+      subCheck = input.nextLine();
       switch (subCheck) {
-        case 1 -> QuanLyKhachHang.getInstance().Read();
-        case 2 -> QuanLyKhachHang.getInstance().Create();
-        case 3 -> QuanLyKhachHang.getInstance().Update();
-        case 4 -> QuanLyKhachHang.getInstance().Delete();
-        case 5 -> QuanLyKhachHang.getInstance().searchByCategory();
-        case 0 -> System.out.println("\nThoát quản lý khách hàng\n");
+        case "1" -> QuanLyKhachHang.getInstance().Read();
+        case "2" -> QuanLyKhachHang.getInstance().Create();
+        case "3" -> QuanLyKhachHang.getInstance().Update();
+        case "4" -> QuanLyKhachHang.getInstance().Delete();
+        case "5" -> QuanLyKhachHang.getInstance().searchByCategory();
+        case "0" -> System.out.println("\nThoát quản lý khách hàng\n");
         default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
       }
-    } while (subCheck != 0);
+    } while (subCheck != null);
   }
 
   public static void quanLyHoaDon() {
-    int subCheck = 0;
+    String subCheck = null;
     do {
       System.out.println("Danh Sách chức năng:");
       System.out.println("1.Xem danh sách hóa đơn");
@@ -127,40 +127,40 @@ public class QuanLyBanHangUI {
   }
 
   public static void quanlyGiamGia() {
-        int subCheck = 0;
-        do {
-            System.out.println("Danh Sách chức năng:");
-            System.out.println("1.Xem danh sách sản phẩm được giảm giá");
-            System.out.println("2.Thêm sản phẩm bạn muốn giảm giá");
-            System.out.println("3.Sửa sản phẩm được giảm giá");
-            System.out.println("4.Xóa sản phẩm");
-            System.out.println("5.Tìm kiếm");
-            System.out.println("0.Thoát");
-            System.out.println("Mời nhập: ");
-            subCheck = input.nextInt();
-            switch (subCheck) {
-                case 1 -> {
-                    QuanLyGiamGia.getInstance().Read();
-                }
-                case 2 -> {
-                    QuanLyGiamGia.getInstance().Create();
-                }
-                case 3 -> {
-                    QuanLyGiamGia.getInstance().Update();
-                }
-                case 4 -> {
-                    QuanLyGiamGia.getInstance().Delete();
-                }
-                case 5 -> {
-                    QuanLyGiamGia.getInstance().searchByCategory();
-                }
-                case 0 -> {
-                    System.out.println("\nThoát quản lý giảm giá\n");
-                }
-                default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
-            }
-        } while (subCheck != 0);
-    }
+    int subCheck = 0;
+    do {
+      System.out.println("Danh Sách chức năng:");
+      System.out.println("1.Xem danh sách sản phẩm được giảm giá");
+      System.out.println("2.Thêm sản phẩm bạn muốn giảm giá");
+      System.out.println("3.Sửa sản phẩm được giảm giá");
+      System.out.println("4.Xóa sản phẩm");
+      System.out.println("5.Tìm kiếm");
+      System.out.println("0.Thoát");
+      System.out.println("Mời nhập: ");
+      subCheck = input.nextInt();
+      switch (subCheck) {
+        case 1 -> {
+          QuanLyGiamGia.getInstance().Read();
+        }
+        case 2 -> {
+          QuanLyGiamGia.getInstance().Create();
+        }
+        case 3 -> {
+          QuanLyGiamGia.getInstance().Update();
+        }
+        case 4 -> {
+          QuanLyGiamGia.getInstance().Delete();
+        }
+        case 5 -> {
+          QuanLyGiamGia.getInstance().searchByCategory();
+        }
+        case 0 -> {
+          System.out.println("\nThoát quản lý giảm giá\n");
+        }
+        default -> System.out.println("\nBạn nhập sai chức năng, vui lòng nhập lại \n");
+      }
+    } while (subCheck != 0);
+  }
 
   public static void quanlyThanhToan() {
     int subCheck = 0;
