@@ -1,4 +1,4 @@
-nv1;Nguyễn Văn Anh;21;nam;13/20 Phạm ngọc Thạch;NVA@gmail.com;093890944;nhân viên bán hàng;ca tối
-nv2;Đường Tank;22;nam;123/12 Làng Chài;duongtank@gmail.com;092847382;nhân viên bán hàng;ca sáng
-nv3;Ngộ Ghê;22;nam;Indonesia;ngokhi@gmail.com;092847382;nhân viên chăm sóc khách hàng;ca sáng
-nv4;Sa Ngộ Tịnh;22;Chùa Láng;625 Chảo lửa;ngotinh@gmail.com;092847382;nhân viên chăm sóc khách hàng;ca sáng
+nv001;John Doe;30;Nam;123 Main St;johndoe@example.com;1234567890;Nhân viên bán hàng;Ca sáng
+nv002;Jane Smith;25;Nu;456 Elm St;janesmith@example.com;0987654321;Nhân viên bán hàng;Ca chiều
+nv003;Robert Johnson;33;Nam;789 Pine St;robertjohnson@example.com;1234567891;Nhân viên bán hàng;Ca tối
+nv004;Mary Davis;28;Nu;321 Oak St;marydavis@example.com;0987654322;Nhân viên bán hàng;Ca sáng

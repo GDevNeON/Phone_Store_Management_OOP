@@ -41,7 +41,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     dsp = new PhieuNhapHang[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      dsp[i] = new PhieuNhapHang(row[0], row[1], row[2], LocalDate.parse(row[3]), Integer.parseInt(row[4]));
+      dsp[i] = new PhieuNhapHang(row[0], row[1], row[2], LocalDate.parse(row[3]), row[4]);
     }
     return dsp;
   }
@@ -78,8 +78,8 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     System.out.println("1.Có ");
     System.out.println("2.Không ");
     System.out.print("Mời nhập: ");
-    String choose1 = sc.nextLine();
-    if (choose1 == "1") {
+    int choose1 = sc.nextInt();
+    if (choose1 == 1) {
       chiTiet.searchByCategory();
     }
     waitConsole();
@@ -114,7 +114,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     boolean foundEmp = false;
     do {
       System.out.print("Nhập ID nhân viên: ");
-      phieuNhapHang.setWorkerId(sc.nextLine());
+      String ID_nhanVien = sc.nextLine();
+      while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)){
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID phiếu nhập: ");
+        ID_phieuNhap = sc.nextLine(); 
+      }
+      phieuNhapHang.setWorkerId(ID_phieuNhap);
       for (NhanVien nv : nvList) {
         if (nv.getWorkerId().equals(phieuNhapHang.getWorkerId())) {
           foundEmp = true;
@@ -161,7 +166,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     phieuNhapHang.setInputDate(LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("d/MM/uuuu")));
 
     System.out.print("Nhập tổng tiền: ");
-    phieuNhapHang.setPrice(sc.nextInt());
+    String price = sc.nextLine();
+    while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+  			System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+			  price = sc.nextLine();
+    }
+    phieuNhapHang.setPrice(price);
 
     try {
       String pnhString = phieuNhapHang.getReceiptId() + ";" + phieuNhapHang.getWorkerId() + ";"
@@ -375,7 +385,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
             for (int i = 0; i < dsp.length; i++) {
               if (dsp[i].getReceiptId().equals(ID_PhieuNhapHang)) {
                 System.out.print("Nhập tổng tiền: ");
-                pnh.setPrice(sc.nextInt());
+                String price = sc.nextLine();
+                while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                    price = sc.nextLine();
+                }      
+                pnh.setPrice(price);
               }
               data[i] = dsp[i].getReceiptId() + ";" + dsp[i].getWorkerId() + ";"
                   + dsp[i].getSupplierName() + ";" + dsp[i].getInputDate() + ";" + dsp[i].getPrice();
@@ -408,7 +423,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                 boolean foundEmp = false;
                 do {
                   System.out.print("Nhập ID nhân viên: ");
-                  pnh.setWorkerId(sc.nextLine());
+                  String ID_nhanVien = sc.nextLine();
+                  while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID nhân viên: ");
+                    ID_nhanVien = sc.nextLine();
+                  }
+                  pnh.setWorkerId(ID_nhanVien);
                   for (NhanVien nv : nvList) {
                     if (nv.getWorkerId().equals(pnh.getWorkerId())) {
                       foundEmp = true;
@@ -453,7 +473,12 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                   }
                 } while (foundNcc == false);
                 System.out.print("Nhập tổng tiền: ");
-                pnh.setPrice(sc.nextInt());
+                String price = sc.nextLine();
+                  while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+                      System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                      price = sc.nextLine();
+                  }
+                pnh.setPrice(price);
 
                 dsp[i].setReceiptId(pnh.getReceiptId());
                 dsp[i].setWorkerId(pnh.getWorkerId());

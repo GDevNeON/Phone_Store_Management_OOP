@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class PhieuNhapHang {
-  private int price;
+  private String price;
   private String workerId, supplierName;
   private String receiptId;
   private LocalDate inputDate;
@@ -11,7 +11,7 @@ public class PhieuNhapHang {
   public PhieuNhapHang() {
   }
 
-  public PhieuNhapHang(String receiptId, String workerId, String supplierName, LocalDate inputDate,int price) {
+  public PhieuNhapHang(String receiptId, String workerId, String supplierName, LocalDate inputDate,String price) {
     this.price = price;
     this.workerId = workerId;
     this.supplierName = supplierName;
@@ -19,11 +19,11 @@ public class PhieuNhapHang {
     this.inputDate = inputDate;
   }
 
-  public int getPrice() {
+  public String getPrice() {
     return this.price;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(String price) {
     this.price = price;
   }
 
@@ -59,7 +59,7 @@ public class PhieuNhapHang {
     this.inputDate = inputDate;
   }
 
-  public PhieuNhapHang price(int price) {
+  public PhieuNhapHang price(String price) {
     setPrice(price);
     return this;
   }
