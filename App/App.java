@@ -7,12 +7,13 @@ import views.QuanLyNhanSuUI;
 import java.util.Scanner;
 
 import controllers.Login;
+import models.PhieuNhapHang;
 
 public class App {
   private static Scanner sc = new Scanner(System.in);
 
   public static void main(String[] args) {
-
+    
     while (true) {
       System.out.println("Chào mừng đến với hệ thống quản lý cửa hàng điện thoại: ");
       System.out.println("Tên đăng nhập: ");
