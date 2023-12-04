@@ -318,13 +318,13 @@ public class QuanLyNhaCungCap implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t |5. Fax                                   |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int choose = input.nextInt();
+            String choose = input.nextLine();
 
             switch (choose) {
-                case 0 -> {
+                case "0" -> {
                     return;
                 }
-                case 1 -> {
+                case "1" -> {
                     input.nextLine();
                     System.out.println("Nhập ID nhà cung cấp: ");
                     String maNCC = input.nextLine();
@@ -334,7 +334,7 @@ public class QuanLyNhaCungCap implements ControllerInterface {
                         }
                     }
                 }
-                case 2 -> {
+                case "2" -> {
                     System.out.println("Nhập tên nhà cung cấp: ");
                     input.nextLine();
                     String tenNCC = input.nextLine();
@@ -344,7 +344,7 @@ public class QuanLyNhaCungCap implements ControllerInterface {
                         }
                     }
                 }
-                case 3 -> {
+                case "3" -> {
                     input.nextLine();
                     System.out.println("Nhập đia chỉ: ");
                     String diaChi = input.nextLine();
@@ -354,7 +354,7 @@ public class QuanLyNhaCungCap implements ControllerInterface {
                         }
                     }
                 }
-                case 4 -> {
+                case "4" -> {
                     input.nextLine();
                     System.out.println("Nhập số điện thoại: ");
                     String SDT = input.nextLine();
@@ -364,7 +364,7 @@ public class QuanLyNhaCungCap implements ControllerInterface {
                         }
                     }
                 }
-                case 5 -> {
+                case "5" -> {
                     input.nextLine();
                     System.out.println("Nhập fax: ");
                     String Fax = input.nextLine();
