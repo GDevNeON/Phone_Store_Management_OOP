@@ -10,7 +10,7 @@ public class NhanVien extends ConNguoi {
   public NhanVien() {
   }
 
-  public NhanVien(String workerId, String name, int age, String gender, String address, String email, String sdt,  
+  public NhanVien(String workerId, String name, int age, String gender, String address, String email, String sdt,
       String role, String shift) {
     super(name, gender, address, email, sdt, age);
     this.workerId = workerId;
@@ -67,7 +67,7 @@ public class NhanVien extends ConNguoi {
     String verify1[] = { "Sales", "Marketing", "Advertising", "Customer Service" };
     while (true) {
       value = sc.nextLine();
-      if (value.isBlank() || value.length() > 30) {
+      if (value.isBlank() || value.length() > 15) {
         System.out.println("Vai trò không hợp lệ. Nhập lại: ");
       } else {
         boolean flag = false;

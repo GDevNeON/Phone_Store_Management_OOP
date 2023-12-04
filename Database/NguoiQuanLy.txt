@@ -1,5 +1,4 @@
-ql1;Nguyen Chim Se;21;nam;13/20 Vo Van Tan;NCS@gmail.com;093890944;quan li nhan vien;ca toi
-ql2;Hai Au;20;nam;12/10 Bau Troi Cua Doi Ta;haiau@gmail.com;092847382;quan li quan li;ca sang
-ql8;thanh danh;100;nu;aaaaaaaaaaaa;l@gmail.com;000000000000;quan li quan li;ca trua
-ql3;long;200;nam;a@gmail.com;a@gmail.com;00200000000;quan li;ca toi
-ql10;tru;20;Nam;421/532;cat@gmail.com;0123456789;quan ly thong tin;sang
+ql1;Nguyen Chim Se;21;nam;13/20 Vo Van Tan;NCS@gmail.com;093890944;low-tier;ca toi
+ql2;Hai Au;20;nam;12/10 Bau Troi Cua Doi Ta;haiau@gmail.com;092847382;mid-tier;ca sang
+ql3;thanh danh;100;nu;aaaaaaaaaaaa;l@gmail.com;000000000000;high-tier;ca trua
+ql4;long;200;nam;a@gmail.com;a@gmail.com;00200000000;high-tier;ca toi

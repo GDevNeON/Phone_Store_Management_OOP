@@ -13,6 +13,7 @@ public class Validation {
   private static final int MAX_NAME_LENGTH = 30;
   private static final int MAX_ADDRESS_LENGTH = 100;
   private static final int MAX_EMAIL_LENGTH = 100;
+  private static final int MAX_PHONE_NUMBER_LENGTH = 10;
   private static final int MAX_ID_LENGTH = 8;
 
   // Hàm validation cho tên
@@ -22,7 +23,7 @@ public class Validation {
 
   // Hàm validation cho tuổi
   public static boolean isValidAge(int age) {
-    return age >= 0;
+    return age >= 0 && age <= 150;
   }
 
   // Hàm validation cho giới tính
@@ -43,7 +44,7 @@ public class Validation {
 
   // Hàm validation cho số điện thoại
   public static boolean isValidPhoneNumber(String SDT) {
-    return SDT.matches("^0\\d{9}$");
+    return SDT.matches("^0\\d{9}$") && SDT.length() <= MAX_PHONE_NUMBER_LENGTH;
   }
 
   // Hàm validation cho số fax
@@ -127,5 +128,29 @@ public class Validation {
   // Hàm validation cho id_sanpham
   public boolean isValidIDproduct(String id) {
     return id.startsWith("sp") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  // Hàm validation cho id_thanhtoan
+  public boolean isValidIDpayment(String id) {
+    return id.startsWith("tt") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  // Hàm validation cho id_hoadon
+  public boolean isValidIDreceipt(String id) {
+    return id.startsWith("hd") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  // Hàm validation cho id_khachhang
+  public boolean isValidIDcustomer(String id) {
+    return id.startsWith("kh") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  // Hàm validation cho id_sanpham
+  public boolean isValidIDmanager(String id) {
+    return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  public boolean isValidKindOfCustomer(String kindOfCustomer) {
+    return kindOfCustomer.equalsIgnoreCase("walk-in") || kindOfCustomer.equalsIgnoreCase("regular");
   }
 }

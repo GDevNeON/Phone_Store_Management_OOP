@@ -11,4 +11,3 @@ NV5;employee5;e;employee
 ADMIN1;Admin1;ad;admin
 ADMIN2;Admin2;Ad;admin
 ADMIN3;Admin3;aD;admin
-QL7;manager7;123;manager

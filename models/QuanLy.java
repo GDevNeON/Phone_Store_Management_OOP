@@ -14,7 +14,8 @@ public class QuanLy extends ConNguoi {
   public QuanLy() {
   }
 
-  public QuanLy(String name, String gender, String address, String email, String sdt, int age, String managerId, String role, String shift, int slnv) {
+  public QuanLy(String name, String gender, String address, String email, String sdt, int age, String managerId,
+      String role, String shift, int slnv) {
     super(name, gender, address, email, sdt, age);
     this.managerId = managerId;
     this.role = role;
@@ -84,20 +85,22 @@ public class QuanLy extends ConNguoi {
     sc.nextLine();
     while (true) {
       test = sc.nextLine();
-      if (test.isBlank() || !validate.isValidIDmanager(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-          System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
+      if (test.isBlank() || !validate.isValidIDmanager(test)) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng,
+                                                                // NHẬP LẠI ĐEEEEEEEE!!!!
+        System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
       } else {
         setManagerId(test);
         break;
       }
     }
 
-    System.out.println("Nhập chức vụ: () ");    //thêm danh sách chức vụ tránh thầy nhập bừa
-    String verify1[] = {"", "", "", ""};   
+    System.out.println("Nhập chức vụ: (low/mid/high-tier) "); // thêm danh sách chức vụ tránh thầy nhập bừa
+    String verify1[] = { "low-tier", "mid-tier", "high-tier" };
     while (true) {
       test = sc.nextLine();
-      if (test.isBlank() || test.length() > 20) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-          System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
+      if (test.isBlank() || test.length() > 20) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
+                                                  // ĐEEEEEEEE!!!!
+        System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
       } else {
         boolean flag = false;
         for (String v : verify1) {
@@ -110,19 +113,19 @@ public class QuanLy extends ConNguoi {
         if (flag) {
           setRole(test);
           break;
-        }
-        else {
+        } else {
           System.out.println("Chức vụ không hợp lệ. Nhập lại: ");
         }
       }
     }
-    
+
     System.out.println("Nhập ca trực (ca sang, ca trua, ca chieu, ca toi): ");
-    String verify[] = {"ca sang", "ca trua", "ca chieu", "ca toi"};
+    String verify[] = { "ca sang", "ca trua", "ca chieu", "ca toi" };
     while (true) {
       test = sc.nextLine();
-      if (test.isBlank() || test.length() > 5) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-          System.out.println("Ca trực không hợp lệ. Nhập lại: ");
+      if (test.isBlank() || test.length() > 10) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
+                                                  // ĐEEEEEEEE!!!!
+        System.out.println("Ca trực không hợp lệ. Nhập lại: ");
       } else {
         boolean flag = false;
         for (String v : verify) {
@@ -135,8 +138,7 @@ public class QuanLy extends ConNguoi {
         if (flag) {
           setShift(test);
           break;
-        }
-        else {
+        } else {
           System.out.println("Ca trực không hợp lệ. Nhập lại: ");
         }
       }

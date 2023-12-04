@@ -6,3 +6,4 @@ doggu;Nam;48/123;doggu@gmail.com;0123123123;12;kh10;regular custome
 Truong Gia Thanh;Nam;123/456;trggiathanh@gmail.com;0123123123;20;kh6;walk-in customer
 truong gia minh;Nam;123/456 Nguyen Trai;trggiathanh@gmail.com;0123123123;20;kh7;walk-in customer
 dog;Nam;123/123;dog@gmail.com;0123123123;20;kh8;regular customer
+long;Nu;123/123;long@gmail.com;0123123123;20;kh9;walk-in
