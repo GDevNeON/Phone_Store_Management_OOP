@@ -333,13 +333,13 @@ public class QuanLySanPham implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t |5. Giá tiền                              |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int choose = input.nextInt();
+            String choose = input.nextLine();
 
             switch (choose) {
-                case 0 -> {
+                case "0" -> {
                     return;
                 }
-                case 1 -> {
+                case "1" -> {
                     input.nextLine();
                     System.out.println("Nhập ID sản phẩm: ");
                     String ID_Product = input.nextLine();
@@ -349,7 +349,7 @@ public class QuanLySanPham implements ControllerInterface {
                         }
                     }
                 }
-                case 2 -> {
+                case "2" -> {
                     input.nextLine();
                     System.out.println("Nhập loại sản phẩm: ");
                     String ID_Typeofproduct = input.nextLine();
@@ -359,7 +359,7 @@ public class QuanLySanPham implements ControllerInterface {
                         }
                     }
                 }
-                case 3 -> {
+                case "3" -> {
                     input.nextLine();
                     System.out.println("Nhập tên sản phẩm: ");
                     String name = input.nextLine();
@@ -369,7 +369,7 @@ public class QuanLySanPham implements ControllerInterface {
                         }
                     }
                 }
-                case 4 -> {
+                case "4" -> {
                     input.nextLine();
                     System.out.println("Nhập số lượng từ: ");
                     int begin = input.nextInt();
@@ -381,7 +381,7 @@ public class QuanLySanPham implements ControllerInterface {
                         }
                     }
                 }
-                case 5 -> {
+                case "5" -> {
                     input.nextLine();
                     System.out.println("Từ giá: ");
                     int begin = input.nextInt();
