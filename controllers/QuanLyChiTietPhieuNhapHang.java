@@ -90,19 +90,19 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       return;
     }
 
-    boolean foundPhieuNhap = false;
-    PhieuNhapHang[] phieuNhapHangList = QuanLyPhieuNhapHang.getInstance().getListPhieuNhapHang();
-    for (PhieuNhapHang phieuNhapHang : phieuNhapHangList) {
-      if (chiTietPhieuNhapHang.getPhieuNhapId().equals(phieuNhapHang.getReceiptId())) {
-        foundPhieuNhap = true;
-        break;
-      }
-    }
+    // boolean foundPhieuNhap = false;
+    // PhieuNhapHang[] phieuNhapHangList = QuanLyPhieuNhapHang.getInstance().getListPhieuNhapHang();
+    // for (PhieuNhapHang phieuNhapHang : phieuNhapHangList) {
+    //   if (chiTietPhieuNhapHang.getPhieuNhapId().equals(phieuNhapHang.getReceiptId())) {
+    //     foundPhieuNhap = true;
+    //     break;
+    //   }
+    // }
 
-    if (foundPhieuNhap == false) {
-      System.out.println("\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ PHIẾU NHẬP TRONG DANH SÁCH PHIẾU NHẬP-----+");
-      return;
-    }
+    // if (foundPhieuNhap == false) {
+    //   System.out.println("\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ PHIẾU NHẬP TRONG DANH SÁCH PHIẾU NHẬP-----+");
+    //   return;
+    // }
 
     System.out.println("Nhập số lượng: ");
     while (!sc.hasNextInt()) {
@@ -113,7 +113,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
 
     System.out.println("Nhập giá: ");
     String price = sc.nextLine();
-    while (price.isEmpty() || kiemTra.isInteger(price)){
+    while (price.isEmpty() || kiemTra.isInteger(price) == false){
       System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
       price = sc.nextLine();
     }
