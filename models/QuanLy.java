@@ -5,6 +5,7 @@ import java.util.Scanner;
 import controllers.Validation;
 
 public class QuanLy extends ConNguoi {
+  private Validation validate = new Validation();
   private String managerId;
   private String role;
   private String shift;
@@ -83,7 +84,7 @@ public class QuanLy extends ConNguoi {
     sc.nextLine();
     while (true) {
       test = sc.nextLine();
-      if (test.isBlank() || !Validation.isValidIDmanager(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+      if (test.isBlank() || !validate.isValidIDmanager(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
           System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
       } else {
         setManagerId(test);

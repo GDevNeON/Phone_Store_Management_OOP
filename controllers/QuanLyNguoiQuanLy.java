@@ -11,6 +11,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
   private static QuanLyNguoiQuanLy instance;
   private static Scanner sc = new Scanner(System.in);
   private QuanLy[] manager;
+  private Validation validate = new Validation();
 
   private QuanLyNguoiQuanLy() {
     getListManagers();
@@ -72,7 +73,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
     System.out.println("Nhập ID người quản lý (ql_): ");
     while (true) {
         test = sc.nextLine();
-        if (test.isBlank() || (!Validation.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+        if (test.isBlank() || (!validate.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
                 System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
         } else {
             break;
@@ -202,7 +203,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                 sc.nextLine();
                 while (true) {
                     test = sc.nextLine();
-                    if (test.isBlank() || (!Validation.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                    if (test.isBlank() || (!validate.isValidIDmanager(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
                       System.out.println("ID người quản lý không hợp lệ. Nhập lại: ");
                     } else {
                         break;

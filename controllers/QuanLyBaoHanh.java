@@ -13,8 +13,9 @@ import models.BaoHanh;
 
 public class QuanLyBaoHanh implements ControllerInterface {
   private static QuanLyBaoHanh instance;
-  private Scanner sc = new Scanner(System.in);
+  private static Scanner sc = new Scanner(System.in);
   private BaoHanh[] warranty;
+  private Validation validate = new Validation();
 
   public static QuanLyBaoHanh getInstance() {
     if (instance == null) {
@@ -68,7 +69,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
 
   @Override
   public void Create() {
-    sc.nextLine();
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN BẢO HÀNH----+");
     BaoHanh warrantyModel = new BaoHanh();
     String test;
@@ -76,7 +76,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     System.out.println("Nhập ID Sản phẩm (sp_): ");
 		while (true) {
 			test = sc.nextLine();
-			if (test.isBlank() || (!Validation.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+			if (test.isBlank() || (!validate.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 					System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
 			} else {
 				break;
@@ -102,7 +102,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
         if (test.isBlank() || test.length() != 10) {
             System.out.println("Ngày không hợp lệ. Nhập lại: ");
         } else {
-            if (Validation.isValidDate(test)) {
+            if (validate.isValidDate(test)) {
                 warrantyModel.setProductDate(LocalDate.parse(test));
                 break;
             } else {
@@ -114,7 +114,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     System.out.println("Nhập số năm bảo hành (1 -> 5): ");
     while (true) {
         test = sc.nextLine();
-        if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+        if (!validate.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
             System.out.println("Phải nhập số nguyên!. Nhập lại: ");
         } else {
             if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
@@ -156,7 +156,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 		sc.nextLine();
 		while (true) {
 			test = sc.nextLine();
-			if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+			if (test.isBlank() || !validate.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 					System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
 			} else {
 				break;
@@ -180,7 +180,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Update() {
     try {
-      sc.nextLine();
       System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN BẢO HÀNH----+");
       System.out.println("Nhập ID của sản phẩm cần sửa: ");
       String ID_Product;
@@ -270,7 +269,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 								sc.nextLine();
 								while (true) {
 									test = sc.nextLine();
-									if (test.isBlank() || !Validation.isValidIDproduct(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+									if (test.isBlank() || !validate.isValidIDproduct(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 											System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
 									} else {
 										break;
@@ -303,7 +302,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                     if (test.isBlank() || test.length() != 10) {
                         System.out.println("Ngày không hợp lệ. Nhập lại: ");
                     } else {
-                        if (Validation.isValidDate(test)) {
+                        if (validate.isValidDate(test)) {
                             id.setProductDate(LocalDate.parse(test));
                             break;
                         } else {
@@ -320,7 +319,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                 System.out.println("Nhập số năm bảo hành (1 -> 5): ");
 								while (true) {
 										test = sc.nextLine();
-										if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+										if (!validate.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 												System.out.println("Phải nhập số nguyên!. Nhập lại: ");
 										} else {
 												if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
@@ -376,7 +375,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 									sc.nextLine();
 									while (true) {
 										test = sc.nextLine();
-										if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+										if (test.isBlank() || !validate.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 												System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
 										} else {
 											break;
@@ -426,7 +425,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 								sc.nextLine();
 								while (true) {
 									test = sc.nextLine();
-									if (test.isBlank() || (!Validation.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+									if (test.isBlank() || (!validate.isValidIDproduct(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 											System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
 									} else {
 										break;
@@ -458,7 +457,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                     if (test.isBlank() || test.length() != 10) {
                         System.out.println("Ngày không hợp lệ. Nhập lại: ");
                     } else {
-                        if (Validation.isValidDate(test)) {
+                        if (validate.isValidDate(test)) {
                             id.setProductDate(LocalDate.parse(test));
                             break;
                         } else {
@@ -474,7 +473,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                 System.out.println("Nhập số năm bảo hành (1 -> 5): ");
 								while (true) {
 										test = sc.nextLine();
-										if (!Validation.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+										if (!validate.isInteger(test) || test.isBlank()) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 												System.out.println("Phải nhập số nguyên!. Nhập lại: ");
 										} else {
 												if (Integer.parseInt(test) < 1 || Integer.parseInt(test) > 5) {
@@ -528,7 +527,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 									sc.nextLine();
 									while (true) {
 										test = sc.nextLine();
-										if (test.isBlank() || !Validation.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+										if (test.isBlank() || !validate.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
 												System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
 										} else {
 											break;
@@ -580,7 +579,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Delete() {
     try {
-      sc.nextLine();
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN BẢO HÀNH----+");
       System.out.print("Nhập ID sản phẩm cần xóa: ");
       String ID_Product;
@@ -645,7 +643,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void searchByCategory() {
     try {
-      sc.nextLine();
       String find = null;
       System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM-------------+");
       System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
@@ -676,7 +673,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
             sc.nextLine();
             while (true) {
               find = sc.nextLine();
-              if (find.isBlank() || !Validation.isValidIDproduct(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+              if (find.isBlank() || !validate.isValidIDproduct(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
                   System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
               } else {
                 break;
@@ -692,7 +689,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
                 if (find.isBlank() || find.length() != 10) {
                     System.out.println("Ngày không hợp lệ. Nhập lại: ");
                 } else {
-                    if (Validation.isValidDate(find)) {
+                    if (validate.isValidDate(find)) {
                         break;
                     } else {
                         System.out.println("Ngày không hợp lệ. Nhập lại: ");
@@ -706,7 +703,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
             sc.nextLine();
             while (true) {
                 find = sc.nextLine();
-                if (!Validation.isInteger(find) || find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                if (!validate.isInteger(find) || find.isBlank()) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
                     System.out.println("Phải nhập số nguyên!. Nhập lại: ");
                 } else {
                     if (Integer.parseInt(find) < 1 || Integer.parseInt(find) > 5) {
@@ -751,7 +748,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
             sc.nextLine();
             while (true) {
               find = sc.nextLine();
-              if (find.isBlank() || !Validation.isValidIDcustomer(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+              if (find.isBlank() || !validate.isValidIDcustomer(find)) {   //nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
                   System.out.println("ID Khách hàng không hợp lệ. Nhập lại: ");
               } else {
                 break;
