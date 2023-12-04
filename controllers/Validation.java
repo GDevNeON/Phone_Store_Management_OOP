@@ -6,16 +6,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Validation {
 
   // Các hằng số để quy định độ dài tối đa của các trường thông tin
   private static final int MAX_NAME_LENGTH = 30;
   private static final int MAX_ADDRESS_LENGTH = 100;
   private static final int MAX_EMAIL_LENGTH = 100;
-  private static final int MAX_PHONE_NUMBER_LENGTH = 10;
   private static final int MAX_ID_LENGTH = 8;
 
   // Hàm validation cho tên
@@ -46,16 +42,13 @@ public class Validation {
 
   // Hàm validation cho số điện thoại
   public static boolean isValidPhoneNumber(String SDT) {
-    return SDT.matches("^0\\d{9}$") && SDT.length() <= MAX_PHONE_NUMBER_LENGTH;
+    return SDT.matches("^0\\d{9}$");
   }
 
   // Hàm validation cho số fax
-  public static boolean isValidFax(String Fax) {
-    String regex = "^84\\d{8}$";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(Fax);
-    return matcher.matches();
-  }
+  public boolean isValidFax(String Fax) {
+    return Fax.matches("^84\\d{8}$");
+}
 
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
   public boolean isInteger(String input) {

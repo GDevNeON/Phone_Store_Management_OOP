@@ -5,6 +5,7 @@ import java.util.Scanner;
 import controllers.Validation;
 
 public class KhachHang extends ConNguoi {
+  Scanner input = new Scanner(System.in);
   private String customerId;
   private String kindOfCustomer;
 
@@ -48,7 +49,6 @@ public class KhachHang extends ConNguoi {
   public void AddThongTin() {
     Validation validate = new Validation();
     super.AddThongTin();
-    Scanner input = new Scanner(System.in);
     String value;
     do {
       System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
