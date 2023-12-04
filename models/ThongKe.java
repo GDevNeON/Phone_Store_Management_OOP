@@ -53,7 +53,7 @@ public class ThongKe {
         this.price = price;
     }
 
-    public double getTotalAmount() {
+    public int getTotalAmount() {
         return totalAmount;
     }
 
