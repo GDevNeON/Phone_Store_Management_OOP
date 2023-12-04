@@ -617,10 +617,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
         case "1" -> {
           System.out.print("Nhập tiền nhập hàng: ");
           String price = sc.nextLine();
-          while (price.isEmpty() || kiemTra.isInteger(price) == false ) {
-            System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
-            price = sc.nextLine();
-          }
           for (PhieuNhapHang pnh : dsp) {
             if (price.equals(pnh.getPrice())) {
               result = addPhieuNhapHang(result, pnh);

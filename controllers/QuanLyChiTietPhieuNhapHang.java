@@ -38,7 +38,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     dsct = new ChiTietPhieuNhapHang[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      dsct[i] = new ChiTietPhieuNhapHang(row[0], row[1], Integer.parseInt(row[2]), Integer.parseInt(row[3]));
+      dsct[i] = new ChiTietPhieuNhapHang(row[0], row[1], Integer.parseInt(row[2]),row[3]);
     }
     return dsct;
   }
@@ -105,10 +105,19 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     }
 
     System.out.println("Nhập số lượng: ");
+    while (!sc.hasNextInt()) {
+      System.out.println("Vui lòng nhập một số nguyên.");
+      sc.next();
+    }
     chiTietPhieuNhapHang.setAmount(sc.nextInt());
 
     System.out.println("Nhập giá: ");
-    chiTietPhieuNhapHang.setPrice(sc.nextInt());
+    String price = sc.nextLine();
+    while (price.isEmpty() || kiemTra.isInteger(price)){
+      System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+      price = sc.nextLine();
+    }
+    chiTietPhieuNhapHang.setPrice(price);
 
     System.out.println("Nhập mã sản phẩm: ");
     String ID_sanPham = sc.nextLine();
@@ -290,15 +299,12 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập số lượng sản phẩm: ");
+                while (!sc.hasNextInt()) {
+                  System.out.println("Vui lòng nhập một số nguyên.");
+                  sc.next();
+                }
+               
                 ctpnh.setAmount(sc.nextInt());
-                // SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
-                // for (SanPham sp : spList) {
-                // if (dsct[i].getProductId().equals(sp.getProductId())) {
-                // if (ctpnh.getAmount() > dsct[i].getAmount()) {
-                // sp.setAmountRemaining(sp.);
-                // }
-                // }
-                // }
                 dsct[i].setAmount(ctpnh.getAmount());
               }
               data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
@@ -316,7 +322,12 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
             for (int i = 0; i < dsct.length; i++) {
               if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
                 System.out.print("Nhập giá tiền: ");
-                ctpnh.setPrice(sc.nextInt());
+                String price = sc.nextLine();
+                while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+                  System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                  price = sc.nextLine();
+                }
+                ctpnh.setPrice(price);
                 dsct[i].setPrice(ctpnh.getPrice());
               }
               data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
@@ -400,10 +411,19 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
                     }
                   }
                   System.out.print("Nhập số lượng sản phẩm: ");
+                  while (!sc.hasNextInt()) {
+                    System.out.println("Vui lòng nhập một số nguyên.");
+                    sc.next();
+                  }
                   ctpnh.setAmount(sc.nextInt());
 
                   System.out.print("Nhập giá: ");
-                  ctpnh.setPrice(sc.nextInt());
+                  String price = sc.nextLine();
+                  while (price.isEmpty() || kiemTra.isInteger(price)) {
+                    System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                    price = sc.nextLine();
+                  }
+                  ctpnh.setPrice(price);
 
                   dsct[i].setPhieuNhapId(ctpnh.getPhieuNhapId());
                   dsct[i].setProductId(ctpnh.getProductId());
@@ -532,17 +552,19 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
           }
         }
         case "3" -> {
-          System.out.print("Nhập số lượng: ");
-          Integer amount = sc.nextInt();
-          for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-            if (amount.equals(chiTietPhieu.getAmount())) {
-              result = addChiTietPhieuNhapHang(result, chiTietPhieu);
+          System.out.println("Nhập số lượng từ: ");
+          int begin = sc.nextInt();
+          System.out.println("Đến: ");
+          int end = sc.nextInt();
+          for (ChiTietPhieuNhapHang ctp : dsct) {
+            if (ctp.getAmount() <= end && ctp.getAmount() >= begin) {
+              result = addChiTietPhieuNhapHang  (result, ctp);
             }
           }
         }
         case "4" -> {
           System.out.print("Nhập giá tiền: ");
-          Integer price = sc.nextInt();
+          String price = sc.nextLine();
           for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
             if (price.equals(chiTietPhieu.getPrice())) {
               result = addChiTietPhieuNhapHang(result, chiTietPhieu);

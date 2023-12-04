@@ -1,14 +1,13 @@
 package models;
 
 public class ChiTietPhieuNhapHang {
-  private String phieuNhapId, productId;
+  private String phieuNhapId, productId, price;
   private int amount;
-  private int price;
 
   public ChiTietPhieuNhapHang() {
   }
 
-  public ChiTietPhieuNhapHang(String phieuNhapId, String productId, int amount, int price) {
+  public ChiTietPhieuNhapHang(String phieuNhapId, String productId, int amount, String price) {
     this.phieuNhapId = phieuNhapId;
     this.productId = productId;
     this.amount = amount;
@@ -39,11 +38,11 @@ public class ChiTietPhieuNhapHang {
     this.amount = amount;
   }
 
-  public int getPrice() {
+  public String getPrice() {
     return this.price;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(String price) {
     this.price = price;
   }
 
@@ -62,7 +61,7 @@ public class ChiTietPhieuNhapHang {
     return this;
   }
 
-  public ChiTietPhieuNhapHang price(int price) {
+  public ChiTietPhieuNhapHang price(String price) {
     setPrice(price);
     return this;
   }
