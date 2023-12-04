@@ -9,18 +9,16 @@ public class QuanLy extends ConNguoi {
   private String managerId;
   private String role;
   private String shift;
-  private int slnv;
 
   public QuanLy() {
   }
 
   public QuanLy(String name, String gender, String address, String email, String sdt, int age, String managerId,
-      String role, String shift, int slnv) {
+      String role, String shift) {
     super(name, gender, address, email, sdt, age);
     this.managerId = managerId;
     this.role = role;
     this.shift = shift;
-    this.slnv = slnv;
   }
 
   public String getManagerId() {
@@ -47,14 +45,6 @@ public class QuanLy extends ConNguoi {
     this.shift = shift;
   }
 
-  public int getSlnv() {
-    return this.slnv;
-  }
-
-  public void setSlnv(int slnv) {
-    this.slnv = slnv;
-  }
-
   public QuanLy managerId(String managerId) {
     setManagerId(managerId);
     return this;
@@ -67,11 +57,6 @@ public class QuanLy extends ConNguoi {
 
   public QuanLy shift(String shift) {
     setShift(shift);
-    return this;
-  }
-
-  public QuanLy slnv(int slnv) {
-    setSlnv(slnv);
     return this;
   }
 

@@ -2,8 +2,10 @@ package controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +58,7 @@ public class Validation {
   }
 
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
-  public static boolean isInteger(String input) {
+  public boolean isInteger(String input) {
     try {
       Integer.parseInt(input);
       return true;
@@ -152,5 +154,18 @@ public class Validation {
 
   public boolean isValidKindOfCustomer(String kindOfCustomer) {
     return kindOfCustomer.equalsIgnoreCase("walk-in") || kindOfCustomer.equalsIgnoreCase("regular");
+  }
+
+  public String validateInput(Scanner sc, String[] validValues, int maxLength) {
+    String value;
+    while (true) {
+      value = sc.nextLine().trim();
+      if (value.isBlank() || value.length() > maxLength || !Arrays.asList(validValues).contains(value)) {
+        System.out.println("Giá trị không hợp lệ. Nhập lại: ");
+      } else {
+        break;
+      }
+    }
+    return value;
   }
 }

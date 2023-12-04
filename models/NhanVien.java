@@ -59,57 +59,20 @@ public class NhanVien extends ConNguoi {
 
   @Override
   public void AddThongTin() {
+    Validation validate = new Validation();
     Scanner sc = new Scanner(System.in);
-    String value;
     super.AddThongTin();
 
-    System.out.println("Nhập vai trò: () ");
-    String verify1[] = { "Sales", "Marketing", "Advertising", "Customer Service" };
-    while (true) {
-      value = sc.nextLine();
-      if (value.isBlank() || value.length() > 15) {
-        System.out.println("Vai trò không hợp lệ. Nhập lại: ");
-      } else {
-        boolean flag = false;
-        for (String v : verify1) {
-          if (value.equals(v)) {
-            flag = true;
-            break;
-          }
-          flag = false;
-        }
-        if (flag) {
-          setRole(value);
-          break;
-        } else {
-          System.out.println("Vai trò không hợp lệ. Nhập lại: ");
-        }
-      }
-    }
+    // Nhập và kiểm tra vai trò
+    System.out.println("Nhập vai trò (Sales, Marketing, Advertising, Customer Service): ");
+    String[] validRoles = { "Sales", "Marketing", "Advertising", "Customer Service" };
+    setRole(validate.validateInput(sc, validRoles, 15));
 
+    // Nhập và kiểm tra ca trực
     System.out.println("Nhập ca trực (morning, afternoon, night): ");
-    String verify[] = { "morning", "afternoon", "night" };
-    while (true) {
-      value = sc.nextLine();
-      if (value.isBlank() || value.length() > 10) {
-        System.out.println("Ca trực không hợp lệ. Nhập lại: ");
-      } else {
-        boolean flag = false;
-        for (String v : verify) {
-          if (value.equals(v)) {
-            flag = true;
-            break;
-          }
-          flag = false;
-        }
-        if (flag) {
-          setShift(value);
-          break;
-        } else {
-          System.out.println("Ca trực không hợp lệ. Nhập lại: ");
-        }
-      }
-    }
+    String[] validShifts = { "morning", "afternoon", "night" };
+    setShift(validate.validateInput(sc, validShifts, 10));
+
     sc.close();
   }
 }
