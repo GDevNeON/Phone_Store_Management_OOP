@@ -110,26 +110,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
       return;
     }
 
-    NhanVien[] nvList = QuanLyNhanVien.getInstance().getListEmployee();
-    boolean foundEmp = false;
-    do {
-      System.out.print("Nhập ID nhân viên: ");
-      String ID_nhanVien = sc.nextLine();
-      while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)){
-        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID nhân viên: ");
-        ID_phieuNhap = sc.nextLine(); 
-      }
-      phieuNhapHang.setWorkerId(ID_phieuNhap);
-      for (NhanVien nv : nvList) {
-        if (nv.getWorkerId().equals(phieuNhapHang.getWorkerId())) {
-          foundEmp = true;
-          break;
-        }
-      }
-      if (foundEmp == false) {
-        System.out.println("\t\t\t\t\t\t\t\t +-----MÃ NHÂN VIÊN KHÔNG TÌM THẤY. VUI LÒNG THỬ LẠI-----+");
-      }
-    } while (foundEmp == false);
+    
     NhaCungCap[] nccList = QuanLyNhaCungCap.getInstance().getListNhaCungCap();
     boolean foundNcc = false;
     do {

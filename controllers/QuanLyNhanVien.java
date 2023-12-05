@@ -7,7 +7,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.NhanVien;
-import models.QuanLy;
 
 public class QuanLyNhanVien implements ControllerInterface {
   private static Scanner input = new Scanner(System.in);
@@ -72,7 +71,6 @@ public class QuanLyNhanVien implements ControllerInterface {
     NhanVien nvien = new NhanVien();
     Validation validate = new Validation();
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NHÂN VIÊN----+");
-    NhanVien nhanVien = new NhanVien();
     System.out.println("Nhập ID nhân viên (nv_): ");
     while (true) {
       test = input.nextLine();
