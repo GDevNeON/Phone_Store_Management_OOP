@@ -1,9 +1,9 @@
-Tran Thi B;Nu;456 Nguyen Hue;tranb@example.com;0987654321;25;kh2;regular customer
-Le Van C;Nam;789 Tran Hung Dao;levanc@example.com;0123456780;35;kh3;walk-in customer
-Pham Thi D;Nu;321 Le Duan;phamthid@example.com;0987654311;28;kh4;regular customer
-Hoang Van E;Nam;654 Pham Van Dong;hoangvane@example.com;0123456790;32;kh5;walk-in customer
-doggu;Nam;48/123;doggu@gmail.com;0123123123;12;kh10;regular custome
-Truong Gia Thanh;Nam;123/456;trggiathanh@gmail.com;0123123123;20;kh6;walk-in customer
-truong gia minh;Nam;123/456 Nguyen Trai;trggiathanh@gmail.com;0123123123;20;kh7;walk-in customer
-dog;Nam;123/123;dog@gmail.com;0123123123;20;kh8;regular customer
+Tran Thi B;Nu;456 Nguyen Hue;tranb@example.com;0987654321;25;kh2;regular 
+Le Van C;Nam;789 Tran Hung Dao;levanc@example.com;0123456780;35;kh3;walk-in 
+Pham Thi D;Nu;321 Le Duan;phamthid@example.com;0987654311;28;kh4;regular 
+Hoang Van E;Nam;654 Pham Van Dong;hoangvane@example.com;0123456790;32;kh5;walk-in 
+doggu;Nam;48/123;doggu@gmail.com;0123123123;12;kh10;regular
+Truong Gia Thanh;Nam;123/456;trggiathanh@gmail.com;0123123123;20;kh6;walk-in 
+truong gia minh;Nam;123/456 Nguyen Trai;trggiathanh@gmail.com;0123123123;20;kh7;walk-in 
+dog;Nam;123/123;dog@gmail.com;0123123123;20;kh8;regular 
 long;Nu;123/123;long@gmail.com;0123123123;20;kh9;walk-in
