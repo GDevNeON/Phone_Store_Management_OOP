@@ -5,6 +5,7 @@ import java.util.Scanner;
 import controllers.Validation;
 
 public class ConNguoi {
+    Scanner sc = new Scanner(System.in);
     private String name, gender, address, email, sdt;
     private int age;
 
@@ -13,6 +14,15 @@ public class ConNguoi {
     }
 
     public ConNguoi(String name, String gender, String address, String email, String sdt, int age) {
+        this.name = name;
+        this.gender = gender;
+        this.address = address;
+        this.email = email;
+        this.sdt = sdt;
+        this.age = age;
+    }
+
+    public ConNguoi(String name, int age, String address, String email, String sdt, String gender) {
         this.name = name;
         this.gender = gender;
         this.address = address;
@@ -100,7 +110,6 @@ public class ConNguoi {
     }
 
     public void AddThongTin() {
-        Scanner sc = new Scanner(System.in);
         try {
             do {
                 System.out.print("Nhập họ tên: ");
