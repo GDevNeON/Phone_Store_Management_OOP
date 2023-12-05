@@ -69,19 +69,8 @@ public class QuanLyThanhToan implements ControllerInterface {
     public void Create() {
         System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN THANH TOÁN----+");
         ThanhToan thanhToanModel = new ThanhToan();
-        String test;
-
-        System.out.println("Nhập mã thanh toán (tt_): ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank() || (!validate.isValidIDpayment(test))) { // nếu như xâu test rỗng hoặc chứa toàn khoảng
-                                                                        // trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
-            } else {
-                break;
-            }
-        }
-        thanhToanModel.setPaymentId(test);
+        
+        thanhToanModel.setPaymentId(InputPaymentId());
         ThanhToan[] ttList = QuanLyThanhToan.getInstance().getListPayments();
         int check = 0;
         for (ThanhToan p : ttList) {
@@ -95,17 +84,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             return;
         }
 
-        System.out.println("Nhập mã khách hàng (kh_): ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank() || (!validate.isValidIDcustomer(test))) { // nếu như xâu test rỗng hoặc chứa toàn khoảng
-                                                                         // trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
-            } else {
-                break;
-            }
-        }
-        thanhToanModel.setCustomerId(test);
+        thanhToanModel.setCustomerId(InputCustomerId());
         KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
         check = 0;
         for (KhachHang customer : customers) {
@@ -119,17 +98,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             return;
         }
 
-        System.out.println("Nhập mã đơn hàng (hd_): ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank() || (!validate.isValidIDreceipt(test))) { // nếu như xâu test rỗng hoặc chứa toàn khoảng
-                                                                        // trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
-            } else {
-                break;
-            }
-        }
-        thanhToanModel.setReceiptId(test);
+        thanhToanModel.setReceiptId(InputReceiptId());
         check = 0;
         for (ThanhToan p : payment) {
             if (thanhToanModel.getReceiptId().equals(p.getReceiptId())) {
@@ -142,54 +111,12 @@ public class QuanLyThanhToan implements ControllerInterface {
             return;
         }
 
-        System.out.println("Nhập số lượng hàng: ");
-        while (sc.hasNextInt()) {
-            thanhToanModel.setAmount(sc.nextInt());
-        }
-
-        System.out.println("Nhập ngày đặt hàng: ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank() || test.length() != 10) {
-                System.out.println("Ngày không hợp lệ. Nhập lại: ");
-            } else {
-                if (validate.isValidDate(test)) {
-                    thanhToanModel.setPaymentDate(LocalDate.parse(sc.nextLine()));
-                    break;
-                } else {
-                    System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                }
-            }
-        }
-
-        System.out.println("Nhập phương thức đặt hàng: ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank() || test.length() > 20) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
-                                                        // ĐEEEEEEEE!!!!
-                System.out.println("Không hợp lệ. Nhập lại: ");
-            } else {
-                thanhToanModel.setPaymentMethod(test);
-                break;
-            }
-        }
-
-        System.out.println("Nhập trạng thái của đơn hàng (0 hoặc 1) (0: chưa xử lý, 1: đã xử lý): ");
-        while (true) {
-            test = sc.nextLine();
-            if (test.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                System.out.println("Trạng thái không được để trống. Nhập lại: ");
-            } else {
-                if (test.compareTo("0") == 0 || test.compareTo("1") == 0) {
-                    thanhToanModel.setStatus(test);
-                    break;
-                } else {
-                    System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
-                }
-            }
-        }
-
-        updateList(0, payment);
+        thanhToanModel.setAmount(Integer.parseInt(InputAmount()));
+        thanhToanModel.setPaymentDate(LocalDate.parse(InputPaymentDate()));
+        thanhToanModel.setPaymentMethod(InputPaymentMethod());
+        thanhToanModel.setStatus(InputStatus());
+        
+        updateList(0, payment, thanhToanModel);
         getListPayments();
     }
 
@@ -197,18 +124,9 @@ public class QuanLyThanhToan implements ControllerInterface {
     public void Update() {
         try {
             System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN THANH TOÁN----+");
-            System.out.print("- Mời nhập ID thanh toán cần chỉnh sửa: ");
-            String ID_Payment;
+            System.out.println("- Mời nhập ID thanh toán cần chỉnh sửa: ");
+            String ID_Payment = InputPaymentId();
             ThanhToan id = null;
-
-            while (true) {
-                ID_Payment = sc.nextLine();
-                if (ID_Payment.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                    System.out.println("Mã thanh toán không được để trống. Nhập lại: ");
-                } else {
-                    break;
-                }
-            }
 
             for (ThanhToan p : payment) {
                 if (p.getPaymentId().equals(ID_Payment)) {
@@ -270,8 +188,6 @@ public class QuanLyThanhToan implements ControllerInterface {
                         break;
                 }
 
-                String[] data = new String[payment.length];
-
                 for (int i = 0; i < payment.length; i++) {
                     if (payment[i].getPaymentId().equals(ID_Payment)) {
                         System.out.println("Nhập thông tin thanh toán:");
@@ -281,21 +197,8 @@ public class QuanLyThanhToan implements ControllerInterface {
                                 return;
                             }
                             case 1 -> {
-                                String test;
-                                System.out.println("Nhập ID thanh toán (tt_): ");
                                 sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank() || (!validate.isValidIDpayment(test))) { // nếu như xâu test rỗng
-                                                                                                // hoặc chứa toàn khoảng
-                                                                                                // trắng, NHẬP LẠI
-                                                                                                // ĐEEEEEEEE!!!!
-                                        System.out.println("Mã thanh toán không hợp lệ. Nhập lại: ");
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                id.setPaymentId(test);
+                                id.setPaymentId(InputPaymentId());
                                 ThanhToan[] ttList = QuanLyThanhToan.getInstance().getListPayments();
                                 int check = 0;
                                 for (ThanhToan p : ttList) {
@@ -313,24 +216,11 @@ public class QuanLyThanhToan implements ControllerInterface {
                             }
 
                             case 2 -> {
-                                String test;
-                                System.out.println("Nhập ID Khách hàng: ");
+                                sc.nextLine();
                                 boolean foundCustomer = false;
                                 do {
                                     sc.nextLine();
-                                    while (true) {
-                                        test = sc.nextLine();
-                                        if (test.isBlank() || (!validate.isValidIDcustomer(test))) { // nếu như xâu test
-                                                                                                     // rỗng hoặc chứa
-                                                                                                     // toàn khoảng
-                                                                                                     // trắng, NHẬP LẠI
-                                                                                                     // ĐEEEEEEEE!!!!
-                                            System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                                        } else {
-                                            break;
-                                        }
-                                    }
-                                    id.setCustomerId(sc.nextLine());
+                                    id.setCustomerId(InputCustomerId());
                                     KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
                                     for (KhachHang customer : customers) {
                                         if (customer.getCustomerId().equals(id.getCustomerId())) {
@@ -344,21 +234,8 @@ public class QuanLyThanhToan implements ControllerInterface {
                             }
 
                             case 3 -> {
-                                String test;
-                                System.out.println("Nhập mã thanh toán (tt_): ");
                                 sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank() || (!validate.isValidIDreceipt(test))) { // nếu như xâu test rỗng
-                                                                                                // hoặc chứa toàn khoảng
-                                                                                                // trắng, NHẬP LẠI
-                                                                                                // ĐEEEEEEEE!!!!
-                                        System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                id.setPaymentId(test);
+                                id.setReceiptId(InputReceiptId());
                                 int check = 0;
                                 for (ThanhToan p : payment) {
                                     if (id.getReceiptId().equals(p.getReceiptId())) {
@@ -374,117 +251,44 @@ public class QuanLyThanhToan implements ControllerInterface {
                                 break;
                             }
                             case 4 -> {
-                                System.out.println("Nhập số lượng hàng: ");
                                 sc.nextLine();
-                                while (sc.hasNextInt()) {
-                                    sc.nextInt();
-                                    id.setAmount(sc.nextInt());
-                                }
+                                id.setAmount(Integer.parseInt(InputAmount()));
                                 payment[i].setAmount(id.getAmount());
                                 break;
                             }
 
                             case 5 -> {
-                                String test;
-                                System.out.println("Nhập ngày đặt hàng: ");
                                 sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank() || test.length() != 10) {
-                                        System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                                    } else {
-                                        if (validate.isValidDate(test)) {
-                                            id.setPaymentDate(LocalDate.parse(sc.nextLine()));
-                                            break;
-                                        } else {
-                                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                                        }
-                                    }
-                                }
+                                id.setPaymentDate(LocalDate.parse(InputPaymentDate()));
                                 payment[i].setPaymentDate(id.getPaymentDate());
                                 break;
                             }
 
                             case 6 -> {
-                                String test;
-                                System.out.println("Nhập phương thức đặt hàng: ");
                                 sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank() || test.length() > 20) { // nếu như xâu test rỗng hoặc chứa toàn
-                                                                                // khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                                        System.out.println("Không hợp lệ. Nhập lại: ");
-                                    } else {
-                                        id.setPaymentMethod(test);
-                                        break;
-                                    }
-                                }
+                                id.setPaymentMethod(InputPaymentMethod());
                                 payment[i].setPaymentMethod(id.getPaymentMethod());
                                 break;
                             }
 
                             case 7 -> {
-                                String test;
-                                System.out.println(
-                                        "Nhập trạng thái của đơn hàng (0 hoặc 1) (0: chưa xử lý, 1: đã xử lý): ");
                                 sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
-                                                          // ĐEEEEEEEE!!!!
-                                        System.out.println("Trạng thái không được để trống. Nhập lại: ");
-                                    } else {
-                                        if (test.compareTo("0") == 0 || test.compareTo("1") == 0) {
-                                            id.setStatus(test);
-                                            break;
-                                        } else {
-                                            System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
-                                        }
-                                    }
-                                }
+                                id.setStatus(InputStatus());
                                 payment[i].setStatus(id.getStatus());
                                 break;
                             }
                         }
                     }
-                    data[i] = payment[i].getPaymentId() + ";" +
-                            payment[i].getCustomerId() + ";" +
-                            payment[i].getReceiptId() + ";" +
-                            payment[i].getAmount() + ";" +
-                            payment[i].getPaymentDate() + ";" +
-                            payment[i].getPaymentMethod() + ";" +
-                            payment[i].getStatus();
                 }
-                try {
-                    Stream.addAll("Database/ThanhToan.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t+----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
-                    waitConsole();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                updateList(1, payment, id); //cập nhật danh sách
             } else {
-                String[] data = new String[payment.length];
+                sc.nextLine();
 
                 for (int i = 0; i < payment.length; i++) {
                     if (payment[i].getPaymentId().equals(ID_Payment)) {
                         System.out.println("Nhập thông tin thanh toán:");
-
                         {
-                            String test;
-                            System.out.println("Nhập ID thanh toán (tt_): ");
-                            sc.nextLine();
-                            while (true) {
-                                test = sc.nextLine();
-                                if (test.isBlank() || (!validate.isValidIDpayment(test))) { // nếu như xâu test rỗng
-                                                                                            // hoặc chứa toàn khoảng
-                                                                                            // trắng, NHẬP LẠI
-                                                                                            // ĐEEEEEEEE!!!!
-                                    System.out.println("Mã thanh toán không hợp lệ. Nhập lại: ");
-                                } else {
-                                    break;
-                                }
-                            }
-                            id.setPaymentId(test);
+                            id.setPaymentId(InputPaymentId());
                             ThanhToan[] ttList = QuanLyThanhToan.getInstance().getListPayments();
                             int check = 0;
                             for (ThanhToan p : ttList) {
@@ -497,27 +301,12 @@ public class QuanLyThanhToan implements ControllerInterface {
                                 System.out.println("\t\t\t\t\t\t\t\t +----MÃ THANH TOÁN BỊ TRÙNG----+");
                                 return;
                             }
-                            payment[i].setPaymentId(id.getPaymentId());
                         }
 
                         {
-                            String test;
-                            System.out.println("Nhập ID Khách hàng: ");
                             boolean foundCustomer = false;
                             do {
-                                sc.nextLine();
-                                while (true) {
-                                    test = sc.nextLine();
-                                    if (test.isBlank() || (!validate.isValidIDcustomer(test))) { // nếu như xâu test
-                                                                                                 // rỗng hoặc chứa toàn
-                                                                                                 // khoảng trắng, NHẬP
-                                                                                                 // LẠI ĐEEEEEEEE!!!!
-                                        System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                id.setCustomerId(sc.nextLine());
+                                id.setCustomerId(InputCustomerId());
                                 KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
                                 for (KhachHang customer : customers) {
                                     if (customer.getCustomerId().equals(id.getCustomerId())) {
@@ -530,21 +319,7 @@ public class QuanLyThanhToan implements ControllerInterface {
                         }
 
                         {
-                            String test;
-                            System.out.println("Nhập mã thanh toán (tt_): ");
-                            sc.nextLine();
-                            while (true) {
-                                test = sc.nextLine();
-                                if (test.isBlank() || (!validate.isValidIDreceipt(test))) { // nếu như xâu test rỗng
-                                                                                            // hoặc chứa toàn khoảng
-                                                                                            // trắng, NHẬP LẠI
-                                                                                            // ĐEEEEEEEE!!!!
-                                    System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                                } else {
-                                    break;
-                                }
-                            }
-                            id.setPaymentId(test);
+                            id.setReceiptId(InputReceiptId());
                             int check = 0;
                             for (ThanhToan p : payment) {
                                 if (id.getReceiptId().equals(p.getReceiptId())) {
@@ -556,77 +331,12 @@ public class QuanLyThanhToan implements ControllerInterface {
                                 System.out.println("\t\t\t\t\t\t\t\t +----MÃ ĐƠN HÀNG BỊ TRÙNG----+");
                                 return;
                             }
-                            payment[i].setReceiptId(id.getReceiptId());
                         }
 
-                        {
-                            System.out.println("Nhập số lượng hàng: ");
-                            sc.nextLine();
-                            while (sc.hasNextInt()) {
-                                sc.nextInt();
-                                id.setAmount(sc.nextInt());
-                            }
-                            payment[i].setAmount(id.getAmount());
-                        }
-
-                        {
-                            String test;
-                            System.out.println("Nhập ngày đặt hàng: ");
-                            sc.nextLine();
-                            while (true) {
-                                test = sc.nextLine();
-                                if (test.isBlank() || test.length() != 10) {
-                                    System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                                } else {
-                                    if (validate.isValidDate(test)) {
-                                        id.setPaymentDate(LocalDate.parse(sc.nextLine()));
-                                        break;
-                                    } else {
-                                        System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                                    }
-                                }
-                            }
-                            payment[i].setPaymentDate(id.getPaymentDate());
-                        }
-
-                        {
-                            String test;
-                            System.out.println("Nhập phương thức đặt hàng: ");
-                            sc.nextLine();
-                            while (true) {
-                                test = sc.nextLine();
-                                if (test.isBlank() || test.length() > 20) { // nếu như xâu test rỗng hoặc chứa toàn
-                                                                            // khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                                    System.out.println("Không hợp lệ. Nhập lại: ");
-                                } else {
-                                    id.setPaymentMethod(test);
-                                    break;
-                                }
-                            }
-                            payment[i].setPaymentMethod(id.getPaymentMethod());
-                        }
-
-                        {
-                            String test;
-                            System.out
-                                    .println("Nhập trạng thái của đơn hàng (0 hoặc 1) (0: chưa xử lý, 1: đã xử lý): ");
-                            sc.nextLine();
-                            while (true) {
-                                test = sc.nextLine();
-                                if (test.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
-                                                      // ĐEEEEEEEE!!!!
-                                    System.out.println("Trạng thái không được để trống. Nhập lại: ");
-                                } else {
-                                    if (test.compareTo("0") == 0 || test.compareTo("1") == 0) {
-                                        id.setStatus(test);
-                                        break;
-                                    } else {
-                                        System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
-                                    }
-                                }
-                            }
-                            payment[i].setStatus(id.getStatus());
-                        }
+                        id.setAmount(Integer.parseInt(InputAmount()));
+                        id.setPaymentDate(LocalDate.parse(InputPaymentDate()));
+                        id.setPaymentMethod(InputPaymentMethod());
+                        id.setStatus(InputStatus());
 
                         payment[i].setPaymentId(id.getPaymentId());
                         payment[i].setCustomerId(id.getCustomerId());
@@ -636,21 +346,8 @@ public class QuanLyThanhToan implements ControllerInterface {
                         payment[i].setPaymentMethod(id.getPaymentMethod());
                         payment[i].setStatus(id.getStatus());
                     }
-                    data[i] = payment[i].getPaymentId() + ";" +
-                            payment[i].getCustomerId() + ";" +
-                            payment[i].getReceiptId() + ";" +
-                            payment[i].getAmount() + ";" +
-                            payment[i].getPaymentDate() + ";" +
-                            payment[i].getPaymentMethod() + ";" +
-                            payment[i].getStatus();
                 }
-                try {
-                    Stream.addAll("Database/ThanhToan.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t+----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
-                    waitConsole();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                updateList(1, payment, id); //cập nhật danh sách
             }
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
@@ -663,17 +360,8 @@ public class QuanLyThanhToan implements ControllerInterface {
     public void Delete() {
         try {
             System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN THANH TOÁN----+");
-            System.out.print("Nhập ID thanh toán cần xóa: ");
-            String ID_Payment;
-
-            while (true) {
-                ID_Payment = sc.nextLine();
-                if (ID_Payment.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                    System.out.println("Mã thanh toán không được để trống. Nhập lại: ");
-                } else {
-                    break;
-                }
-            }
+            System.out.println("Nhập ID thanh toán cần xóa: ");
+            String ID_Payment = InputPaymentId();
 
             ThanhToan id = null;
             for (ThanhToan p : payment) {
@@ -696,7 +384,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             }
 
             // Cập nhật lại toàn bộ list vào file
-            updateList(1, payment);
+            updateList(1, payment, id);
 
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
@@ -750,107 +438,38 @@ public class QuanLyThanhToan implements ControllerInterface {
                 }
             }
 
-            System.out.print("Nhập nội dung cần tìm: ");
+            sc.nextLine();
+            System.out.println("Nhập nội dung cần tìm: ");
             switch (index) {
+                case 0 -> {
+                    return;
+                } 
                 case 1 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank() || (!validate.isValidIDpayment(find))) { // nếu như xâu find rỗng hoặc chứa
-                                                                                    // toàn khoảng trắng, NHẬP LẠI
-                                                                                    // ĐEEEEEEEE!!!!
-                            System.out.println("Mã thanh toán không hợp lệ. Nhập lại: ");
-                        } else {
-                            break;
-                        }
-                    }
+                    find = InputPaymentId();
                     break;
                 }
-
                 case 2 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank() || (!validate.isValidIDcustomer(find))) { // nếu như xâu find rỗng hoặc chứa
-                                                                                     // toàn khoảng trắng, NHẬP LẠI
-                                                                                     // ĐEEEEEEEE!!!!
-                            System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                        } else {
-                            break;
-                        }
-                    }
+                    find = InputCustomerId();
                     break;
                 }
-
                 case 3 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank() || (!validate.isValidIDreceipt(find))) { // nếu như xâu find rỗng hoặc chứa
-                                                                                    // toàn khoảng trắng, NHẬP LẠI
-                                                                                    // ĐEEEEEEEE!!!!
-                            System.out.println("ID thanh toán không hợp lệ. Nhập lại: ");
-                        } else {
-                            break;
-                        }
-                    }
+                    find = InputReceiptId();
                     break;
                 }
                 case 4 -> {
-                    sc.nextLine();
-                    while (sc.hasNextInt()) {
-                        find = sc.nextLine();
-                        break;
-                    }
+                    find = InputAmount();
                     break;
                 }
-
                 case 5 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank() || find.length() != 10) {
-                            System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                        } else {
-                            if (validate.isValidDate(find)) {
-                                break;
-                            } else {
-                                System.out.println("Ngày không hợp lệ. Nhập lại: ");
-                            }
-                        }
-                    }
+                    find = InputPaymentDate();
                     break;
                 }
-
                 case 6 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank() || find.length() > 20) { // nếu như xâu find rỗng hoặc chứa toàn khoảng
-                                                                    // trắng, NHẬP LẠI ĐEEEEEEEE!!!!
-                            System.out.println("Không hợp lệ. Nhập lại: ");
-                        } else {
-                            break;
-                        }
-                    }
+                    find = InputPaymentMethod();
                     break;
                 }
-
                 case 7 -> {
-                    sc.nextLine();
-                    while (true) {
-                        find = sc.nextLine();
-                        if (find.isBlank()) { // nếu như xâu find rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI
-                                              // ĐEEEEEEEE!!!!
-                            System.out.println("Trạng thái không được để trống. Nhập lại: ");
-                        } else {
-                            if (find.compareTo("0") == 0 || find.compareTo("1") == 0) {
-                                break;
-                            } else {
-                                System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
-                            }
-                        }
-                    }
+                    find = InputStatus();
                     break;
                 }
             }
@@ -860,8 +479,6 @@ public class QuanLyThanhToan implements ControllerInterface {
 
             for (int i = 0; i < payment.length; i++) {
                 switch (index) {
-                    case 0:
-                        return;
                     case 1:
                         if (payment[i].getPaymentId().contains(find))
                             OutputData(i);
@@ -894,6 +511,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             }
             System.out.format(
                     "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
+            waitConsole();
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
         } catch (Exception e) {
@@ -901,6 +519,109 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
     }
 
+    //Hàm nhập data
+    public String InputPaymentId() {
+        String test;
+        System.out.println("Nhập mã thanh toán (tt_): ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || (!validate.isValidIDpayment(test))) {
+                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+            } else {
+                break;
+            }
+        }
+        return test;
+    }
+    public String InputCustomerId() {
+        String test;
+        System.out.println("Nhập mã khách hàng (kh_): ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || (!validate.isValidIDcustomer(test))) {
+                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+            } else {
+                break;
+            }
+        }
+        return test;
+    }
+    public String InputReceiptId() {
+        String test;
+        System.out.println("Nhập mã đơn hàng (hd_): ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || (!validate.isValidIDreceipt(test))) {
+                System.out.println("ID Sản phẩm không hợp lệ. Nhập lại: ");
+            } else {
+                break;
+            }
+        }
+        return test;
+    }
+    public String InputAmount() {
+        String test;
+        System.out.println("Nhập số lượng hàng: ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || (validate.isInteger(test) && test.length() < 7)) {
+                break;
+            }
+            else {
+                System.out.println("Số lượng hàng không được để trống hay lớn hơn 9999999: ");
+            }
+        }
+        return test;
+    }
+    public String InputPaymentDate() {
+        String test;
+        System.out.println("Nhập ngày đặt hàng (yyyy-MM-dd): ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || test.length() != 10) {
+                System.out.println("Ngày không hợp lệ. Nhập lại: ");
+            } else {
+                if (validate.isValidDate(test)) {
+                    break;
+                } else {
+                    System.out.println("Ngày không hợp lệ. Nhập lại: ");
+                }
+            }
+        }
+        return test;
+    }
+    public String InputPaymentMethod() {
+        String test;
+        System.out.println("Nhập phương thức đặt hàng: ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank() || test.length() > 20) {
+                System.out.println("Không hợp lệ. Nhập lại: ");
+            } else {
+                break;
+            }
+        }
+        return test;
+    }
+    public String InputStatus() {
+        String test;
+        System.out.println("Nhập trạng thái của đơn hàng (0 hoặc 1) (0: chưa xử lý, 1: đã xử lý): ");
+        while (true) {
+            test = sc.nextLine();
+            if (test.isBlank()) { // nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+                System.out.println("Trạng thái không được để trống. Nhập lại: ");
+            } else {
+                if (test.compareTo("0") == 0 || test.compareTo("1") == 0) {
+                    break;
+                } else {
+                    System.out.println("Trạng thái không hợp lệ. Nhập lại: ");
+                }
+            }
+        }
+        return test;
+    }
+
+    //Hàm xuất data
     public void OutputData(int i) {
         String row = String.format("| %-11s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
                 payment[i].getPaymentId(),
@@ -945,12 +666,18 @@ public class QuanLyThanhToan implements ControllerInterface {
         return data;
     }
 
-    public void updateList(int select, ThanhToan[] payment) {
+    public void updateList(int select, ThanhToan[] payment, ThanhToan tt) {
         switch (select) {
             case 0:
                 try {
-                    String[] inputStringData = stringToInputInFile(payment);
-                    Stream.addAll("Database/ThanhToan.txt", inputStringData);
+                    String inputStringData = tt.getPaymentId() + ";" +
+                                            tt.getCustomerId() + ";" +
+                                            tt.getReceiptId() + ";" +
+                                            tt.getAmount() + ";" +
+                                            tt.getPaymentDate() + ";" +
+                                            tt.getPaymentMethod() + ";" +
+                                            tt.getStatus();
+                    Stream.addOneLine("Database/ThanhToan.txt", inputStringData);
                     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN THANH TOÁN THÀNH CÔNG----+");
                     waitConsole();
                 } catch (IOException e) {
@@ -972,5 +699,6 @@ public class QuanLyThanhToan implements ControllerInterface {
 
     public void waitConsole() {
         System.out.println("\t\t\t\t\t\t\t\t - Ấn Enter để tiếp tục");
+        sc.nextLine();
     }
 }

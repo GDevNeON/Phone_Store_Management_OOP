@@ -87,24 +87,8 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
 
         qly.AddThongTin();
-
-        try {
-            String inputStringData = qly.getManagerId() + ";" +
-                    qly.getName() + ";" +
-                    qly.getAge() + ";" +
-                    qly.getGender() + ";" +
-                    qly.getAddress() + ";" +
-                    qly.getEmail() + ";" +
-                    qly.getSdt() + ";" +
-                    qly.getRole() + ";" +
-                    qly.getShift();
-            Stream.addOneLine("Database/NguoiQuanLy.txt", inputStringData);
-            System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NGƯỜI QUẢN LÝ THÀNH CÔNG----+");
-            waitConsole();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+      
+        updateList(0, manager, qly);
         getListManagers();
     }
 
@@ -175,8 +159,6 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                     }
                 }
 
-                String[] data = new String[manager.length];
-
                 for (int i = 0; i < manager.length; i++) {
                     if (manager[i].getManagerId().equals(ID_Manager)) {
                         System.out.println("Nhập thông tin người quản lý:");
@@ -218,27 +200,11 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                             }
                         }
                     }
-                    data[i] = manager[i].getManagerId() + ";" +
-                            manager[i].getName() + ";" +
-                            manager[i].getAge() + ";" +
-                            manager[i].getGender() + ";" +
-                            manager[i].getAddress() + ";" +
-                            manager[i].getEmail() + ";" +
-                            manager[i].getSdt() + ";" +
-                            manager[i].getRole() + ";" +
-                            manager[i].getShift();
                 }
-                try {
-                    Stream.addAll("Database/NguoiQuanLy.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t+----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
-                    waitConsole();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                updateList(1, manager, id);
 
             } else {
-                String[] data = new String[manager.length];
-
+                sc.nextLine();
                 for (int i = 0; i < manager.length; i++) {
                     if (manager[i].getManagerId().equals(ID_Manager)) {
                         {
@@ -271,23 +237,8 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                         manager[i].setRole(id.getRole());
                         manager[i].setShift(id.getShift());
                     }
-                    data[i] = manager[i].getManagerId() + ";" +
-                            manager[i].getName() + ";" +
-                            manager[i].getAge() + ";" +
-                            manager[i].getGender() + ";" +
-                            manager[i].getAddress() + ";" +
-                            manager[i].getEmail() + ";" +
-                            manager[i].getSdt() + ";" +
-                            manager[i].getRole() + ";" +
-                            manager[i].getShift();
                 }
-                try {
-                    Stream.addAll("Database/NguoiQuanLy.txt", data);
-                    System.out.println("\t\t\t\t\t\t\t\t+----SỬA THÔNG TIN SẢN PHẨM THÀNH CÔNG----+");
-                    waitConsole();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                updateList(1, manager, id);
             }
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
@@ -324,7 +275,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             }
 
             // Cập nhật lại toàn bộ list vào file
-            updateList(1, manager);
+            updateList(1, manager, id);
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
         } catch (Exception e) {
@@ -363,7 +314,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             int index = sc.nextInt();
 
             while (true) {
-                if (index < 1 || index > 3) {
+                if (index < 0 || index > 3) {
                     System.out.print("Nhập lại: ");
                     index = sc.nextInt();
                 } else {
@@ -408,6 +359,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             }
             System.out.format(
                     "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
+            waitConsole();
         } catch (InputMismatchException ei) {
             System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
         } catch (Exception e) {
@@ -536,19 +488,26 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         return data;
     }
 
-    public void updateList(int select, QuanLy[] manager) {
+    public void updateList(int select, QuanLy[] manager, QuanLy qly) {
         switch (select) {
             case 0:
                 try {
-                    String[] data = stringToInputInFile(manager);
-                    Stream.addAll("Database/NguoiQuanLy.txt", data);
+                    String inputStringData = qly.getManagerId() + ";" +
+                                            qly.getName() + ";" +
+                                            qly.getAge() + ";" +
+                                            qly.getGender() + ";" +
+                                            qly.getAddress() + ";" +
+                                            qly.getEmail() + ";" +
+                                            qly.getSdt() + ";" +
+                                            qly.getRole() + ";" +
+                                            qly.getShift();
+                    Stream.addOneLine("Database/NguoiQuanLy.txt", inputStringData);
                     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN NGƯỜI QUẢN LÝ THÀNH CÔNG----+");
                     waitConsole();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-
             case 1:
                 String[] data = stringToInputInFile(manager);
 
