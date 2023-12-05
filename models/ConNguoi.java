@@ -9,15 +9,10 @@ public class ConNguoi {
     private int age;
 
     public ConNguoi() {
-        name = null;
-        gender = null;
-        address = null;
-        email = null;
-        sdt = null;
-        age = 0;
+
     }
 
-    public ConNguoi(String name, Integer age, String gender, String address, String email, String sdt) {
+    public ConNguoi(String name, String gender, String address, String email, String sdt, int age) {
         this.name = name;
         this.gender = gender;
         this.address = address;
