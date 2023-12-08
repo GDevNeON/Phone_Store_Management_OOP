@@ -40,7 +40,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     warranty = new BaoHanh[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      warranty[i] = new BaoHanh(row[0], LocalDate.parse(row[1]), row[2], row[3], row[4], row[5], row[6]);
+      warranty[i] = new BaoHanh(row[0], row[1], LocalDate.parse(row[2]), row[3], row[4], row[5], row[6], row[7]);
     }
     return warranty;
   }
@@ -52,7 +52,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
     getListWarranties();
 
     for (BaoHanh w : warranty) {
-      String read = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
+      String read = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
+          w.getWarrantyId(),
           w.getProductId(),
           w.getProductDate(),
           w.getYearsOfWarranty(),
@@ -63,7 +64,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
       System.out.println(read);
     }
     System.out.format(
-        "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+        "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
     waitConsole();
   }
 
@@ -72,8 +73,21 @@ public class QuanLyBaoHanh implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN BẢO HÀNH----+");
     BaoHanh warrantyModel = new BaoHanh();
     
-    warrantyModel.setProductId(InputProductId());
+    warrantyModel.setWarrantyId(InputWarrantyId());
     int check = 0;
+    for (BaoHanh bh: warranty) {
+      if (warrantyModel.getWarrantyId().equals(bh.getWarrantyId())) {
+        check = 1;
+        break;
+      }
+    }
+    if (check == 1) {
+      System.out.println("\t\t\t\t\t\t\t\t +----MÃ BẢO HÀNH BỊ TRÙNG. VUI LÒNG KIỂM TRA LẠI----+");
+      return;
+    }
+      
+    warrantyModel.setProductId(InputProductId());
+    check = 0;
     SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
     for (SanPham sp : spList) {
       if (warrantyModel.getProductId().equals(sp.getProductId())) {
@@ -82,25 +96,28 @@ public class QuanLyBaoHanh implements ControllerInterface {
       }
     }
     if (check == 0) {
-      System.out.println("\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI. VUI LÒNG KIỂM TRA LẠI----+");
+      System.out.println("\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI TRONG DS SẢN PHẨM. VUI LÒNG KIỂM TRA LẠI----+");
       return;
     }
 
     warrantyModel.setProductDate(LocalDate.parse(InputProductDate()));
-
     warrantyModel.setYearsOfWarranty(InputYearsOfWarranty()); 
-
     warrantyModel.setWarrantyMethod(InputWarrantyMethod());
 
     warrantyModel.setCustomerId(InputCustomerId());
     KhachHang[] customers = QuanLyKhachHang.getInstance().getListCustomer();
-
+    check = 0;
     for (KhachHang customer : customers) {
       if (customer.getCustomerId().equalsIgnoreCase(warrantyModel.getCustomerId())) {
         warrantyModel.setCustomerName(customer.getName());
         warrantyModel.setSdt(customer.getSdt());
+        check = 1;
         break;
       }
+    }
+    if (check == 0) {
+      System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG. VUI LÒNG KIỂM TRA LẠI----+");
+      return;
     }
 
     updateList(0, warranty, warrantyModel);
@@ -110,39 +127,32 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Update() {
     try {
+      sc.nextLine();
       System.out.println("\t\t\t\t\t\t\t\t +----CẬP NHẬT THÔNG TIN BẢO HÀNH----+");
-      System.out.println("Nhập ID của sản phẩm cần sửa: ");
-      String ID_Product = InputProductId();
+      System.out.println("Nhập ID bảo hành cần sửa: ");
+      String ID_Warranty = InputWarrantyId();
       BaoHanh id = null;
 
       for (BaoHanh warrantyModel : warranty) {
-        if (warrantyModel.getProductId().equals(ID_Product)) {
+        if (warrantyModel.getWarrantyId().equals(ID_Warranty)) {
           id = warrantyModel;
           break;
         }
       }
-
       if (id == null) {
-        System.out.println("\t\t\t\t\t\t\t\t +-----MÃ SẢN PHẨM KHÔNG TỒN TẠI-----+");
+        System.out.println("\t\t\t\t\t\t\t\t +-----MÃ BẢO HÀNH KHÔNG TỒN TẠI-----+");
         return;
       }
 
       System.out.println("1. Sửa 1 phần của dòng");
       System.out.println("2. Sửa toàn bộ dòng");
       System.out.print("Nhập số 1 hoặc 2: ");
-      int choose = sc.nextInt();
-      while (true) {
-        if (choose < 1 || choose > 2) {
-          System.out.print("Nhập lại: ");
-          choose = sc.nextInt();
-        } else {
-          break;
-        }
-      }
+      int choose = InputChoice(1, 2);
 
       System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN BẢO HÀNH TRƯỚC KHI CHỈNH SỬA----+");
       OutputHeader();
-      String row = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
+      String row = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
+          id.getWarrantyId(),
           id.getProductId(),
           id.getProductDate(),
           id.getYearsOfWarranty(),
@@ -152,30 +162,22 @@ public class QuanLyBaoHanh implements ControllerInterface {
           id.getSdt());
       System.out.println(row);
       System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+          "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
       if (choose == 1) {
         System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN SỬA-------------+");
         System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
         System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
         System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
-        System.out.println("\t\t\t\t\t\t\t\t |2. Ngày sản xuất                         |");
-        System.out.println("\t\t\t\t\t\t\t\t |3. Năm bảo hành                          |");
+        System.out.println("\t\t\t\t\t\t\t\t |2. Ngày bảo hành                         |");
+        System.out.println("\t\t\t\t\t\t\t\t |3. Số năm bảo hành                       |");
         System.out.println("\t\t\t\t\t\t\t\t |4. Phương thức bảo hành                  |");
         System.out.println("\t\t\t\t\t\t\t\t |5. ID Khách hàng                         |");
         System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
         System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-        int index = sc.nextInt();
-        while (true) {
-          if (index < 0 || index > 5) {
-            System.out.print("Nhập lại: ");
-            index = sc.nextInt();
-          } else {
-            break;
-          }
-        }
+        int index = InputChoice(0, 5);
 
         for (int i = 0; i < warranty.length; i++) {
-          if (warranty[i].getProductId().equals(ID_Product)) {
+          if (warranty[i].getWarrantyId().equals(ID_Warranty)) {
             System.out.println("Nhập thông tin bảo hành:");
             switch (index) {
               case 0 -> {
@@ -232,6 +234,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
                     if (customer.getCustomerId().equals(id.getCustomerId())) {
                       foundCustomer = true;
                       warranty[i].setCustomerId(id.getCustomerId());
+                      warranty[i].setCustomerName(customer.getName());
+                      warranty[i].setSdt(customer.getSdt());
                       break;
                     }
                   }
@@ -247,7 +251,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
         sc.nextLine();
 
         for (int i = 0; i < warranty.length; i++) {
-          if (warranty[i].getProductId().equals(ID_Product)) {
+          if (warranty[i].getWarrantyId().equals(ID_Warranty)) {
             System.out.println("Nhập thông tin bảo hành:");
             	{
                 id.setProductId(InputProductId());
@@ -278,6 +282,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
                     if (customer.getCustomerId().equals(id.getCustomerId())) {
                       foundCustomer = true;
                       warranty[i].setCustomerId(id.getCustomerId());
+                      warranty[i].setCustomerName(customer.getName());
+                      warranty[i].setSdt(customer.getSdt());
                       break;
                     }
                   }
@@ -304,13 +310,14 @@ public class QuanLyBaoHanh implements ControllerInterface {
   @Override
   public void Delete() {
     try {
+      sc.nextLine();
       System.out.println("\t\t\t\t\t\t\t\t +----XÓA THÔNG TIN BẢO HÀNH----+");
-      System.out.println("Nhập ID sản phẩm cần xóa: ");
-      String ID_Product = InputProductId();
+      System.out.println("Nhập ID bảo hành cần xóa: ");
+      String ID_Warranty = InputWarrantyId();
 
       BaoHanh product = null;
       for (BaoHanh w : warranty) {
-        if (w.getProductId().equals(ID_Product)) {
+        if (w.getWarrantyId().equals(ID_Warranty)) {
           product = w;
           break;
         }
@@ -322,7 +329,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
       }
 
       for (int i = 0; i < warranty.length; i++) {
-        if (ID_Product.equals(warranty[i].getProductId())) {
+        if (ID_Warranty.equals(warranty[i].getWarrantyId())) {
           warranty = deleteWarranty(warranty, i);
           break;
         }
@@ -338,51 +345,25 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
   }
 
-  // Xóa phần tử khỏi mảng
-  public BaoHanh[] deleteWarranty(BaoHanh[] warranty, int index) {
-    BaoHanh[] newCs = new BaoHanh[warranty.length - 1];
-    for (int i = 0, j = 0; i < warranty.length; i++) {
-      if (i != index) {
-        newCs[j++] = warranty[i];
-      }
-    }
-    return newCs;
-  }
-
-  // Thêm phần tử vào mảng
-  public BaoHanh[] addWarranty(BaoHanh[] warranty, BaoHanh sanpham) {
-    warranty = Arrays.copyOf(warranty, warranty.length + 1);
-    warranty[warranty.length - 1] = sanpham;
-    return warranty;
-  }
-
   @Override
   public void searchByCategory() {
     try {
+      sc.nextLine();
       String find = null;
       System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN TÌM-------------+");
       System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
       System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
       System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
-      System.out.println("\t\t\t\t\t\t\t\t |2. Ngày sản xuất                         |");
+      System.out.println("\t\t\t\t\t\t\t\t |2. Ngày bảo hành                         |");
       System.out.println("\t\t\t\t\t\t\t\t |3. Số năm bảo hành                       |");
       System.out.println("\t\t\t\t\t\t\t\t |4. Phương thức bảo hành                  |");
       System.out.println("\t\t\t\t\t\t\t\t |5. ID Khách hàng                         |");
       System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
       System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
 
-      int index = sc.nextInt();
+      int index = InputChoice(0, 5);
 
-      while (true) {
-        if (index < 0 || index > 5) {
-          System.out.print("Nhập lại: ");
-          index = sc.nextInt();
-        } else {
-          break;
-        }
-      }
-
-      System.out.print("Nhập nội dung cần tìm: ");
+      System.out.println("Nhập nội dung cần tìm: ");
       sc.nextLine();
       switch (index) {
           case 0 -> {
@@ -438,7 +419,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
         }
       }
       System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+          "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
       waitConsole();
     } catch (InputMismatchException e) {
       System.out.println("\t\t\t\t\t\t\t\t GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI!");
@@ -447,8 +428,20 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
   }
 
-
   //Hàm nhập data
+  public String InputWarrantyId() {
+    String test;
+    System.out.println("Nhập ID Bảo hành (bh_): ");
+		while (true) {
+        test = sc.nextLine();
+        if (test.isBlank() || (!validate.isValidIDwarranty(test))) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
+            System.out.println("ID Bảo hành không hợp lệ. Nhập lại: ");
+        } else {
+          break;
+        }
+		}
+    return test;
+  }
   public String InputProductId() {
     String test;
     System.out.println("Nhập ID Sản phẩm (sp_): ");
@@ -464,7 +457,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
   }
   public String InputProductDate() {
     String test;
-    System.out.println("Nhập Ngày sản xuất (yyyy-MM-dd): ");
+    System.out.println("Nhập Ngày bảo hành (yyyy-MM-dd): ");
     while (true) {
         test = sc.nextLine();
         if (test.isBlank() || test.length() != 10) {
@@ -527,7 +520,6 @@ public class QuanLyBaoHanh implements ControllerInterface {
   public String InputCustomerId() {
     String test;
     System.out.println("Nhập ID Khách hàng (kh_): ");
-		sc.nextLine();
 		while (true) {
 			test = sc.nextLine();
 			if (test.isBlank() || !validate.isValidIDcustomer(test)) {   //nếu như xâu test rỗng hoặc chứa toàn khoảng trắng, NHẬP LẠI ĐEEEEEEEE!!!!
@@ -538,11 +530,23 @@ public class QuanLyBaoHanh implements ControllerInterface {
 		}
     return test;
   }
-
+  public int InputChoice(int beginIndex, int endIndex) {
+    int choose = sc.nextInt();
+    while (true) {
+      if (choose < beginIndex || choose > endIndex) {
+        System.out.print("Nhập lại: ");
+        choose = sc.nextInt();
+      } else {
+        break;
+      }
+    }
+    return choose;
+  }
 
   //Hàm xuất data
   public void OutputData(int i) {
-    String row = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
+    String row = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
+        warranty[i].getWarrantyId(),
         warranty[i].getProductId(),
         warranty[i].getProductDate(),
         warranty[i].getYearsOfWarranty(),
@@ -554,26 +558,28 @@ public class QuanLyBaoHanh implements ControllerInterface {
   }
 
   public void OutputHeader() {
-    String header = String.format("| %-11s | %-25s | %-8s | %-20s | %-13s | %-25s | %-12s |",
+    String header = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
+          "ID bảo hành",
           "ID sản phẩm",
           "Ngày bảo hành",
-          "Số lượng",
+          "Số năm BH",
           "Phương thức bảo hành",
           "ID khách hàng",
           "Tên khách hàng",
           "SĐT");
       System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+          "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
       System.out.println(header);
       System.out.format(
-          "+-------------+---------------------------+----------+----------------------+---------------+---------------------------+--------------+%n");
+          "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
   }
 
   public String[] stringToInputInFile(BaoHanh[] warranty) {
     String[] data = new String[warranty.length];
 
     for (int i = 0; i < warranty.length; i++) {
-      data[i] = warranty[i].getProductId() + ";" +
+      data[i] = warranty[i].getWarrantyId() + ";" +
+          warranty[i].getProductId() + ";" +
           warranty[i].getProductDate() + ";" +
           warranty[i].getYearsOfWarranty() + ";" +
           warranty[i].getWarrantyMethod() + ";" +
@@ -589,7 +595,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
     switch (select) {
       case 0:
         try {
-          String data = bh.getProductId() + ";" +
+          String data = bh.getWarrantyId() + ";" +
+                        bh.getProductId() + ";" +
                         bh.getProductDate() + ";" +
                         bh.getYearsOfWarranty() + ";" +
                         bh.getWarrantyMethod() + ";" +
@@ -615,6 +622,24 @@ public class QuanLyBaoHanh implements ControllerInterface {
         }
         break;
     }
+  }
+
+  // Xóa phần tử khỏi mảng
+  public BaoHanh[] deleteWarranty(BaoHanh[] warranty, int index) {
+    BaoHanh[] newCs = new BaoHanh[warranty.length - 1];
+    for (int i = 0, j = 0; i < warranty.length; i++) {
+      if (i != index) {
+        newCs[j++] = warranty[i];
+      }
+    }
+    return newCs;
+  }
+
+  // Thêm phần tử vào mảng
+  public BaoHanh[] addWarranty(BaoHanh[] warranty, BaoHanh sanpham) {
+    warranty = Arrays.copyOf(warranty, warranty.length + 1);
+    warranty[warranty.length - 1] = sanpham;
+    return warranty;
   }
 
   public void waitConsole() {

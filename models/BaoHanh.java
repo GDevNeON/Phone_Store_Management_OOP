@@ -3,6 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class BaoHanh {
+  private String warrantyId;
   private String productId;
   private LocalDate productDate;
   private String yearsOfWarranty;
@@ -14,8 +15,9 @@ public class BaoHanh {
   public BaoHanh() {
   }
 
-  public BaoHanh(String productId, LocalDate productDate, String yearsOfWarranty, String warrantyMethod,
+  public BaoHanh(String warrantyId, String productId, LocalDate productDate, String yearsOfWarranty, String warrantyMethod,
       String customerId, String customerName, String sdt) {
+    this.warrantyId = warrantyId;
     this.productId = productId;
     this.productDate = productDate;
     this.yearsOfWarranty = yearsOfWarranty;
@@ -23,6 +25,14 @@ public class BaoHanh {
     this.customerId = customerId;
     this.customerName = customerName;
     this.sdt = sdt;
+  }
+
+  public String getWarrantyId() {
+    return this.warrantyId;
+  }
+
+  public void setWarrantyId(String warrantyId) {
+    this.warrantyId = warrantyId;
   }
 
   public String getProductId() {
@@ -79,6 +89,11 @@ public class BaoHanh {
 
   public void setSdt(String sdt) {
     this.sdt = sdt;
+  }
+
+  public BaoHanh warrantyId(String warrantyId) {
+    setWarrantyId(warrantyId);
+    return this;
   }
 
   public BaoHanh productId(String productId) {

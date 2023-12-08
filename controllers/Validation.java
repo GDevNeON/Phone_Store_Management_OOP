@@ -145,6 +145,11 @@ public class Validation {
     return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH;
   }
 
+  // Hàm validation cho id_baohanh
+  public boolean isValidIDwarranty(String id) {
+    return id.startsWith("bh") && id.length() <= MAX_ID_LENGTH;
+  }
+
   public boolean isValidKindOfCustomer(String kindOfCustomer) {
     return kindOfCustomer.equalsIgnoreCase("walk-in") || kindOfCustomer.equalsIgnoreCase("regular");
   }
