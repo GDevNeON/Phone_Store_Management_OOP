@@ -73,7 +73,7 @@ public class NhaCungCap {
         while (true) {
             System.out.println("Nhập ID nhà cung cấp (ncc_): ");
             MaNCC = input.nextLine();
-            if (MaNCC.isEmpty() || !MaNCC.matches("^ncc[0-9]+$") || MaNCC.length() > 7) {
+            if (MaNCC.isBlank() || !MaNCC.matches("^ncc[0-9]+$") || MaNCC.length() > 7) {
                 System.out.println("Nhập sai định dạng.");
             } else {
                 int check = 0;
@@ -98,13 +98,13 @@ public class NhaCungCap {
         do {
             System.out.println("Nhập tên nhà cung cấp");
             TenNCC = input.nextLine();
-            if (TenNCC.isEmpty()) {
+            if (TenNCC.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (TenNCC.length() > 30) {
                 System.out.println("Nhập không quá 30 kí tự.");
             }
-        } while (TenNCC.isEmpty() || TenNCC.length() > 30);
+        } while (TenNCC.isBlank() || TenNCC.length() > 30);
         setTenNCC(TenNCC);
     }
 
@@ -112,13 +112,13 @@ public class NhaCungCap {
         do {
             System.out.println("Nhập địa chỉ nhà cung cấp");
             DiaChi = input.nextLine();
-            if (DiaChi.isEmpty()) {
+            if (DiaChi.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (DiaChi.length() > 40) {
                 System.out.println("Nhập không quá 40 kí tự.");
             }
-        } while (DiaChi.isEmpty() || DiaChi.length() > 40);
+        } while (DiaChi.isBlank() || DiaChi.length() > 40);
         setDiaChi(DiaChi);
     }
 

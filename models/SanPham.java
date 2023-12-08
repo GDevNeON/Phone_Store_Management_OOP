@@ -78,41 +78,11 @@ public class SanPham {
         this.status = status;
     }
 
-    public SanPham productId(String productId) {
-        setProductId(productId);
-        return this;
-    }
-
-    public SanPham typeOfProductId(String typeOfProductId) {
-        setTypeOfProductId(typeOfProductId);
-        return this;
-    }
-
-    public SanPham name(String name) {
-        setName(name);
-        return this;
-    }
-
-    public SanPham amount(int amount) {
-        setAmount(amount);
-        return this;
-    }
-
-    public SanPham price(int price) {
-        setPrice(price);
-        return this;
-    }
-
-    public SanPham status(int status) {
-        setStatus(status);
-        return this;
-    }
-
     public void nhapProductId(SanPham[] DSSP) {
         while (true) {
             System.out.println("Nhập ID sản phẩm (sp_): ");
             productId = input.nextLine();
-            if (productId.isEmpty() || !productId.matches("^sp[0-9]+$") || productId.length() > 6) {
+            if (productId.isBlank() || !productId.matches("^sp[0-9]+$") || productId.length() > 6) {
                 System.out.println("Nhập sai định dạng.");
             } else {
                 int check = 0;
@@ -136,13 +106,13 @@ public class SanPham {
         do {
             System.out.println("Nhập loại: ");
             typeOfProductId = input.nextLine();
-            if (typeOfProductId.isEmpty()) {
+            if (typeOfProductId.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (typeOfProductId.length() > 10) {
                 System.out.println("Nhập không quá 10 kí tự.");
             }
-        } while (typeOfProductId.isEmpty() || typeOfProductId.length() > 10);
+        } while (typeOfProductId.isBlank() || typeOfProductId.length() > 10);
         setTypeOfProductId(typeOfProductId);
     }
 
@@ -150,13 +120,13 @@ public class SanPham {
         do {
             System.out.println("Nhập tên sản phẩm: ");
             name = input.nextLine();
-            if (name.isEmpty()) {
+            if (name.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (name.length() > 20) {
                 System.out.println("Nhập không quá 20 kí tự.");
             }
-        } while (name.isEmpty() || name.length() > 20);
+        } while (name.isBlank() || name.length() > 20);
         setName(name);
     }
 

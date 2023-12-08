@@ -86,7 +86,7 @@ public class GiamGia {
         while (true) {
             System.out.println("Nhập ID giảm giá (gg_): ");
             discountId = input.nextLine();
-            if (discountId.isEmpty() || !discountId.matches("^gg[0-9]+$") || discountId.length() > 6) {
+            if (discountId.isBlank() || !discountId.matches("^gg[0-9]+$") || discountId.length() > 6) {
                 System.out.println("Nhập sai định dạng.");
             } else {
                 int check = 0;
@@ -110,13 +110,13 @@ public class GiamGia {
         do {
             System.out.println("Nhập loại khách hàng: ");
             kindOfCustomer = input.nextLine();
-            if (kindOfCustomer.isEmpty()) {
+            if (kindOfCustomer.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (kindOfCustomer.length() > 20) {
                 System.out.println("Nhập không quá 20 kí tự.");
             }
-        } while (kindOfCustomer.isEmpty() || kindOfCustomer.length() > 20);
+        } while (kindOfCustomer.isBlank() || kindOfCustomer.length() > 20);
         setKindOfCustomer(kindOfCustomer);
     }
 
@@ -124,13 +124,13 @@ public class GiamGia {
         do {
             System.out.println("Nhập tên sản phẩm: ");
             productName = input.nextLine();
-            if (productName.isEmpty()) {
+            if (productName.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             }
             if (productName.length() > 10) {
                 System.out.println("Nhập không quá 20 kí tự.");
             }
-        } while (productName.isEmpty() || productName.length() > 20);
+        } while (productName.isBlank() || productName.length() > 20);
         setProductName(productName);
     }
 
@@ -138,10 +138,10 @@ public class GiamGia {
         do {
             System.out.println("Nhập % giảm giá: ");
             discountRate = input.nextLine();
-            if (discountRate.isEmpty() || !discountRate.matches("^[0-9]{1,2}%$") || discountRate.length() > 3) {
+            if (discountRate.isBlank() || !discountRate.matches("^[0-9]{1,2}%$") || discountRate.length() > 3) {
                 System.out.println("Nhập % giảm giá từ 0 - 99%.");
             }
-        } while (discountRate.isEmpty() || !discountRate.matches("^[0-9]{1,2}%$") || discountRate.length() > 3);
+        } while (discountRate.isBlank() || !discountRate.matches("^[0-9]{1,2}%$") || discountRate.length() > 3);
         setDiscountRate(discountRate);
     }
 
@@ -151,7 +151,7 @@ public class GiamGia {
         String StartDate;
         while (true) {
             StartDate = input.nextLine();
-            if (StartDate.isEmpty()) {
+            if (StartDate.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             } else {
                 if (validate.isValidDate(StartDate) && StartDate.length() == 10) {
@@ -169,7 +169,7 @@ public class GiamGia {
         String endDate;
         while (true) {
             endDate = input.nextLine();
-            if (endDate.isEmpty()) {
+            if (endDate.isBlank()) {
                 System.out.println("Nhập sai định dạng.");
             } else {
                 if (validate.isValidDate(endDate) && endDate.length() == 10) {
