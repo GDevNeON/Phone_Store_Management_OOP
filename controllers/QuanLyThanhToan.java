@@ -142,15 +142,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             System.out.println("1. Sửa 1 phần của dòng");
             System.out.println("2. Sửa toàn bộ dòng");
             System.out.print("Nhập số 1 hoặc 2: ");
-            int choose = sc.nextInt();
-            while (true) {
-                if (choose < 1 || choose > 2) {
-                    System.out.print("Nhập lại: ");
-                    choose = sc.nextInt();
-                } else {
-                    break;
-                }
-            }
+            int choose = InputChoice(1, 2);
 
             System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN THANH TOÁN TRƯỚC KHI CHỈNH SỬA----+");
             OutputHeader();
@@ -179,14 +171,7 @@ public class QuanLyThanhToan implements ControllerInterface {
                 System.out.println("\t\t\t\t\t\t\t\t |7. Trạng thái                            |");
                 System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
                 System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-                int index = sc.nextInt();
-                while (true) {
-                    if (index < 0 || index > 7) {
-                        System.out.print("Nhập lại: ");
-                        index = sc.nextInt();
-                    } else
-                        break;
-                }
+                int index = InputChoice(0, 7);
 
                 for (int i = 0; i < payment.length; i++) {
                     if (payment[i].getPaymentId().equals(ID_Payment)) {
@@ -393,24 +378,6 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
     }
 
-    // Xóa phần tử khỏi mảng
-    public ThanhToan[] deletePayment(ThanhToan[] payment, int index) {
-        ThanhToan[] newCs = new ThanhToan[payment.length - 1];
-        for (int i = 0, j = 0; i < payment.length; i++) {
-            if (i != index) {
-                newCs[j++] = payment[i];
-            }
-        }
-        return newCs;
-    }
-
-    // Thêm phần tử vào mảng
-    public ThanhToan[] addPayment(ThanhToan[] payment, ThanhToan sanpham) {
-        payment = Arrays.copyOf(payment, payment.length + 1);
-        payment[payment.length - 1] = sanpham;
-        return payment;
-    }
-
     @Override
     public void searchByCategory() {
         try {
@@ -427,16 +394,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t |7. Trạng thái                            |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int index = sc.nextInt();
-
-            while (true) {
-                if (index < 0 || index > 7) {
-                    System.out.print("Nhập lại: ");
-                    index = sc.nextInt();
-                } else {
-                    break;
-                }
-            }
+            int index = InputChoice(0, 7);
 
             sc.nextLine();
             System.out.println("Nhập nội dung cần tìm: ");
@@ -620,6 +578,18 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
+    public int InputChoice(int beginIndex, int endIndex) {
+        int choose = sc.nextInt();
+        while (true) {
+            if (choose < beginIndex || choose > endIndex) {
+                System.out.print("Nhập lại: ");
+                choose = sc.nextInt();
+            } else {
+                break;
+            }
+        }
+        return choose;
+    }
 
     //Hàm xuất data
     public void OutputData(int i) {
@@ -695,6 +665,24 @@ public class QuanLyThanhToan implements ControllerInterface {
                 }
                 break;
         }
+    }
+
+    // Xóa phần tử khỏi mảng
+    public ThanhToan[] deletePayment(ThanhToan[] payment, int index) {
+        ThanhToan[] newCs = new ThanhToan[payment.length - 1];
+        for (int i = 0, j = 0; i < payment.length; i++) {
+            if (i != index) {
+                newCs[j++] = payment[i];
+            }
+        }
+        return newCs;
+    }
+
+    // Thêm phần tử vào mảng
+    public ThanhToan[] addPayment(ThanhToan[] payment, ThanhToan sanpham) {
+        payment = Arrays.copyOf(payment, payment.length + 1);
+        payment[payment.length - 1] = sanpham;
+        return payment;
     }
 
     public void waitConsole() {

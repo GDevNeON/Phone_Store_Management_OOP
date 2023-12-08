@@ -114,15 +114,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             System.out.println("1. Sửa 1 phần của dòng");
             System.out.println("2. Sửa toàn bộ dòng");
             System.out.print("Nhập số 1 hoặc 2: ");
-            int choose = sc.nextInt();
-            while (true) {
-                if (choose < 1 || choose > 2) {
-                    System.out.print("Nhập lại: ");
-                    choose = sc.nextInt();
-                } else {
-                    break;
-                }
-            }
+            int choose = InputChoice(1, 2);
 
             System.out.println("\t\t\t\t\t\t\t\t +----THÔNG TIN NGƯỜI QUẢN LÝ TRƯỚC KHI CHỈNH SỬA----+");
             OutputHeader();
@@ -149,15 +141,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                 System.out.println("\t\t\t\t\t\t\t\t |3. Ca làm                                |");
                 System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
                 System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-                int index = sc.nextInt();
-                while (true) {
-                    if (index < 0 || index > 3) {
-                        System.out.print("Nhập lại: ");
-                        index = sc.nextInt();
-                    } else {
-                        break;
-                    }
-                }
+                int index = InputChoice(0, 3);
 
                 for (int i = 0; i < manager.length; i++) {
                     if (manager[i].getManagerId().equals(ID_Manager)) {
@@ -311,16 +295,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             System.out.println("\t\t\t\t\t\t\t\t |3. Ca làm                                |");
             System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
             System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
-            int index = sc.nextInt();
-
-            while (true) {
-                if (index < 0 || index > 3) {
-                    System.out.print("Nhập lại: ");
-                    index = sc.nextInt();
-                } else {
-                    break;
-                }
-            }
+            int index = InputChoice(0, 3);
 
             System.out.println("Nhập nội dung cần tìm: ");
             sc.nextLine();
@@ -435,6 +410,18 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
             }
         }
         return test;
+    }
+    public int InputChoice(int beginIndex, int endIndex) {
+        int choose = sc.nextInt();
+        while (true) {
+            if (choose < beginIndex || choose > endIndex) {
+                System.out.print("Nhập lại: ");
+                choose = sc.nextInt();
+            } else {
+                break;
+            }
+        }
+        return choose;
     }
 
     //Hàm xuất data
