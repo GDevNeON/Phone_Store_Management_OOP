@@ -26,7 +26,7 @@ public class QuanLyBanHangUI {
     System.out.println("3.Quản lý bảo hành");
     System.out.println("4.Quản lý giảm giá");
     System.out.println("5.Quản lý thanh toán");
-    System.out.println("a.Đăng xuất.");
+    System.out.println("0.Đăng xuất.");
     System.out.println("--------------------------------------");
   }
 
@@ -39,7 +39,7 @@ public class QuanLyBanHangUI {
       System.out.println("3.Sửa khách hàng");
       System.out.println("4.Xóa khách hàng");
       System.out.println("5.Tìm kiếm");
-      System.out.println("a.Thoát");
+      System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
       subCheck = input.nextLine();
       switch (subCheck) {
@@ -66,7 +66,7 @@ public class QuanLyBanHangUI {
       System.out.println("3.Sửa hóa đơn");
       System.out.println("4.Xóa hóa đơn");
       System.out.println("5.Tìm kiếm");
-      System.out.println("a.Thoát");
+      System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
       subCheck = input.nextLine();
       switch (subCheck) {
@@ -103,12 +103,12 @@ public class QuanLyBanHangUI {
     String subCheck = null;
     do {
       System.out.println("Danh Sách chức năng:");
-      System.out.println("1.Xem danh sách hóa đơn");
-      System.out.println("2.Thêm hóa đơn");
-      System.out.println("3.Sửa hóa đơn");
-      System.out.println("4.Xóa hóa đơn");
+      System.out.println("1.Xem danh sách bảo hành");
+      System.out.println("2.Thêm bảo hành");
+      System.out.println("3.Sửa bảo hành");
+      System.out.println("4.Xóa bảo hành");
       System.out.println("5.Tìm kiếm");
-      System.out.println("a.Thoát");
+      System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
       subCheck = input.nextLine();
       switch (subCheck) {
@@ -145,7 +145,7 @@ public class QuanLyBanHangUI {
       System.out.println("3.Sửa sản phẩm được giảm giá");
       System.out.println("4.Xóa sản phẩm");
       System.out.println("5.Tìm kiếm");
-      System.out.println("a.Thoát");
+      System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
       subCheck = input.nextLine();
       switch (subCheck) {
@@ -182,7 +182,7 @@ public class QuanLyBanHangUI {
       System.out.println("3.Sửa ");
       System.out.println("4.Xóa ");
       System.out.println("5.Tìm kiếm");
-      System.out.println("a.Thoát");
+      System.out.println("0.Thoát");
       System.out.println("Mời nhập: ");
       subCheck = input.nextLine();
       switch (subCheck) {
