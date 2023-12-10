@@ -23,7 +23,24 @@ public class Validation {
   public static boolean isValidAge(int age) {
     return age >= 0 && age <= 150;
   }
-
+  public static int readValidAge() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter your age: ");
+    while (!scanner.hasNextInt()) {
+        System.out.println("That's not a valid integer. Please try again.");
+        scanner.next();
+    }
+    int age = scanner.nextInt();
+    while (!isValidAge(age)) {
+        System.out.println("That's not a valid age. Please enter an age between 1 and 150.");
+        while (!scanner.hasNextInt()) {
+            System.out.println("That's not a valid integer. Please try again.");
+            scanner.next();
+        }
+        age = scanner.nextInt();
+    }
+    return age;
+}
   // Hàm validation cho giới tính
   public static boolean isValidGender(String gender) {
     return gender.equalsIgnoreCase("Nam") || gender.equalsIgnoreCase("Nu");
@@ -143,11 +160,6 @@ public class Validation {
   // Hàm validation cho id_sanpham
   public boolean isValidIDmanager(String id) {
     return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH;
-  }
-
-  // Hàm validation cho id_baohanh
-  public boolean isValidIDwarranty(String id) {
-    return id.startsWith("bh") && id.length() <= MAX_ID_LENGTH;
   }
 
   public boolean isValidKindOfCustomer(String kindOfCustomer) {

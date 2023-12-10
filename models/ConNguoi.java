@@ -116,7 +116,7 @@ public class ConNguoi {
                 setName(sc.nextLine());
             } while (!Validation.isValidName(name));
             do {
-                System.out.print("Nhập tuổi: ");
+                Validation.readValidAge();
                 setAge(sc.nextInt());
             } while (!Validation.isValidAge(age));
             sc.nextLine();
