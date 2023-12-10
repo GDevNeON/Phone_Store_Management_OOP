@@ -24,16 +24,16 @@ public class Validation {
     return age >= 0 && age <= 150;
   }
   public static int readValidAge() {
-    System.out.print("Enter your age: ");
+    System.out.print("Nhập tuổi: ");
     while (!scanner.hasNextInt()) {
-        System.out.println("That's not a valid integer. Please try again.");
+        System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
         scanner.next();
     }
     int age = scanner.nextInt();
     while (!isValidAge(age)) {
-        System.out.println("That's not a valid age. Please enter an age between 1 and 150.");
+        System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
         while (!scanner.hasNextInt()) {
-            System.out.println("That's not a valid integer. Please try again.");
+            System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
             scanner.next();
         }
         age = scanner.nextInt();
