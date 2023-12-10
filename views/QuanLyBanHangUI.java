@@ -20,7 +20,7 @@ public class QuanLyBanHangUI {
   }
 
   public static void listFunctionsView() {
-    System.out.println("--------- Quản Lý Khách Hàng ---------");
+    System.out.println("--------- Danh sách chức năng --------");
     System.out.println("1.Quản lý khách hàng");
     System.out.println("2.Quản lý hóa đơn");
     System.out.println("3.Quản lý bảo hành");

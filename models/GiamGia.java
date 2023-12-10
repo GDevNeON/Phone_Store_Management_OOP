@@ -6,7 +6,7 @@ import controllers.Validation;
 
 public class GiamGia {
     Scanner input = new Scanner(System.in);
-    private Validation validate = new Validation();
+    Validation validate = new Validation();
     GiamGia[] DSGG;
     private String discountId;
     private String kindOfCustomer;
@@ -108,16 +108,14 @@ public class GiamGia {
 
     public void nhapKindOfCustomer(GiamGia[] DSGG) {
         do {
-            System.out.println("Nhập loại khách hàng: ");
+            System.out.println("Nhập loại khách hàng (walk-in/regular customer): ");
             kindOfCustomer = input.nextLine();
-            if (kindOfCustomer.isBlank()) {
-                System.out.println("Nhập sai định dạng.");
+            if (kindOfCustomer.isBlank() || !validate.isValidKindOfCustomer(kindOfCustomer)) {
+              System.out.println("Loại khách hàng không hợp lệ. Nhập lại: ");
+            } else {
+              setKindOfCustomer(kindOfCustomer);
             }
-            if (kindOfCustomer.length() > 20) {
-                System.out.println("Nhập không quá 20 kí tự.");
-            }
-        } while (kindOfCustomer.isBlank() || kindOfCustomer.length() > 20);
-        setKindOfCustomer(kindOfCustomer);
+          } while (!validate.isValidKindOfCustomer(kindOfCustomer));
     }
 
     public void nhapProductName(GiamGia[] DSGG) {

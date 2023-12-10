@@ -1,5 +1,5 @@
-gg1;Giau;Nokia C20;15%;2016-11-10;1027-11-10
-gg2;Khach hang lau nam;Iphone 8;20%;2020-12-02;2022-12-02
-gg3;Dai gia;Oppo reno 7;10%;2019-12-01;2020-12-01
-gg4;Ti phu;Samsung J55;5%;2021-01-01;2022-01-01
-gg5;Khach hang tiem nang;Xiaomi;20%;2020-05-01;2022-05-01
+gg1;regular;Nokia C20;15%;2016-11-10;1027-11-10
+gg2;regular;Iphone 8;20%;2020-12-02;2022-12-02
+gg3;regular;Oppo reno 7;10%;2019-12-01;2020-12-01
+gg4;regular;Samsung J55;5%;2021-01-01;2022-01-01
+gg5;regular;Xiaomi;20%;2020-05-01;2022-05-01

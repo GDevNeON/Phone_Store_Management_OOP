@@ -8,6 +8,7 @@ import controllers.QuanLyConfigurations;
 import controllers.QuanLyNhaCungCap;
 import controllers.QuanLyPhieuNhapHang;
 import controllers.QuanLySanPham;
+import controllers.ThongKeKinhDoanh;
 
 public class QuanLyKhoHangUI {
   private static QuanLyKhoHangUI instance;
@@ -29,6 +30,7 @@ public class QuanLyKhoHangUI {
     System.out.println("4.Quản lý nhà cung cấp");
     System.out.println("5.Quản lý chi tiết phiếu nhập hàng");
     System.out.println("6.Quản lý chi tiết hóa đơn");
+    System.out.println("7.Thống kê kinh doanh");
     System.out.println("0.Thoát chương trình.");
     System.out.println("-------------------------------------");
   }
@@ -235,6 +237,9 @@ public class QuanLyKhoHangUI {
         }
         case "6" -> {
           quanLyChiTietHoaDonUI();
+        }
+        case "7" -> {
+          ThongKeKinhDoanh.getInstance().searchByCategory();
         }
         case "0" -> {
           System.out.println("\nThoát chương trình quản lý khách hàng thành công");

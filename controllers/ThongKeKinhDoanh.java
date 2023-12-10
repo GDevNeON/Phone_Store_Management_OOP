@@ -89,21 +89,8 @@ public class ThongKeKinhDoanh implements ControllerInterface {
                 }
             }
             case "2" -> {
-                String startDateString, endDateString;
-                LocalDate startDate = null, endDate = null;
-
-                do {
-                    System.out.println("Nhập ngày bắt đầu (yyyy-MM-dd): ");
-                    startDateString = input.nextLine();
-                } while (!validate.isValidDate(startDateString));
-
-                do {
-                    System.out.println("Nhập ngày kết thúc (yyyy-MM-dd): ");
-                    endDateString = input.nextLine();
-                } while (!validate.isValidDate(endDateString));
-
-                startDate = LocalDate.parse(startDateString);
-                endDate = LocalDate.parse(endDateString);
+                LocalDate startDate = inputDate("Nhập ngày bắt đầu (yyyy-MM-dd): ");
+                LocalDate endDate = inputDate("Nhập ngày kết thúc (yyyy-MM-dd): ");
 
                 for (ThongKe thongKe : TK) {
                     LocalDate thongKeDate = thongKe.getDate();
@@ -132,5 +119,18 @@ public class ThongKeKinhDoanh implements ControllerInterface {
         }
         System.out.format("+----------+------------+--------------+-----------------+-----------------+%n");
         waitConsole();
+    }
+    private LocalDate inputDate(String i) {
+        LocalDate date = null;
+        do {
+            System.out.print(i);
+            String dateString = input.nextLine();
+            if (validate.isValidDate(dateString)) {
+                date = LocalDate.parse(dateString);
+            } else {
+                System.out.println("Ngày không hợp lệ, vui lòng nhập lại!");
+            }
+        } while (date == null);
+        return date;
     }
 }
