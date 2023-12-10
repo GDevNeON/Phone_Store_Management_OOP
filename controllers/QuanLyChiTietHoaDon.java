@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 import models.ChiTietHoaDon;
 import models.ThongKe;
+import models.SanPham;
+
 
 public class QuanLyChiTietHoaDon implements ControllerInterface {
     private static QuanLyChiTietHoaDon instance;
@@ -59,7 +61,21 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
         waitConsole();
 
     }
-
+    public boolean check_SP(String SP){
+        int check = 0;
+        SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+        for (SanPham sp : spList) {
+          if (SP.equals(sp.getProductId())) {
+            check = 1;
+            break;
+          }
+        }
+        if (check == 0) {
+          System.out.println("\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI TRONG DS SẢN PHẨM. VUI LÒNG KIỂM TRA LẠI----+");
+          return false;
+        }
+        return true;
+    }
     @Override
     public void Create() {
         ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
@@ -71,34 +87,35 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
             System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
             HD = input.nextLine();
             if (HD.isEmpty() || !HD.matches("^hd[0-9]+$") || HD.length() > 5) {
-                System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+                System.out.println("\t\t\t\t\t\t\t\t +----Bạn nhập không đúng định dạng hãy nhập lại.----+");
             }
         } while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") || HD.length() > 5);
         chiTietHoaDon.setReceiptId(HD);
-
+        System.out.println();
         String SP;
         do {
             System.out.print("Nhập mã sản phẩm:(sp[0-n])--sp1->sp999 :");
             SP = input.nextLine();
             if (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5) {
-                System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+                System.out.println("\t\t\t\t\t\t\t\t +----Bạn nhập không đúng định dạng hãy nhập lại.----+");
             }
-        } while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5);
+        } while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5||check_SP(SP)==false);
+
         chiTietHoaDon.setProductId(SP);
         thongKe.setProductId(SP);
  
-        System.out.println("enter để tiếp tục");
+        System.out.println("\t\t\t\t\t\t\t\t+----Enter để tiếp tục!!!----+");
         String Amount;
         int Amount_int;
         Amount = input.nextLine();
-        while (!Amount.matches("^[0-9]+$") || Amount.length() > 4) {
-            System.out.print("Nhập số lượng: (<9999) :");
+        while (!Amount.matches("^[0-9]+$") || Amount.length() > 3) {
+            System.out.print("Nhập số lượng: (<999) :");
             Amount = input.nextLine();
         }
         Amount_int = Integer.parseInt(Amount);
         chiTietHoaDon.setAmount(Amount_int);
         thongKe.setAmount(Amount_int);
-        System.out.println("enter để tiếp tục :");
+        System.out.println("\t\t\t\t\t\t\t\t+----Enter để tiếp tục!!!----+");
 
         String Price;
         int Price_int;
@@ -121,7 +138,8 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
             String input = chiTietHoaDon.getReceiptId() + ";" + chiTietHoaDon.getProductId() + ";"
                     + chiTietHoaDon.getAmount() + ";" + chiTietHoaDon.getPrice();
             Stream.addOneLine("Database/ChiTietHoaDon.txt", input);
-            System.out.println("Nhập chi tiết hóa đơn thành công");
+            System.out.println();
+            System.out.println("\t\t\t\t\t\t\t\t+----Nhập chi tiết hóa đơn thành công----+");
             waitConsole();
         } catch (IOException e) {
             e.printStackTrace();
@@ -129,7 +147,6 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
         try {
             String input = thongKe.getProductId() + ";" + thongKe.getAmount() + ";" + thongKe.getPrice() + ";" + thongKe.getDate() + ";" + thongKe.getTotalAmount();
             Stream.addOneLine("Database/ThongKe.txt", input);
-            waitConsole();
         } catch (IOException e) {
             e.printStackTrace();
         }
