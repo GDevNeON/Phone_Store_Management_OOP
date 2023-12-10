@@ -4,4 +4,3 @@ nv003;Robert Johnson;33;Nam;789 Pine St;robertjohnson@example.com;1234567891;Mar
 nv004;Mary Davis;28;Nu;321 Oak St;marydavis@example.com;0987654322;Sales;Ca sáng
 nv005;Doggu;15;Nam;123/456 Nguyen Van Troi;doggu@gmail.com;0123123123;Sales;morning
 nv10;dogug;16;Nam;48/235;doggu@gmail.com;0123123123;Sales;morning
-nv100;Dope;150;Nam;123/456/789;dope@gmail.com;0123123123;Advertising;morning

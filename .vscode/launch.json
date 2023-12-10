@@ -6,6 +6,13 @@
       "name": "App",
       "request": "launch",
       "mainClass": "App.App",
+      "projectName": "QuanLyCuaHangDienThoaiOOP_f23b7a27"
+    },
+    {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "App.App",
       "projectName": "QuanLyCuaHangDienThoaiOOP_3c1f1a41"
     },
     {
