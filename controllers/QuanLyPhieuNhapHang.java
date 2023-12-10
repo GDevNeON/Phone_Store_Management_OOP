@@ -12,14 +12,15 @@ import java.util.Scanner;
 import models.NhaCungCap;
 import models.NhanVien;
 import models.PhieuNhapHang;
+import models.TaiKhoan;
 
 public class QuanLyPhieuNhapHang implements ControllerInterface {
   private static QuanLyPhieuNhapHang instance;
   private PhieuNhapHang[] dsp;
+  public static TaiKhoan[] acc;
   public QuanLyChiTietPhieuNhapHang chiTiet;
   private static Scanner sc = new Scanner(System.in);
   private Validation kiemTra = new Validation();
-
   private QuanLyPhieuNhapHang() {
     getListPhieuNhapHang();
   }
@@ -110,6 +111,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
       return;
     }
 
+    phieuNhapHang.setWorkerId(Login.getInstance().getLoggedInAccountId());
     
     NhaCungCap[] nccList = QuanLyNhaCungCap.getInstance().getListNhaCungCap();
     boolean foundNcc = false;
@@ -138,6 +140,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
         } else {
           System.out.println("\t\t\t\t\t\t\t\t +---TẠO PHIẾU NHẬP THẤT BẠI-----+");
           return;
+
         }
       }
     } while (foundNcc == false);

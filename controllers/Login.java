@@ -9,7 +9,8 @@ public class Login {
 
   public static TaiKhoan[] acc;
   public static Scanner input = new Scanner(System.in);
-  private static Login instance;
+  public static Login instance;
+  public String loggedInAccountId; 
 
   public static Login getInstance() {
     if (instance == null) {
@@ -19,6 +20,14 @@ public class Login {
   }
 
   private Login() {
+  }
+
+  public void layIdAccount(String accountid){
+    loggedInAccountId = accountid;
+  }
+
+  public String getLoggedInAccountId() {
+    return loggedInAccountId;
   }
 
   public int check(String username, String password) {
@@ -39,9 +48,12 @@ public class Login {
             return 2;
           }
           if (acc[j].getPosition().equals("admin")) {
+            String accountId = acc[j].getAccountId();
+            layIdAccount(accountId);
             return 3;
           }
         }
+        
       }
     } catch (FileNotFoundException e) {
       e.printStackTrace();

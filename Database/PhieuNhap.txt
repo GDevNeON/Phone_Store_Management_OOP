@@ -2,5 +2,6 @@ pn2;nv005;Ong Hoang Iphone;2022-12-25;2000000
 pn4;nv003;Ong Hoang Iphone;2023-11-24;5000000
 pn1;nv001;Apple Corporation;2023-11-27;100000000
 pn5;nv003;Ong Hoang Iphone;2023-12-03;5455000
-pn7;null;Ong Hoang Iphone;2023-12-04;50000000
-pn8;null;Ong Hoang Iphone;2023-12-04;52000000
+pn12;ADMIN1;Ong Hoang Iphone;2023-12-10;12345600
+pn14;ADMIN2;Ong Hoang Iphone;2023-12-10;25090000
+pn15;ADMIN3;Ong Hoang Iphone;2023-12-10;123321000
