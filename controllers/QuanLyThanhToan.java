@@ -94,7 +94,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             }
         }
         if (check == 0) {
-            System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI----+");
+            System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG----+");
             return;
         }
 
@@ -214,6 +214,8 @@ public class QuanLyThanhToan implements ControllerInterface {
                                             break;
                                         }
                                     }
+                                    if (!foundCustomer)
+                                        System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG----+");
                                 } while (foundCustomer == false);
                                 break;
                             }
@@ -300,6 +302,8 @@ public class QuanLyThanhToan implements ControllerInterface {
                                         break;
                                     }
                                 }
+                                if (!foundCustomer)
+                                    System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG----+");
                             } while (foundCustomer == false);
                         }
 
@@ -438,7 +442,7 @@ public class QuanLyThanhToan implements ControllerInterface {
             for (int i = 0; i < payment.length; i++) {
                 switch (index) {
                     case 1:
-                        if (payment[i].getPaymentId().contains(find))
+                        if (payment[i].getPaymentId().equals(find))
                             OutputData(i);
                         break;
                     case 2:
@@ -478,7 +482,7 @@ public class QuanLyThanhToan implements ControllerInterface {
     }
 
     //Hàm nhập data
-    public String InputPaymentId() {
+    private String InputPaymentId() {
         String test;
         System.out.println("Nhập mã thanh toán (tt_): ");
         while (true) {
@@ -491,7 +495,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputCustomerId() {
+    private String InputCustomerId() {
         String test;
         System.out.println("Nhập mã khách hàng (kh_): ");
         while (true) {
@@ -504,7 +508,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputReceiptId() {
+    private String InputReceiptId() {
         String test;
         System.out.println("Nhập mã đơn hàng (hd_): ");
         while (true) {
@@ -517,7 +521,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputAmount() {
+    private String InputAmount() {
         String test;
         System.out.println("Nhập số lượng hàng: ");
         while (true) {
@@ -531,7 +535,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputPaymentDate() {
+    private String InputPaymentDate() {
         String test;
         System.out.println("Nhập ngày đặt hàng (yyyy-MM-dd): ");
         while (true) {
@@ -548,9 +552,9 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputPaymentMethod() {
+    private String InputPaymentMethod() {
         String test;
-        System.out.println("Nhập phương thức đặt hàng: ");
+        System.out.println("Nhập phương thức đặt hàng (không quá 20 kí tự): ");
         while (true) {
             test = sc.nextLine();
             if (test.isBlank() || test.length() > 20) {
@@ -561,7 +565,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public String InputStatus() {
+    private String InputStatus() {
         String test;
         System.out.println("Nhập trạng thái của đơn hàng (0 hoặc 1) (0: chưa xử lý, 1: đã xử lý): ");
         while (true) {
@@ -578,7 +582,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         }
         return test;
     }
-    public int InputChoice(int beginIndex, int endIndex) {
+    private int InputChoice(int beginIndex, int endIndex) {
         int choose = sc.nextInt();
         while (true) {
             if (choose < beginIndex || choose > endIndex) {
@@ -592,7 +596,7 @@ public class QuanLyThanhToan implements ControllerInterface {
     }
 
     //Hàm xuất data
-    public void OutputData(int i) {
+    private void OutputData(int i) {
         String row = String.format("| %-11s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
                 payment[i].getPaymentId(),
                 payment[i].getCustomerId(),
@@ -604,7 +608,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         System.out.println(row);
     }
 
-    public void OutputHeader() {
+    private void OutputHeader() {
         String header = String.format("| %-5s | %-15s | %-10s | %-9s | %-20s | %-25s | %-15s |",
                 "ID Đơn Hàng",
                 "ID Khách Hàng",
@@ -620,7 +624,7 @@ public class QuanLyThanhToan implements ControllerInterface {
                 "+-------------+-----------------+------------+-----------+----------------------+---------------------------+-----------------+%n");
     }
 
-    public String[] stringToInputInFile(ThanhToan[] payment) {
+    private String[] stringToInputInFile(ThanhToan[] payment) {
         String[] data = new String[payment.length];
 
         for (int i = 0; i < payment.length; i++) {
@@ -636,7 +640,7 @@ public class QuanLyThanhToan implements ControllerInterface {
         return data;
     }
 
-    public void updateList(int select, ThanhToan[] payment, ThanhToan tt) {
+    private void updateList(int select, ThanhToan[] payment, ThanhToan tt) {
         switch (select) {
             case 0:
                 try {
@@ -668,7 +672,7 @@ public class QuanLyThanhToan implements ControllerInterface {
     }
 
     // Xóa phần tử khỏi mảng
-    public ThanhToan[] deletePayment(ThanhToan[] payment, int index) {
+    private ThanhToan[] deletePayment(ThanhToan[] payment, int index) {
         ThanhToan[] newCs = new ThanhToan[payment.length - 1];
         for (int i = 0, j = 0; i < payment.length; i++) {
             if (i != index) {

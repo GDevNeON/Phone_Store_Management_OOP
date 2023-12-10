@@ -18,14 +18,12 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         getListManagers();
     }
 
-
     public static QuanLyNguoiQuanLy getInstance() {
         if (instance == null) {
             instance = new QuanLyNguoiQuanLy();
         }
         return instance;
     }
-
 
     public QuanLy[] getListManagers() {     // Lấy danh sách người quản lý từ file
         String[] result = new String[0];
@@ -42,7 +40,6 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
         return manager;
     }
-
 
     @Override
     public void Read() {
@@ -66,7 +63,6 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
                 "+-------+----------------------+------+-----------+--------------------------------+---------------------------+---------------+----------------------+-------------+%n");
         waitConsole();
     }
-
 
     @Override
     public void Create() {
@@ -267,22 +263,6 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
     }
 
-    public QuanLy[] deleteManager(QuanLy[] manager, int index) {
-        QuanLy[] newCs = new QuanLy[manager.length - 1];
-        for (int i = 0, j = 0; i < manager.length; i++) {
-            if (i != index) {
-                newCs[j++] = manager[i];
-            }
-        }
-        return newCs;
-    }
-
-    public QuanLy[] addManager(QuanLy[] manager, QuanLy nql) {
-        manager = Arrays.copyOf(manager, manager.length + 1);
-        manager[manager.length - 1] = nql;
-        return manager;
-    }
-
     @Override
     public void searchByCategory() {
         try {
@@ -343,7 +323,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
     }
 
     //Hàm nhập data
-    public String InputManagerId() {
+    private String InputManagerId() {
         String test;
         System.out.println("Nhập ID người quản lý (ql_): ");
         while (true) {
@@ -357,7 +337,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
         return test;
     }
-    public String InputRole() {
+    private String InputRole() {
         String test;
         System.out.println("Nhập chức vụ: (low/mid/high-tier) "); // thêm danh sách chức vụ tránh thầy nhập bừa
         String verify1[] = { "low-tier", "mid-tier", "high-tier" };
@@ -384,7 +364,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
         return test;
     }
-    public String InputShift() {
+    private String InputShift() {
         String test;
         System.out.println("Nhập ca trực (morning, afternoon, night): ");
         String verify[] = { "morning", "afternoon", "night" };
@@ -411,7 +391,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
         return test;
     }
-    public int InputChoice(int beginIndex, int endIndex) {
+    private int InputChoice(int beginIndex, int endIndex) {
         int choose = sc.nextInt();
         while (true) {
             if (choose < beginIndex || choose > endIndex) {
@@ -425,7 +405,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
     }
 
     //Hàm xuất data
-    public void OutputData(int i) {
+    private void OutputData(int i) {
         String row = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
                 manager[i].getManagerId(),
                 manager[i].getName(),
@@ -439,7 +419,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         System.out.println(row);
     }
 
-    public void OutputHeader() {
+    private void OutputHeader() {
         String header = String.format("| %-5s | %-20s | %-4s | %-9s | %-30s | %-25s | %-13s | %-20s | %-11s |",
                 "ID",
                 "Họ tên",
@@ -475,7 +455,7 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         return data;
     }
 
-    public void updateList(int select, QuanLy[] manager, QuanLy qly) {
+    private void updateList(int select, QuanLy[] manager, QuanLy qly) {
         switch (select) {
             case 0:
                 try {
@@ -509,8 +489,20 @@ public class QuanLyNguoiQuanLy implements ControllerInterface {
         }
     }
 
-    public int getListLength(QuanLy[] manager) {
-        return manager.length;
+    private QuanLy[] deleteManager(QuanLy[] manager, int index) {
+        QuanLy[] newCs = new QuanLy[manager.length - 1];
+        for (int i = 0, j = 0; i < manager.length; i++) {
+            if (i != index) {
+                newCs[j++] = manager[i];
+            }
+        }
+        return newCs;
+    }
+
+    public QuanLy[] addManager(QuanLy[] manager, QuanLy nql) {
+        manager = Arrays.copyOf(manager, manager.length + 1);
+        manager[manager.length - 1] = nql;
+        return manager;
     }
 
     public void waitConsole() {

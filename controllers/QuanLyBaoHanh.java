@@ -163,6 +163,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
       System.out.println(row);
       System.out.format(
           "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
+
       if (choose == 1) {
         System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN SỬA-------------+");
         System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
@@ -239,6 +240,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
                       break;
                     }
                   }
+                  if (!foundCustomer)
+                    System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG. VUI LÒNG KIỂM TRA LẠI----+");
                 } while (foundCustomer == false);
                 break;
               }
@@ -287,6 +290,8 @@ public class QuanLyBaoHanh implements ControllerInterface {
                       break;
                     }
                   }
+                  if (!foundCustomer)
+                    System.out.println("\t\t\t\t\t\t\t\t +----MÃ KHÁCH HÀNG KHÔNG TỒN TẠI TRONG DS KHÁCH HÀNG. VUI LÒNG KIỂM TRA LẠI----+");
                 } while (foundCustomer == false);
               }
 
@@ -429,7 +434,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
   }
 
   //Hàm nhập data
-  public String InputWarrantyId() {
+  private String InputWarrantyId() {
     String test;
     System.out.println("Nhập ID Bảo hành (bh_): ");
 		while (true) {
@@ -442,7 +447,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 		}
     return test;
   }
-  public String InputProductId() {
+  private String InputProductId() {
     String test;
     System.out.println("Nhập ID Sản phẩm (sp_): ");
 		while (true) {
@@ -455,7 +460,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 		}
     return test;
   }
-  public String InputProductDate() {
+  private String InputProductDate() {
     String test;
     System.out.println("Nhập Ngày bảo hành (yyyy-MM-dd): ");
     while (true) {
@@ -472,7 +477,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
     return test;
   }
-  public String InputYearsOfWarranty() {
+  private String InputYearsOfWarranty() {
     String test;
     System.out.println("Nhập số năm bảo hành (1 -> 5): ");
     while (true) {
@@ -489,7 +494,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
     return test;
   }
-  public String InputWarrantyMethod() {
+  private String InputWarrantyMethod() {
     String test;
     System.out.println("Nhập Phương thức bảo hành (tối đa 20 kí tự): ");
     System.out.println("Các Phương thức bảo hành gồm: chinh hang, mo rong, tu nha ban le, tu ben thu ba");
@@ -517,7 +522,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     }
     return test;
   }
-  public String InputCustomerId() {
+  private String InputCustomerId() {
     String test;
     System.out.println("Nhập ID Khách hàng (kh_): ");
 		while (true) {
@@ -530,7 +535,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
 		}
     return test;
   }
-  public int InputChoice(int beginIndex, int endIndex) {
+  private int InputChoice(int beginIndex, int endIndex) {
     int choose = sc.nextInt();
     while (true) {
       if (choose < beginIndex || choose > endIndex) {
@@ -544,7 +549,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
   }
 
   //Hàm xuất data
-  public void OutputData(int i) {
+  private void OutputData(int i) {
     String row = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
         warranty[i].getWarrantyId(),
         warranty[i].getProductId(),
@@ -557,7 +562,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     System.out.println(row);
   }
 
-  public void OutputHeader() {
+  private void OutputHeader() {
     String header = String.format("| %-11s | %-11s | %-25s | %-9s | %-20s | %-13s | %-25s | %-12s |",
           "ID bảo hành",
           "ID sản phẩm",
@@ -574,7 +579,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
           "+-------------+-------------+---------------------------+-----------+----------------------+---------------+---------------------------+--------------+%n");
   }
 
-  public String[] stringToInputInFile(BaoHanh[] warranty) {
+  private String[] stringToInputInFile(BaoHanh[] warranty) {
     String[] data = new String[warranty.length];
 
     for (int i = 0; i < warranty.length; i++) {
@@ -591,7 +596,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
     return data;
   }
 
-  public void updateList(int select, BaoHanh[] warranty, BaoHanh bh) {
+  private void updateList(int select, BaoHanh[] warranty, BaoHanh bh) {
     switch (select) {
       case 0:
         try {
@@ -625,7 +630,7 @@ public class QuanLyBaoHanh implements ControllerInterface {
   }
 
   // Xóa phần tử khỏi mảng
-  public BaoHanh[] deleteWarranty(BaoHanh[] warranty, int index) {
+  private BaoHanh[] deleteWarranty(BaoHanh[] warranty, int index) {
     BaoHanh[] newCs = new BaoHanh[warranty.length - 1];
     for (int i = 0, j = 0; i < warranty.length; i++) {
       if (i != index) {

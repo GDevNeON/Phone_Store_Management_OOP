@@ -2,4 +2,4 @@ bh1;sp1;2008-10-12;2;chinh hang;kh1;Phan Duy;0918273645
 bh2;sp3;2008-12-10;2;mo rong;kh1;Anh Danh;0913243543
 bh3;sp4;2012-10-31;3;chinh hang;kh2;Thien Chương;0986756453
 bh4;sp2;1111-11-11;2;tu ben thu ba;kh5;Hoang Van E;0123456790
-bh5;sp3;2008-01-01;5;tu nha ban le;kh10;doggu;0123123123
+bh5;sp3;2008-01-01;5;tu nha ban le;kh9;long;0123123123
