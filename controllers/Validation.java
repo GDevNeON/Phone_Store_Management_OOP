@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 public class Validation {
-
+  static Scanner scanner = new Scanner(System.in);
   // Các hằng số để quy định độ dài tối đa của các trường thông tin
   private static final int MAX_NAME_LENGTH = 30;
   private static final int MAX_ADDRESS_LENGTH = 100;
@@ -24,7 +24,6 @@ public class Validation {
     return age >= 0 && age <= 150;
   }
   public static int readValidAge() {
-    Scanner scanner = new Scanner(System.in);
     System.out.print("Enter your age: ");
     while (!scanner.hasNextInt()) {
         System.out.println("That's not a valid integer. Please try again.");
@@ -160,6 +159,11 @@ public class Validation {
   // Hàm validation cho id_sanpham
   public boolean isValidIDmanager(String id) {
     return id.startsWith("ql") && id.length() <= MAX_ID_LENGTH;
+  }
+
+  // Hàm validation cho id_baohanh
+  public boolean isValidIDwarranty(String id) {
+    return id.startsWith("bh") && id.length() <= MAX_ID_LENGTH;
   }
 
   public boolean isValidKindOfCustomer(String kindOfCustomer) {
