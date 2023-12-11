@@ -394,9 +394,7 @@ public class QuanLyChiTietPhieuNhapHang implements ControllerInterface {
                 dsct[i].setProductId(ID_product);
                 dsct[i].setAmount(quantity);
                 dsct[i].setPrice(price);
-                
-                  
-            }
+              } 
             data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
                   + dsct[i].getPrice();
           }try {
