@@ -202,7 +202,7 @@ public class ThongKeKinhDoanh implements ControllerInterface {
         do {
             System.out.print(i);
             String dateString = input.nextLine();
-            if (validate.isValidDate(dateString)) {
+            if (validate.isValidDate(dateString) && dateString.length() == 10) {
                 date = LocalDate.parse(dateString);
             } else {
                 System.out.println("Ngày không hợp lệ, vui lòng nhập lại!");
