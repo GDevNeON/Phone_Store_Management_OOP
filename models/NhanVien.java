@@ -61,7 +61,42 @@ public class NhanVien extends ConNguoi {
   public void AddThongTin() {
     Validation validate = new Validation();
     Scanner sc = new Scanner(System.in);
-    super.AddThongTin();
+    
+    String test;
+        int tmp;
+        try {
+            do {
+                System.out.print("Nhập họ tên: ");
+                test = sc.nextLine();
+                setName(test);
+            } while (!Validation.isValidName(test));
+            do {
+                tmp = Validation.readValidAge();
+                setAge(tmp);
+            } while (!Validation.isValidAge(tmp));
+            do {
+                System.out.print("Nhập giới tính: ");
+                test = sc.nextLine();
+                setGender(test);
+            } while (!Validation.isValidGender(test));
+            do {
+                System.out.print("Nhập địa chỉ: ");
+                test = sc.nextLine();
+                setAddress(test);
+            } while (!Validation.isValidAddress(test));
+            do {
+                System.out.print("Nhập Email: ");
+                test = sc.nextLine();
+                setEmail(test);
+            } while (!Validation.isValidEmail(test));
+            do {
+                System.out.print("Nhập số điện thoại: ");
+                test = sc.nextLine();
+                setSdt(test);
+            } while (!Validation.isValidPhoneNumber(test));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     // Nhập và kiểm tra vai trò
     System.out.println("Nhập vai trò (Sales, Marketing, Advertising, Customer Service): ");

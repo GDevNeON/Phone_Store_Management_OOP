@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Scanner;
+import controllers.Validation;
 
 public class QuanLy extends ConNguoi {
     Scanner sc = new Scanner(System.in);
@@ -61,7 +62,40 @@ public class QuanLy extends ConNguoi {
     @Override
     public void AddThongTin() {
         String test;
-        super.AddThongTin();
+        int tmp;
+        try {
+            do {
+                System.out.print("Nhập họ tên: ");
+                test = sc.nextLine();
+                setName(test);
+            } while (!Validation.isValidName(test));
+            do {
+                tmp = Validation.readValidAge();
+                setAge(tmp);
+            } while (!Validation.isValidAge(tmp));
+            do {
+                System.out.print("Nhập giới tính: ");
+                test = sc.nextLine();
+                setGender(test);
+            } while (!Validation.isValidGender(test));
+            do {
+                System.out.print("Nhập địa chỉ: ");
+                test = sc.nextLine();
+                setAddress(test);
+            } while (!Validation.isValidAddress(test));
+            do {
+                System.out.print("Nhập Email: ");
+                test = sc.nextLine();
+                setEmail(test);
+            } while (!Validation.isValidEmail(test));
+            do {
+                System.out.print("Nhập số điện thoại: ");
+                test = sc.nextLine();
+                setSdt(test);
+            } while (!Validation.isValidPhoneNumber(test));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("Nhập chức vụ: (low/mid/high-tier) "); // thêm danh sách chức vụ tránh thầy nhập bừa
         String verify1[] = { "low-tier", "mid-tier", "high-tier" };
