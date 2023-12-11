@@ -411,13 +411,13 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                   + dsp[i].getSupplierName() + ";"
                   + dsp[i].getInputDate() + ";" + dsp[i].getPrice();
 
-              try {
+              
+            }try {
                 Stream.addAll("Database/PhieuNhap.txt", data);
                 System.out.println("\t\t\t\t\t\t\t\t +-----SỬA THÔNG TIN PHIẾU NHẬP THÀNH CÔNG-----+");
               } catch (IOException e) {
                 e.printStackTrace();
               }
-            }
           }
           default -> {
             System.out.println("\t\t\t\t\t\t\t\t +-----LỰA CHỌN KHÔNG HỢP LỆ-----+");
