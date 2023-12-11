@@ -84,13 +84,13 @@ public class ThongKeKinhDoanh implements ControllerInterface {
     @Override
     public void searchByCategory() {
         ThongKe[] result = new ThongKe[0];
-        System.out.println("\t\t\t\t\t\t\t\t +--------NHẬP MỤC LỤC CẨN THỐNG KÊ--------+");
-        System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                 |");
-        System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
-        System.out.println("\t\t\t\t\t\t\t\t |1. ID sản phẩm                           |");
-        System.out.println("\t\t\t\t\t\t\t\t |2. Thống kê theo khoảng thời gian        |");
-        System.out.println("\t\t\t\t\t\t\t\t |3. Khách hàng mua nhiều                  |");
-        System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
+        System.out.println("\t\t\t\t\t\t\t\t +----------NHẬP MỤC LỤC CẨN THỐNG KÊ---------+");
+        System.out.println("\t\t\t\t\t\t\t\t |0. Thoát                                    |");
+        System.out.println("\t\t\t\t\t\t\t\t +--------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t\t\t |1. Thống kê theo ID sản phẩm                |");
+        System.out.println("\t\t\t\t\t\t\t\t |2. Thống kê sản phẩm trong khoảng thời gian |");
+        System.out.println("\t\t\t\t\t\t\t\t |3. Khách hàng mua nhiều                     |");
+        System.out.println("\t\t\t\t\t\t\t\t +--------------------------------------------+");
         System.out.print("\t\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
         String choose = input.nextLine();
 
