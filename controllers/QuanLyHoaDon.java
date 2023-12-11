@@ -44,6 +44,15 @@ public class QuanLyHoaDon implements ControllerInterface {
     return re;
   }
 
+  public String getCustomerIdByReceiptId(String receiptId) {
+    for (HoaDon hoaDon : re) {
+        if (hoaDon.getReceiptId().equals(receiptId)) {
+            return hoaDon.getCustomerId();
+        }
+    }
+    return null;
+}
+
   @Override
   public void Read() {
     rdm = QuanLyChiTietHoaDon.getInstance();
@@ -90,6 +99,7 @@ public class QuanLyHoaDon implements ControllerInterface {
 		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
 
     hd.setReceiptId(HD);
+    // String customerId = getCustomerIdByInvoiceId(hd.getReceiptId());
 
     int check = 0;
     for (HoaDon HoaDon : re) {
@@ -126,7 +136,6 @@ public class QuanLyHoaDon implements ControllerInterface {
 
 		} while (KH.isEmpty() || !KH.matches("^kh[0-9]+$") ||KH.length()>5);
     hd.setCustomerId(KH);
-
 
     String NV;
 		do {

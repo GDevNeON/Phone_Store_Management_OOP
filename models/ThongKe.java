@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class ThongKe {
     Scanner input = new Scanner(System.in);
     ThongKe[] TK;
+    private String customerId;
     private String productId;
     private int amount;
     private int price;
@@ -16,16 +17,26 @@ public class ThongKe {
         totalAmount = 0;
         date = null;
         productId = null;
+        customerId = null;
         price = 0;
         amount = 0;
     }
 
-    public ThongKe(String productId, int amount, int price, LocalDate date, int totalAmount) {
+    public ThongKe(String customerId, String productId, int amount, int price, LocalDate date, int totalAmount) {
+        this.customerId = customerId;
         this.productId = productId;
         this.totalAmount = totalAmount;
         this.date = date;
         this.amount = amount;
         this.price = price;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId){
+        this.customerId = customerId;
     }
 
     public String getProductId() {

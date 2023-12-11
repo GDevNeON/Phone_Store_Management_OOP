@@ -79,6 +79,7 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
     @Override
     public void Create() {
         ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
+        // QuanLyHoaDon quanLyHoaDon = new QuanLyHoaDon();
         ThongKe thongKe = new ThongKe();
         System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN CHI TIẾT HÓA ĐƠN----+");
 
@@ -134,6 +135,10 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
         int totalAmount = Amount_int * Price_int;
         thongKe.setTotalAmount(totalAmount);
 
+        QuanLyHoaDon quanLyHoaDon = QuanLyHoaDon.getInstance();
+        String customerId = quanLyHoaDon.getCustomerIdByReceiptId(HD);
+        thongKe.setCustomerId(customerId);
+
         try {
             String input = chiTietHoaDon.getReceiptId() + ";" + chiTietHoaDon.getProductId() + ";"
                     + chiTietHoaDon.getAmount() + ";" + chiTietHoaDon.getPrice();
@@ -145,7 +150,7 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
             e.printStackTrace();
         }
         try {
-            String input = thongKe.getProductId() + ";" + thongKe.getAmount() + ";" + thongKe.getPrice() + ";" + thongKe.getDate() + ";" + thongKe.getTotalAmount();
+            String input =thongKe.getCustomerId() + ";" + thongKe.getProductId() + ";" + thongKe.getAmount() + ";" + thongKe.getPrice() + ";" + thongKe.getDate() + ";" + thongKe.getTotalAmount();
             Stream.addOneLine("Database/ThongKe.txt", input);
         } catch (IOException e) {
             e.printStackTrace();
