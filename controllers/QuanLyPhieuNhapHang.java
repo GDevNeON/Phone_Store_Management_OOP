@@ -10,7 +10,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.NhaCungCap;
-import models.NhanVien;
 import models.PhieuNhapHang;
 import models.TaiKhoan;
 
@@ -236,10 +235,9 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t |0.Thoát                           |");
       System.out.println("\t\t\t\t\t\t\t\t +----------------------------------+");
       System.out.println("\t\t\t\t\t\t\t\t |1.Sửa ID phiếu nhập               |");
-      System.out.println("\t\t\t\t\t\t\t\t |2.Sửa ID nhân viên nhập           |");
-      System.out.println("\t\t\t\t\t\t\t\t |3.Sửa tên nhà cung cấp            |");
-      System.out.println("\t\t\t\t\t\t\t\t |4.Sửa tổng tiền phiếu nhập        |");
-      System.out.println("\t\t\t\t\t\t\t\t |5.Sửa tất cả thông tin            |");
+      System.out.println("\t\t\t\t\t\t\t\t |2.Sửa tên nhà cung cấp            |");
+      System.out.println("\t\t\t\t\t\t\t\t |3.Sửa tổng tiền phiếu nhập        |");
+      System.out.println("\t\t\t\t\t\t\t\t |4.Sửa tất cả thông tin            |");
       System.out.println("\t\t\t\t\t\t\t\t +----------------------------------+");
       System.out.print("\t\t\t\t\t\t\t\t Mời bạn nhập lựa chọn: ");
       String choose = sc.nextLine();
@@ -256,10 +254,9 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
 									System.out.print("Không đúng định dạng! Vui lòng nhập lại ID phiếu nhập: ");
 									ID_PhieuNhap = sc.nextLine();
 								}
-                pnh.setReceiptId(ID_PhieuNhap);
                 int check = 0;
                 for (PhieuNhapHang phieuNhap : dsp) {
-                  if (pnh.getReceiptId().equals(phieuNhap.getReceiptId())) {
+                  if (phieuNhap.getReceiptId().equals(ID_PhieuNhap)) {
                     check = 1;
                     break;
                   }
@@ -268,7 +265,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                   System.out.println("\t\t\t\t\t\t\t\t MÃ PHIẾU NHẬP BỊ TRÙNG!");
                   return;
                 }
-                dsp[i].setReceiptId(pnh.getReceiptId());
+                dsp[i].setReceiptId(ID_PhieuNhap);
               }
               data[i] = dsp[i].getReceiptId() + ";" + dsp[i].getWorkerId() + ";"
                   + dsp[i].getSupplierName() + ";" + dsp[i].getInputDate() + ";" + dsp[i].getPrice();
@@ -281,42 +278,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
             }
           }
           case "2" -> {
-            for (int i = 0; i < dsp.length; i++) {
-              if (dsp[i].getReceiptId().equals(ID_PhieuNhapHang)) {
-                NhanVien[] nvList = QuanLyNhanVien.getInstance().getListEmployee();
-                boolean foundEmp = false;
-                do {
-                  System.out.print("Nhập ID nhân viên: ");
-                  String ID_nhanVien = sc.nextLine();
-                  while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)) {
-                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID nhân viên: ");
-                    ID_nhanVien = sc.nextLine();
-                  }
-                  pnh.setWorkerId(ID_nhanVien);
-                  for (NhanVien nv : nvList) {
-                    if (nv.getWorkerId().equals(pnh.getWorkerId())) {
-                      foundEmp = true;
-                      break;
-                    }
-                  }
-                  if (foundEmp == false) {
-                    System.out.println(
-                        "\t\t\t\t\t\t\t\t +-----MÃ NHÂN VIÊN KHÔNG TÌM THẤY. VUI LÒNG THỬ LẠI-----+");
-                  }
-                } while (foundEmp == false);
-                dsp[i].setWorkerId(pnh.getWorkerId());
-              }
-              data[i] = dsp[i].getReceiptId() + ";" + dsp[i].getWorkerId() + ";"
-                  + dsp[i].getSupplierName() + ";" + dsp[i].getInputDate() + ";" + dsp[i].getPrice();
-            }
-            try {
-              Stream.addAll("Database/PhieuNhap.txt", data);
-              System.out.println("\t\t\t\t\t\t\t\t +-----SỬA THÔNG TIN PHIẾU NHẬP THÀNH CÔNG-----+");
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-          }
-          case "3" -> {
             for (int i = 0; i < dsp.length; i++) {
               if (dsp[i].getReceiptId().equals(ID_PhieuNhapHang)) {
                 // System.out.print("Nhập tên nhà cung cấp: ");
@@ -365,7 +326,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case "4" -> {
+          case "3" -> {
             for (int i = 0; i < dsp.length; i++) {
               if (dsp[i].getReceiptId().equals(ID_PhieuNhapHang)) {
                 System.out.print("Nhập tổng tiền: ");
@@ -386,7 +347,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
               e.printStackTrace();
             }
           }
-          case "5" -> {
+          case "4" -> {
             for (int i = 0; i < dsp.length; i++) {
               if (dsp[i].getReceiptId().equals(ID_PhieuNhapHang)) {
                 System.out.print("Nhập ID phiếu nhập hàng: ");
@@ -398,32 +359,10 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                     break;
                   }
                 }
-                if (check == 1) {
+                if (check == 0) {
                   System.out.println("\t\t\t\t\t\t\t\t MÃ PHIẾU NHẬP BỊ TRÙNG!");
                   return;
                 }
-
-                NhanVien[] nvList = QuanLyNhanVien.getInstance().getListEmployee();
-                boolean foundEmp = false;
-                do {
-                  System.out.print("Nhập ID nhân viên: ");
-                  String ID_nhanVien = sc.nextLine();
-                  while (ID_nhanVien.isEmpty() || !kiemTra.isValidIDWorker(ID_nhanVien)) {
-                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID nhân viên: ");
-                    ID_nhanVien = sc.nextLine();
-                  }
-                  pnh.setWorkerId(ID_nhanVien);
-                  for (NhanVien nv : nvList) {
-                    if (nv.getWorkerId().equals(pnh.getWorkerId())) {
-                      foundEmp = true;
-                      break;
-                    }
-                  }
-                  if (foundEmp == false) {
-                    System.out.println(
-                        "\t\t\t\t\t\t\t\t +-----MÃ NHÂN VIÊN KHÔNG TÌM THẤY. VUI LÒNG THỬ LẠI-----+");
-                  }
-                } while (foundEmp == false);
 
                 NhaCungCap[] nccList = QuanLyNhaCungCap.getInstance().getListNhaCungCap();
                 boolean foundNcc = false;
@@ -465,7 +404,6 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
                 pnh.setPrice(price);
 
                 dsp[i].setReceiptId(pnh.getReceiptId());
-                dsp[i].setWorkerId(pnh.getWorkerId());
                 dsp[i].setSupplierName(pnh.getSupplierName());
                 dsp[i].setPrice(pnh.getPrice());
               }

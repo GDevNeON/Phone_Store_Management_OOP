@@ -7,10 +7,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.ChiTietPhieuNhapHang;
-import models.PhieuNhapHang;
 import models.SanPham;
 
-public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
+public class QuanLyChiTietPhieuNhapHang implements ControllerInterface {
   private static QuanLyChiTietPhieuNhapHang instance;
   private ChiTietPhieuNhapHang[] dsct;
   private static Scanner sc = new Scanner(System.in);
@@ -38,7 +37,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     dsct = new ChiTietPhieuNhapHang[result.length];
     for (int i = 0; i < result.length; i++) {
       String[] row = result[i].split(";");
-      dsct[i] = new ChiTietPhieuNhapHang(row[0], row[1], Integer.parseInt(row[2]),row[3]);
+      dsct[i] = new ChiTietPhieuNhapHang(row[0], row[1], Integer.parseInt(row[2]), row[3]);
     }
     return dsct;
   }
@@ -72,9 +71,9 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     ChiTietPhieuNhapHang chiTietPhieuNhapHang = new ChiTietPhieuNhapHang();
     System.out.println("Nhập mã chi tiết phiếu nhập: ");
     String ID_chiTiet = sc.nextLine();
-    while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
-        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
-        ID_chiTiet = sc.nextLine();
+    while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)) {
+      System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+      ID_chiTiet = sc.nextLine();
     }
     chiTietPhieuNhapHang.setPhieuNhapId(ID_chiTiet);
     int check = 0;
@@ -90,20 +89,6 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       return;
     }
 
-    // boolean foundPhieuNhap = false;
-    // PhieuNhapHang[] phieuNhapHangList = QuanLyPhieuNhapHang.getInstance().getListPhieuNhapHang();
-    // for (PhieuNhapHang phieuNhapHang : phieuNhapHangList) {
-    //   if (chiTietPhieuNhapHang.getPhieuNhapId().equals(phieuNhapHang.getReceiptId())) {
-    //     foundPhieuNhap = true;
-    //     break;
-    //   }
-    // }
-
-    // if (foundPhieuNhap == false) {
-    //   System.out.println("\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ PHIẾU NHẬP TRONG DANH SÁCH PHIẾU NHẬP-----+");
-    //   return;
-    // }
-
     System.out.println("Nhập số lượng: ");
     while (!sc.hasNextInt()) {
       System.out.println("Vui lòng nhập một số nguyên.");
@@ -113,7 +98,7 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
 
     System.out.println("Nhập giá: ");
     String price = sc.nextLine();
-    while (price.isEmpty() || kiemTra.isInteger(price) == false){
+    while (price.isEmpty() || kiemTra.isInteger(price) == false) {
       System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
       price = sc.nextLine();
     }
@@ -122,8 +107,8 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     System.out.println("Nhập mã sản phẩm: ");
     String ID_sanPham = sc.nextLine();
     while (ID_sanPham.isEmpty() || !kiemTra.isValidIDproduct(ID_sanPham)) {
-        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID sản phẩm: ");
-        ID_sanPham = sc.nextLine();
+      System.out.print("Không đúng định dạng! Vui lòng nhập lại ID sản phẩm: ");
+      ID_sanPham = sc.nextLine();
     }
     chiTietPhieuNhapHang.setProductId(ID_sanPham);
     boolean foundProduct = false;
@@ -167,9 +152,9 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP-----+");
       System.out.print("Nhập mã phiếu nhập cần chỉnh sửa: ");
       String ID_PhieuNhap = sc.nextLine();
-      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)){
-          System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
-          ID_PhieuNhap = sc.nextLine();
+      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)) {
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+        ID_PhieuNhap = sc.nextLine();
       }
       ChiTietPhieuNhapHang ctpnh = null;
 
@@ -209,226 +194,76 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +--------------------------------------+");
       System.out.print("\t\t\t\t\t\t\t\t Mời bạn nhập lựa chọn: ");
       String choose = sc.nextLine();
-        switch (choose) {
-          case "0" ->{
-            System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
-          }
-          case "1" -> {
-            for (int i = 0; i < dsct.length; i++) {
-              if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
-                System.out.print("Nhập ID chi tiết phiếu nhập: ");
-                String ID_chiTiet = sc.nextLine();
-                while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
-                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
-                    ID_chiTiet = sc.nextLine();
-                }
-                ctpnh.setPhieuNhapId(ID_chiTiet);
-                int check = 0;
-                for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-                  if (ctpnh.getPhieuNhapId().equals(chiTietPhieu.getPhieuNhapId())) {
-                    check = 1;
-                    break;
-                  }
-                }
-
-                if (check == 1) {
-                  System.out.println("\t\t\t\t\t\t\t\t MÃ TÀI KHOẢN BỊ TRÙNG!");
-                  return;
-                }
-                dsct[i].setPhieuNhapId(ctpnh.getPhieuNhapId());
+      switch (choose) {
+        case "0" -> {
+          System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
+        }
+        case "1" -> {
+          for (int i = 0; i < dsct.length; i++) {
+            if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
+              System.out.print("Nhập ID chi tiết phiếu nhập: ");
+              String ID_chiTiet = sc.nextLine();
+              while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)) {
+                System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+                ID_chiTiet = sc.nextLine();
               }
-              data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
-                  + dsct[i].getPrice();
-            }
-            try {
-              Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
-              System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
-              waitConsole();
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-          }
-          case "2" -> {
-            for (int i = 0; i < dsct.length; i++) {
-              if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
-                System.out.print("Nhập ID sản phẩm: ");
-                String ID_product = sc.nextLine();
-                while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)){
-                    System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
-                    ID_product = sc.nextLine();
+              int check = 0;
+              for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
+                if (chiTietPhieu.getPhieuNhapId().equals(ID_chiTiet)) { 
+                  check = 1;
+                  break;
                 }
-                ctpnh.setProductId(ID_product);
-                SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
-                boolean foundProduct = false;
-                for (SanPham sp : spList) {
-                  if (ctpnh.getProductId().equals(sp.getProductId())) {
-                    foundProduct = true;
-                    dsct[i].setProductId(ctpnh.getProductId());
-                    break;
-                  }
+              }
 
-                  if (foundProduct == false) {
+              if (check == 1) {
+                System.out.println("\t\t\t\t\t\t\t\t MÃ TÀI KHOẢN BỊ TRÙNG!");
+                return;
+              }
+              dsct[i].setPhieuNhapId(ID_chiTiet); 
+            }
+            data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
+                + dsct[i].getPrice();
+          }
+          try {
+            Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
+            System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
+            waitConsole();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+        case "2" -> {
+          for (int i = 0; i < dsct.length; i++) {
+            if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
+              System.out.print("Nhập ID sản phẩm: ");
+              String ID_product = sc.nextLine();
+              while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)) {
+                System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
+                ID_product = sc.nextLine();
+              }
+              SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+              boolean foundProduct = false;
+              for (SanPham sp : spList) {
+                if (sp.getProductId().equals(ID_product)) { 
+                  foundProduct = true;
+                  dsct[i].setProductId(ID_product); 
+                  break;
+                }
+
+                if (foundProduct == true) {
+                  System.out.println(
+                      "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
+                  System.out.println("1. Có");
+                  System.out.println("2. Không");
+                  int choose1 = sc.nextInt();
+                  if (choose1 == 1) {
+                    QuanLySanPham.getInstance().Create();
+                    dsct[i].setProductId(spList[spList.length - 1].getProductId());
+                  } else if (choose1 == 2) {
                     System.out.println(
-                        "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
-                    System.out.println("1. Có");
-                    System.out.println("2. Không");
-                    int choose1 = sc.nextInt();
-                    if (choose1 == 1) {
-                      QuanLySanPham.getInstance().Create();
-                      dsct[i].setProductId(spList[spList.length - 1].getProductId());
-                    } else if (choose1 == 2) {
-                      System.out.println(
-                          "\t\t\t\t\t\t\t\t +-----CẬP NHẬT THẤT BẠI-----+");
-                      return;
-                    }
+                        "\t\t\t\t\t\t\t\t +-----CẬP NHẬT THẤT BẠI-----+");
+                    return;
                   }
-                  data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
-                      + dsct[i].getPrice();
-                }
-                try {
-                  Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
-                  System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
-                  waitConsole();
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
-              }
-            }
-          }
-          case "3" -> {
-            for (int i = 0; i < dsct.length; i++) {
-              if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
-                System.out.print("Nhập số lượng sản phẩm: ");
-                while (!sc.hasNextInt()) {
-                  System.out.println("Vui lòng nhập một số nguyên.");
-                  sc.next();
-                }
-               
-                ctpnh.setAmount(sc.nextInt());
-                dsct[i].setAmount(ctpnh.getAmount());
-              }
-              data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
-                  + dsct[i].getPrice();
-            }
-            try {
-              Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
-              System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
-              waitConsole();
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-          }
-          case "4" -> {
-            for (int i = 0; i < dsct.length; i++) {
-              if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
-                System.out.print("Nhập giá tiền: ");
-                String price = sc.nextLine();
-                while (price.isEmpty() || kiemTra.isInteger(price) == false) {
-                  System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
-                  price = sc.nextLine();
-                }
-                ctpnh.setPrice(price);
-                dsct[i].setPrice(ctpnh.getPrice());
-              }
-              data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
-                  + dsct[i].getPrice();
-            }
-            try {
-              Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
-              System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
-              waitConsole();
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-          }
-          case "5" -> {
-            for (int i = 0; i < dsct.length; i++) {
-              if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
-                System.out.print("Nhập ID chi tiết phiếu nhập: ");
-                String ID_chiTiet = sc.nextLine();
-                while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)){
-                    System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
-                    ID_chiTiet = sc.nextLine();
-                }
-                ctpnh.setPhieuNhapId(ID_chiTiet);
-                int check = 0;
-                for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-                  if (ctpnh.getPhieuNhapId().equals(chiTietPhieu.getPhieuNhapId())) {
-                    check = 1;
-                    break;
-                  }
-                }
-
-                if (check == 1) {
-                  System.out.println("\t\t\t\t\t\t\t\t MÃ TÀI KHOẢN BỊ TRÙNG!");
-                  return;
-                }
-
-                boolean foundPhieuNhap = false;
-                PhieuNhapHang[] phieuNhapHangList = QuanLyPhieuNhapHang.getInstance().getListPhieuNhapHang();
-                for (PhieuNhapHang phieuNhapHang : phieuNhapHangList) {
-                  if (ctpnh.getPhieuNhapId().equals(phieuNhapHang.getReceiptId())) {
-                    foundPhieuNhap = true;
-                    break;
-                  }
-                }
-
-                if (foundPhieuNhap == false) {
-                  System.out
-                      .println("\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ PHIẾU NHẬP TRONG DANH SÁCH PHIẾU NHẬP-----+");
-                  return;
-                }
-
-                System.out.print("Nhập ID sản phẩm: ");
-                String ID_product = sc.nextLine();
-                while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)){
-                    System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
-                    ID_product = sc.nextLine();
-                }
-                ctpnh.setProductId(ID_product);
-                SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
-                boolean foundProduct = false;
-                for (SanPham sp : spList) {
-                  if (ctpnh.getProductId().equals(sp.getProductId())) {
-                    foundProduct = true;
-                    dsct[i].setProductId(ctpnh.getProductId());
-                    break;
-                  }
-
-                  if (foundProduct == false) {
-                    System.out.println(
-                        "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
-                    System.out.println("1. Có");
-                    System.out.println("2. Không");
-                    String choose1 = sc.nextLine();
-                    if (choose1 == "1") {
-                      QuanLySanPham.getInstance().Create();
-                      dsct[i].setProductId(spList[spList.length - 1].getProductId());
-                    } else if (choose1 == "2") {
-                      System.out.println(
-                          "\t\t\t\t\t\t\t\t +-----CẬP NHẬT THẤT BẠI-----+");
-                      return;
-                    }
-                  }
-                  System.out.print("Nhập số lượng sản phẩm: ");
-                  while (!sc.hasNextInt()) {
-                    System.out.println("Vui lòng nhập một số nguyên.");
-                    sc.next();
-                  }
-                  ctpnh.setAmount(sc.nextInt());
-
-                  System.out.print("Nhập giá: ");
-                  String price = sc.nextLine();
-                  while (price.isEmpty() || kiemTra.isInteger(price)) {
-                    System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
-                    price = sc.nextLine();
-                  }
-                  ctpnh.setPrice(price);
-
-                  dsct[i].setPhieuNhapId(ctpnh.getPhieuNhapId());
-                  dsct[i].setProductId(ctpnh.getProductId());
-                  dsct[i].setAmount(ctpnh.getAmount());
-                  dsct[i].setPrice(ctpnh.getPrice());
                 }
                 data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
                     + dsct[i].getPrice();
@@ -442,9 +277,140 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
               }
             }
           }
-          default -> System.out.println("\t\t\t\t\t\t\t\t +-----LỰA CHỌN KHÔNG HỢP LỆ-----+");
         }
-      
+        case "3" -> {
+          for (int i = 0; i < dsct.length; i++) {
+            if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
+              System.out.print("Nhập số lượng sản phẩm: ");
+              while (!sc.hasNextInt()) {
+                System.out.println("Vui lòng nhập một số nguyên.");
+                sc.next();
+              }
+
+              dsct[i].setAmount(sc.nextInt()); 
+            }
+            data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
+                + dsct[i].getPrice();
+          }
+          try {
+            Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
+            System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
+            waitConsole();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+        case "4" -> {
+          for (int i = 0; i < dsct.length; i++) {
+            if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
+              System.out.print("Nhập giá tiền: ");
+              String price = sc.nextLine();
+              while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+                System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                price = sc.nextLine();
+              }
+              dsct[i].setPrice(price); 
+            }
+            data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
+                + dsct[i].getPrice();
+          }
+          try {
+            Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
+            System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
+            waitConsole();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+        case "5" -> {
+          for (int i = 0; i < dsct.length; i++) {
+            if (dsct[i].getPhieuNhapId().equals(ID_PhieuNhap)) {
+              System.out.print("Nhập ID chi tiết phiếu nhập: ");
+              String ID_chiTiet = sc.nextLine();
+              while (ID_chiTiet.isEmpty() || !kiemTra.isValidIDCTP(ID_chiTiet)) {
+                System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+                ID_chiTiet = sc.nextLine();
+              }
+              int check = 0;
+              for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
+                if (chiTietPhieu.getPhieuNhapId().equals(ID_chiTiet)) { 
+                  check = 1;
+                  break;
+                }
+              }
+
+              if (check == 1) {
+                System.out.println("\t\t\t\t\t\t\t\t MÃ TÀI KHOẢN BỊ TRÙNG!");
+                return;
+              }
+
+              System.out.print("Nhập ID sản phẩm: ");
+              String ID_product = sc.nextLine();
+              while (ID_product.isEmpty() || !kiemTra.isValidIDproduct(ID_product)) {
+                System.out.print("Không đúng định đạng! Vui lòng nhập lại ID sản phẩm: ");
+                ID_product = sc.nextLine();
+              }
+              SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+              boolean foundProduct = false;
+              for (SanPham sp : spList) {
+                if (sp.getProductId().equals(ID_product)) { 
+                  foundProduct = true;
+                  dsct[i].setProductId(ID_product); 
+                  break;
+                }
+
+                if (foundProduct == true) {
+                  System.out.println(
+                      "\t\t\t\t\t\t\t\t +-----KHÔNG TÌM THẤY MÃ SẢN PHẨM TRONG DANH SÁCH SẢN PHẨM. BẠN CÓ MUỐN THÊM MỚI KHÔNG?-----+");
+                  System.out.println("1. Có");
+                  System.out.println("2. Không");
+                  int choose1 = sc.nextInt();
+                  if (choose1 == 1) {
+                    QuanLySanPham.getInstance().Create();
+                    dsct[i].setProductId(spList[spList.length - 1].getProductId());
+                  } else if (choose1 == 2) {
+                    System.out.println(
+                        "\t\t\t\t\t\t\t\t +-----CẬP NHẬT THẤT BẠI-----+");
+                    return;
+                  }
+                }
+              }
+
+              System.out.print("Nhập số lượng sản phẩm: ");
+                while (!sc.hasNextInt()) {
+                  System.out.println("Vui lòng nhập một số nguyên.");
+                  sc.next();
+                }
+                int quantity = sc.nextInt(); 
+
+                System.out.print("Nhập giá: ");
+                String price = sc.nextLine();
+                while (price.isEmpty() || kiemTra.isInteger(price) == false) {
+                  System.out.print("Không đúng định dạng! Vui lòng nhập lại: ");
+                  price = sc.nextLine();
+                }
+
+                dsct[i].setPhieuNhapId(ID_chiTiet);
+                dsct[i].setProductId(ID_product);
+                dsct[i].setAmount(quantity);
+                dsct[i].setPrice(price);
+                
+                  
+            }
+            data[i] = dsct[i].getPhieuNhapId() + ";" + dsct[i].getProductId() + ";" + dsct[i].getAmount() + ";"
+                  + dsct[i].getPrice();
+          }try {
+            Stream.addAll("Database/ChiTietPhieuNhap.txt", data);
+            System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA CHI TIẾT PHIẾU NHẬP THÀNH CÔNG-----+");
+            waitConsole();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          
+        }
+        default -> System.out.println("\t\t\t\t\t\t\t\t +-----LỰA CHỌN KHÔNG HỢP LỆ-----+");
+      }
+
     } catch (InputMismatchException ei) {
       System.out.println("\t\t\t\t\t\t\t\t +-----GIÁ TRỊ KHÔNG HỢP LỆ. VUI LÒNG NHẬP LẠI-----+");
     } catch (Exception e) {
@@ -457,9 +423,9 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
       System.out.println("\t\t\t\t\t\t\t\t +-----XÓA CHI TIẾT PHIẾU NHẬP HÀNG-----+");
       System.out.print("Nhập mã chi tiết phiếu nhập cần xóa: ");
       String ID_PhieuNhap = sc.nextLine();
-      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)){
-          System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
-          ID_PhieuNhap = sc.nextLine();
+      while (ID_PhieuNhap.isEmpty() || !kiemTra.isValidIDCTP(ID_PhieuNhap)) {
+        System.out.print("Không đúng định dạng! Vui lòng nhập lại ID chi tiết phiếu: ");
+        ID_PhieuNhap = sc.nextLine();
       }
 
       ChiTietPhieuNhapHang xoachiTiet = null;
@@ -529,51 +495,51 @@ public class QuanLyChiTietPhieuNhapHang  implements ControllerInterface {
     System.out.println("\t\t\t\t\t\t\t\t +-----------------------------------------+");
     System.out.print("\t\t\t\t\t\t\t - Mời Bạn Nhập Lựa Chọn: ");
     String choose = sc.nextLine();
-      switch (choose) {
-        case "0" -> {
-          System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
-        }
-        case "1" -> {
-          System.out.print("Nhập mã phiếu nhập hàng: ");
-          String id = sc.nextLine();
-          for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-            if (chiTietPhieu.getPhieuNhapId().toLowerCase().contains(id.toLowerCase())) {
-              result = addChiTietPhieuNhapHang(result, chiTietPhieu);
-            }
+    switch (choose) {
+      case "0" -> {
+        System.out.println("\t\t\t\t\t\t\t\t THOÁT CHƯƠNG TRÌNH THÀNH CÔNG!");
+      }
+      case "1" -> {
+        System.out.print("Nhập mã phiếu nhập hàng: ");
+        String id = sc.nextLine();
+        for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
+          if (chiTietPhieu.getPhieuNhapId().toLowerCase().contains(id.toLowerCase())) {
+            result = addChiTietPhieuNhapHang(result, chiTietPhieu);
           }
         }
-        case "2" -> {
-          System.out.print("Nhập mã sản phẩm: ");
-          String id = sc.nextLine();
-          for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-            if (chiTietPhieu.getProductId().toLowerCase().contains(id.toLowerCase())) {
-              result = addChiTietPhieuNhapHang(result, chiTietPhieu);
-            }
+      }
+      case "2" -> {
+        System.out.print("Nhập mã sản phẩm: ");
+        String id = sc.nextLine();
+        for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
+          if (chiTietPhieu.getProductId().toLowerCase().contains(id.toLowerCase())) {
+            result = addChiTietPhieuNhapHang(result, chiTietPhieu);
           }
         }
-        case "3" -> {
-          System.out.println("Nhập số lượng từ: ");
-          int begin = sc.nextInt();
-          System.out.println("Đến: ");
-          int end = sc.nextInt();
-          for (ChiTietPhieuNhapHang ctp : dsct) {
-            if (ctp.getAmount() <= end && ctp.getAmount() >= begin) {
-              result = addChiTietPhieuNhapHang  (result, ctp);
-            }
+      }
+      case "3" -> {
+        System.out.println("Nhập số lượng từ: ");
+        int begin = sc.nextInt();
+        System.out.println("Đến: ");
+        int end = sc.nextInt();
+        for (ChiTietPhieuNhapHang ctp : dsct) {
+          if (ctp.getAmount() <= end && ctp.getAmount() >= begin) {
+            result = addChiTietPhieuNhapHang(result, ctp);
           }
         }
-        case "4" -> {
-          System.out.print("Nhập giá tiền: ");
-          String price = sc.nextLine();
-          for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
-            if (price.equals(chiTietPhieu.getPrice())) {
-              result = addChiTietPhieuNhapHang(result, chiTietPhieu);
-            }
+      }
+      case "4" -> {
+        System.out.print("Nhập giá tiền: ");
+        String price = sc.nextLine();
+        for (ChiTietPhieuNhapHang chiTietPhieu : dsct) {
+          if (price.equals(chiTietPhieu.getPrice())) {
+            result = addChiTietPhieuNhapHang(result, chiTietPhieu);
           }
         }
-        default -> {
-          System.out.println("Lựa chọn không hợp lệ!");
-        }
+      }
+      default -> {
+        System.out.println("Lựa chọn không hợp lệ!");
+      }
     }
     String header = String.format("| %-15s | %-15s | %-10s | %-25s |", "ID Phiếu nhập", "ID Sản phẩm", "Số lượng",
         "Giá");

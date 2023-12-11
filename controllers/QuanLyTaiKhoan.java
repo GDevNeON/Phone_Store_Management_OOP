@@ -194,10 +194,9 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                     ID_Account = sc.nextLine();
                     
                 }
-                act.setAccountId(ID_Account);
                 int check = 0;
                 for (TaiKhoan ac : dsAccount) {
-                  if (act.getAccountId().equals(ac.getAccountId())) {
+                  if (ac.getAccountId().equals(ID_Account)) {
                     check = 1;
                     break;
                   }
@@ -206,7 +205,7 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                   System.out.println("\t\t\t\t\t\t\t\t MÃ TÀI KHOẢN BỊ TRÙNG!");
                   return;
                 }
-                dsAccount[i].setAccountId(act.getAccountId());
+                dsAccount[i].setAccountId(ID_Account);
               }
               data[i] = dsAccount[i].getAccountId() + ";" + dsAccount[i].getUsername() + ";"
                   + dsAccount[i].getPassword() + ";" + dsAccount[i].getPosition();
@@ -303,10 +302,9 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                     ID_Account = sc.nextLine();
                     
                 }
-                act.setAccountId(ID_Account);
                 int check = 0;
                 for (TaiKhoan ac : dsAccount) {
-                  if (act.getAccountId().equals(ac.getAccountId())) {
+                  if (ac.getAccountId().equals(ID_Account)) {
                     check = 1;
                     break;
                   }
@@ -318,13 +316,12 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                 }
 
                 System.out.print("Nhập tên tài khoản: ");
-                String name;
-                name = sc.nextLine();
+                String name= sc.nextLine();
                 while (name.isEmpty() || !kiemTra.isValidUsername(name)) {
                     System.out.print("Không đúng định dạng! Vui lòng nhập lại tên tài khoản: ");
                     name = sc.nextLine();
                 }
-                act.setUsername(sc.nextLine());
+                act.setUsername(name);
 
                 System.out.print("Nhập mật khẩu tài khoản: ");
                 String password;
@@ -344,7 +341,7 @@ public class QuanLyTaiKhoan implements ControllerInterface {
                 }
                 act.setPosition(position);
 
-                dsAccount[i].setAccountId(act.getAccountId());
+                dsAccount[i].setAccountId(ID_Account);
                 dsAccount[i].setUsername(act.getUsername());
                 dsAccount[i].setPassword(act.getPassword());
                 dsAccount[i].setPosition(act.getPosition());
