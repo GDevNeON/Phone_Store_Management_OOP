@@ -87,6 +87,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
 
   @Override
   public void Create() {
+    chiTiet = QuanLyChiTietPhieuNhapHang.getInstance();
     System.out.println("\t\t\t\t\t\t\t\t +-----NHẬP THÊM PHIẾU NHẬP-----+");
     PhieuNhapHang phieuNhapHang = new PhieuNhapHang();
     System.out.print("Nhập mã phiếu nhập: ");
@@ -173,7 +174,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     System.out.print("Mời nhập: ");
 
     String choose1 = sc.nextLine();
-    if (choose1 == "1") {
+    if (choose1.equals("1")) {
       boolean check1 = true;
       do {
         chiTiet.Create();
@@ -182,7 +183,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
         System.out.println("2.Không");
         System.out.print("Mời nhập: ");
         String choose2 = sc.nextLine();
-        if (choose2 != "1")
+        if (choose2.equals("2"))
           check1 = false;
       } while (check1);
     }
@@ -192,6 +193,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
 
   @Override
   public void Update() {
+    chiTiet = QuanLyChiTietPhieuNhapHang.getInstance();
     try {
       System.out.println("\t\t\t\t\t\t\t\t +-----CHỈNH SỬA THÔNG TIN PHIẾU NHẬP-----+");
       System.out.print("-Mời nhập ID phiếu nhập cần chỉnh sửa: ");
@@ -435,7 +437,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
     System.out.println("2.Không");
     System.out.print("Mời nhập: ");
     String choose1 = sc.nextLine();
-    if (choose1 == "1") {
+    if (choose1.equals("1")) {
       boolean check1 = true;
       do {
         chiTiet.Update();
@@ -444,7 +446,7 @@ public class QuanLyPhieuNhapHang implements ControllerInterface {
         System.out.println("2.Không");
         System.out.print("Mời nhập: ");
         String choose2 = sc.nextLine();
-        if (choose2 != "1")
+        if (choose2.equals("2"))
           check1 = false;
       } while (check1);
     }
