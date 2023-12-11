@@ -10,7 +10,6 @@ import models.ChiTietHoaDon;
 import models.ThongKe;
 import models.SanPham;
 
-
 public class QuanLyChiTietHoaDon implements ControllerInterface {
     private static QuanLyChiTietHoaDon instance;
     private ChiTietHoaDon[] rd;
@@ -61,25 +60,50 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
         waitConsole();
 
     }
-    public boolean check_SP(String SP){
+
+    public boolean check_SP(String SP) {
         int check = 0;
         SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
         for (SanPham sp : spList) {
-          if (SP.equals(sp.getProductId())) {
-            check = 1;
-            break;
-          }
+            if (SP.equals(sp.getProductId())) {
+                check = 1;
+                break;
+            }
         }
         if (check == 0) {
-          System.out.println("\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI TRONG DS SẢN PHẨM. VUI LÒNG KIỂM TRA LẠI----+");
-          return false;
+            System.out.println(
+                    "\t\t\t\t\t\t\t\t +----MÃ SẢN PHẨM KHÔNG TỒN TẠI TRONG DS SẢN PHẨM. VUI LÒNG KIỂM TRA LẠI----+");
+            return false;
         }
         return true;
     }
+
+    public boolean check_SL(String SL) {
+        int SL_int = Integer.parseInt(SL);
+        SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+        for (SanPham sp : spList) {
+            if (SL_int > (sp.getAmount()) || SL_int < 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int get_Price(String SP) {
+        SanPham[] spList = QuanLySanPham.getInstance().getListSanPham();
+        for (SanPham sp : spList) {
+            if (SP.equals(sp.getProductId())) {
+                return sp.getPrice();
+            }
+        }
+        return 0;
+    }
+
     @Override
     public void Create() {
         ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
         // QuanLyHoaDon quanLyHoaDon = new QuanLyHoaDon();
+        // SanPham sPham=new SanPham();
         ThongKe thongKe = new ThongKe();
         System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN CHI TIẾT HÓA ĐƠN----+");
 
@@ -100,17 +124,18 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
             if (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5) {
                 System.out.println("\t\t\t\t\t\t\t\t +----Bạn nhập không đúng định dạng hãy nhập lại.----+");
             }
-        } while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5||check_SP(SP)==false);
+        } while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5 || check_SP(SP) == false);
 
+        int Price = get_Price(SP);
         chiTietHoaDon.setProductId(SP);
         thongKe.setProductId(SP);
- 
+
         System.out.println("\t\t\t\t\t\t\t\t+----Enter để tiếp tục!!!----+");
         String Amount;
         int Amount_int;
         Amount = input.nextLine();
-        while (!Amount.matches("^[0-9]+$") || Amount.length() > 3) {
-            System.out.print("Nhập số lượng: (<999) :");
+        while (!Amount.matches("^[0-9]+$") || Amount.length() > 3 || check_SL(Amount) == false) {
+            System.out.print("Nhập số lượng: (<= số lượng sản phẩm trong kho,nếu nhập sai sẽ được nhập lại) :");
             Amount = input.nextLine();
         }
         Amount_int = Integer.parseInt(Amount);
@@ -118,21 +143,22 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
         thongKe.setAmount(Amount_int);
         System.out.println("\t\t\t\t\t\t\t\t+----Enter để tiếp tục!!!----+");
 
-        String Price;
-        int Price_int;
-        Price = input.nextLine();
-        while (!Price.matches("^[0-9]+$") || Price.length() > 9) {
-            System.out.print("Nhập giá: (<=999.999.999) :");
-            Price = input.nextLine();
-        }
-        Price_int = Integer.parseInt(Price);
-        chiTietHoaDon.setPrice(Price_int);
-        thongKe.setPrice(Price_int);
+        // String Price;
+        // Price = input.nextLine();
+        // while (!Price.matches("^[0-9]+$") || Price.length() > 9) {
+        // System.out.print("Nhập giá: (<=999.999.999) :");
+        // Price = input.nextLine();
+        // }
+        thongKe.setPrice(Price);
+        System.out.print("Đã lấy được giá sản phẩm:");
 
         LocalDate date = java.time.LocalDate.now();
         thongKe.setDate(date);
-        
-        int totalAmount = Amount_int * Price_int;
+
+        int totalAmount = Amount_int * Price;
+
+        chiTietHoaDon.setPrice(totalAmount);
+
         thongKe.setTotalAmount(totalAmount);
 
         QuanLyHoaDon quanLyHoaDon = QuanLyHoaDon.getInstance();
@@ -150,7 +176,8 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
             e.printStackTrace();
         }
         try {
-            String input =thongKe.getCustomerId() + ";" + thongKe.getProductId() + ";" + thongKe.getAmount() + ";" + thongKe.getPrice() + ";" + thongKe.getDate() + ";" + thongKe.getTotalAmount();
+            String input = thongKe.getCustomerId() + ";" + thongKe.getProductId() + ";" + thongKe.getAmount() + ";"
+                    + thongKe.getPrice() + ";" + thongKe.getDate() + ";" + thongKe.getTotalAmount();
             Stream.addOneLine("Database/ThongKe.txt", input);
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,7 +202,7 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
                 System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
             }
         } while (SP.isEmpty() || !SP.matches("^sp[0-9]+$") || SP.length() > 5);
-
+        int Price = get_Price(SP);
         ChiTietHoaDon cthd = null;
 
         for (ChiTietHoaDon receipt : rd) {
@@ -211,23 +238,15 @@ public class QuanLyChiTietHoaDon implements ControllerInterface {
                 String Amount;
                 int Amount_int;
                 Amount = input.nextLine();
-                while (!Amount.matches("^[0-9]+$") || Amount.length() > 4) {
-                    System.out.print("Nhập số lượng: (<9999) :");
+                while (!Amount.matches("^[0-9]+$") || Amount.length() > 3 || check_SL(Amount) == false) {
+                    System.out.print("Nhập số lượng: (<= số lượng sản phẩm trong kho,nếu nhập sai sẽ được nhập lại) :");
                     Amount = input.nextLine();
                 }
                 Amount_int = Integer.parseInt(Amount);
                 rd[i].setAmount(Amount_int);
 
-                String Price;
-                int Price_int;
-                Price = input.nextLine();
-                while (!Price.matches("^[0-9]+$") || Price.length() > 9) {
-                    System.out.print("Nhập giá: (<=999.999.999) :");
-                    Price = input.nextLine();
-                    System.out.println("enter để tiếp tục :");
-                }
-                Price_int = Integer.parseInt(Price);
-                rd[i].setPrice(Price_int);
+                int totalAmount = Amount_int * Price;
+                rd[i].setPrice(totalAmount);
 
             }
             data[i] = rd[i].getReceiptId() + ";" + rd[i].getProductId() + ";" + rd[i].getAmount() + ";"
