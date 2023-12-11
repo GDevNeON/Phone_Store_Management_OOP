@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+
 public class Validation {
   static Scanner scanner = new Scanner(System.in);
   // Các hằng số để quy định độ dài tối đa của các trường thông tin
@@ -23,23 +24,25 @@ public class Validation {
   public static boolean isValidAge(int age) {
     return age >= 0 && age <= 150;
   }
+
   public static int readValidAge() {
     System.out.print("Nhập tuổi: ");
     while (!scanner.hasNextInt()) {
-        System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
-        scanner.next();
+      System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
+      scanner.next();
     }
     int age = scanner.nextInt();
     while (!isValidAge(age)) {
+      System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
+      while (!scanner.hasNextInt()) {
         System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Tuổi không hợp lệ!. Hãy nhập lại(1-150).");
-            scanner.next();
-        }
-        age = scanner.nextInt();
+        scanner.next();
+      }
+      age = scanner.nextInt();
     }
     return age;
-}
+  }
+
   // Hàm validation cho giới tính
   public static boolean isValidGender(String gender) {
     return gender.equalsIgnoreCase("Nam") || gender.equalsIgnoreCase("Nu");
@@ -64,7 +67,7 @@ public class Validation {
   // Hàm validation cho số fax
   public boolean isValidFax(String Fax) {
     return Fax.matches("^84\\d{8}$");
-}
+  }
 
   // Hàm validation kiểm tra số nguyên cho phần chọn menu
   public boolean isInteger(String input) {

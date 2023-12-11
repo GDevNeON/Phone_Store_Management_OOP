@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import models.HoaDon;
-// import models.KhachHang;
-// import models.NhanVien;
+import models.KhachHang;
+import models.NhanVien;
 
 public class QuanLyHoaDon implements ControllerInterface {
   private static QuanLyHoaDon instance;
@@ -46,12 +46,12 @@ public class QuanLyHoaDon implements ControllerInterface {
 
   public String getCustomerIdByReceiptId(String receiptId) {
     for (HoaDon hoaDon : re) {
-        if (hoaDon.getReceiptId().equals(receiptId)) {
-            return hoaDon.getCustomerId();
-        }
+      if (hoaDon.getReceiptId().equals(receiptId)) {
+        return hoaDon.getCustomerId();
+      }
     }
     return null;
-}
+  }
 
   @Override
   public void Read() {
@@ -85,18 +85,38 @@ public class QuanLyHoaDon implements ControllerInterface {
     waitConsole();
   }
 
+  public boolean check_KH(String KH) {
+    KhachHang[] kHang = QuanLyKhachHang.getInstance().getListCustomer();
+    for (KhachHang kh : kHang) {
+      if (KH.equals(kh.getCustomerId())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean check_NV(String NV) {
+    NhanVien[] nVien = QuanLyNhanVien.getInstance().getListEmployee();
+    for (NhanVien nv : nVien) {
+      if (NV.equals(nv.getWorkerId())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public void Create() {
     HoaDon hd = new HoaDon();
     System.out.println("\t\t\t\t\t\t\t\t +----NHẬP THÔNG TIN HÓA ĐƠN----+");
-		String HD;
-        do {
-			System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
-			HD = input.nextLine();
-			if(HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5){
-				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-			}
-		}while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") ||HD.length()>5);
+    String HD;
+    do {
+      System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
+      HD = input.nextLine();
+      if (HD.isEmpty() || !HD.matches("^hd[0-9]+$") || HD.length() > 5) {
+        System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+      }
+    } while (HD.isEmpty() || !HD.matches("^hd[0-9]+$") || HD.length() > 5);
 
     hd.setReceiptId(HD);
     // String customerId = getCustomerIdByInvoiceId(hd.getReceiptId());
@@ -115,50 +135,54 @@ public class QuanLyHoaDon implements ControllerInterface {
     }
 
     String Price;
-		int Price_int;
-		Price = input.nextLine();
-		while (!Price.matches("^[0-9]+$")||Price.length()>9) {
-			System.out.print("Nhập giá: (<=999.999.999) :");
-			Price = input.nextLine();
-            System.out.println("enter để tiếp tục :");
-		}
-		Price_int = Integer.parseInt(Price);
+    int Price_int;
+    Price = input.nextLine();
+    while (!Price.matches("^[0-9]+$") || Price.length() > 9) {
+      System.out.print("Nhập giá: (<=999.999.999) :");
+      Price = input.nextLine();
+      System.out.println("enter để tiếp tục :");
+    }
+    Price_int = Integer.parseInt(Price);
     hd.setPrice(Price_int);
 
-    // KhachHang[] khList = QuanLyKhachHang.getInstance().getListCustomer();
-    String KH;
-		do {
-			System.out.print("Nhập mã khách hàng:(kh[0-n])--kh1->kh999 :");
-			KH = input.nextLine();
-			if(KH.isEmpty() || !KH.matches("^kh[0-9]+$") ||KH.length()>5){
-				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-			}
+    QuanLyKhachHang khList = QuanLyKhachHang.getInstance();
 
-		} while (KH.isEmpty() || !KH.matches("^kh[0-9]+$") ||KH.length()>5);
+    String KH;
+    do {
+      System.out.print("Nhập mã khách hàng:(kh[0-n])--kh1->kh999 :");
+      KH = input.nextLine();
+      if (KH.isEmpty() || !KH.matches("^kh[0-9]+$") || KH.length() > 5) {
+        System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+      }
+
+    } while (KH.isEmpty() || !KH.matches("^kh[0-9]+$") || KH.length() > 5);
+
+    if (check_KH(KH) == false) {
+      System.out.println("Khách hàng không tồn tại hãy tạo mới khách hàng");
+      khList.Create();
+    }
     hd.setCustomerId(KH);
 
     String NV;
-		do {
-			System.out.print("Nhập mã nhân viên:(nv[0-n])--nv1->nv999 :");
-			NV = input.nextLine();
-			if(NV.isEmpty() || !NV.matches("^nv[0-9]+$") ||NV.length()>5){
-				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-			}
+    do {
+      System.out.print("Nhập mã nhân viên:(nv[0-n])--nv1->nv999 :");
+      NV = input.nextLine();
+      if (NV.isEmpty() || !NV.matches("^nv[0-9]+$") || NV.length() > 5 || check_NV(NV) == false) {
+        System.out.println("Bạn nhập không đúng định dạng hoặc mã nhân viên không tồn tại hãy nhập lại.");
+      }
 
-		} while (NV.isEmpty() || !NV.matches("^nv[0-9]+$") ||NV.length()>5);
-      hd.setEmployeeId(NV);
+    } while (NV.isEmpty() || !NV.matches("^nv[0-9]+$") || NV.length() > 5 || check_NV(NV) == false);
+    hd.setEmployeeId(NV);
 
+    String TT;
+    do {
+      System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
+      TT = input.nextLine();
+      if (TT.isEmpty() || TT.length() > 20) {
+        System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+      }
 
-    
-		String TT;
-		do {
-			System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
-			TT = input.nextLine();
-			if(TT.isEmpty()||TT.length()>20){
-				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-			}
-
-		} while (KH.isEmpty()||TT.length()>20);
+    } while (KH.isEmpty() || TT.length() > 20);
     hd.setPurchaseMethod(TT);
 
     LocalDate date = java.time.LocalDate.now();
@@ -176,16 +200,16 @@ public class QuanLyHoaDon implements ControllerInterface {
     System.out.println();
     System.out.println("Thêm chi tiết hóa đơn cho hóa đơn này:");
 
-      boolean check1 = true;
-      do {
-        rdm.Create();
-        System.out.println("Thêm tiếp chi tiết hóa đơn:");
-        System.out.println("1.Có (Nhập số khác để thoát)");
-        System.out.print("Mời nhập:");
-        int choose2 = input.nextInt();
-        if (choose2 != 1)
-          check1 = false;
-      } while (check1);
+    boolean check1 = true;
+    do {
+      rdm.Create();
+      System.out.println("Thêm tiếp chi tiết hóa đơn:");
+      System.out.println("1.Có (Nhập số khác để thoát)");
+      System.out.print("Mời nhập:");
+      int choose2 = input.nextInt();
+      if (choose2 != 1)
+        check1 = false;
+    } while (check1);
 
     waitConsole();
   }
@@ -196,12 +220,12 @@ public class QuanLyHoaDon implements ControllerInterface {
     String ID_HoaDon;
     HoaDon hdon = null;
     do {
-			System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
-			ID_HoaDon = input.nextLine();
-			if(ID_HoaDon.isEmpty() || !ID_HoaDon.matches("^hd[0-9]+$") ||ID_HoaDon.length()>5){
-				System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-			}
-		}while (ID_HoaDon.isEmpty() || !ID_HoaDon.matches("^hd[0-9]+$") ||ID_HoaDon.length()>5);
+      System.out.print("Nhập mã hoá đơn:(hd[0-n])--hd1->hd999 :");
+      ID_HoaDon = input.nextLine();
+      if (ID_HoaDon.isEmpty() || !ID_HoaDon.matches("^hd[0-9]+$") || ID_HoaDon.length() > 5) {
+        System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+      }
+    } while (ID_HoaDon.isEmpty() || !ID_HoaDon.matches("^hd[0-9]+$") || ID_HoaDon.length() > 5);
 
     for (HoaDon HoaDon : re) {
       if (ID_HoaDon.equals(HoaDon.getReceiptId())) {
@@ -237,49 +261,54 @@ public class QuanLyHoaDon implements ControllerInterface {
         System.out.println("Sửa thông tin hóa đơn:");
 
         String Price;
-				int Price_int;
-				Price = input.nextLine();
-				while (!Price.matches("^[0-9]+$")) {
-					System.out.print("Nhập giá: (<1.000.000.000)");
-					Price = input.nextLine();
-				}
-				Price_int = Integer.parseInt(Price);
-				
-				re[i].setPrice(Price_int);
+        int Price_int;
+        Price = input.nextLine();
+        while (!Price.matches("^[0-9]+$")) {
+          System.out.print("Nhập giá: (<1.000.000.000)");
+          Price = input.nextLine();
+        }
+        Price_int = Integer.parseInt(Price);
 
-				String KH;
-				do {
-					System.out.print("Nhập mã khách hàng:(kh[0-n])");
-					KH = input.nextLine();
-					if(KH.isEmpty() || !KH.matches("^kh[0-9]+$") ||KH.length()>5){
-						System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-					}
+        re[i].setPrice(Price_int);
+        QuanLyKhachHang khList = QuanLyKhachHang.getInstance();
 
-				} while (KH.isEmpty() || !KH.matches("^kh[0-9]+$") ||KH.length()>5);
-				re[i].setCustomerId(KH);
+        String KH;
+        do {
+          System.out.print("Nhập mã khách hàng:(kh[0-n])");
+          KH = input.nextLine();
+          if (KH.isEmpty() || !KH.matches("^kh[0-9]+$") || KH.length() > 5) {
+            System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+          }
 
+        } while (KH.isEmpty() || !KH.matches("^kh[0-9]+$") || KH.length() > 5);
 
-				String NV;
-				do {
-					System.out.print("Nhập mã nhân viên:(nv[0-n])");
-					NV = input.nextLine();
-					if(NV.isEmpty() || !NV.matches("^nv[0-9]+$") ||NV.length()>5){
-						System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-					}
+        if (check_KH(KH) == false) {
+          System.out.println("Khách hàng không tồn tại hãy tạo mới khách hàng");
+          khList.Create();
+        }
+        re[i].setCustomerId(KH);
 
-				} while (NV.isEmpty() || !NV.matches("^nv[0-9]+$") ||NV.length()>5);
-				re[i].setEmployeeId(NV);
+        String NV;
+        do {
+          System.out.print("Nhập mã nhân viên:(nv[0-n])--nv1->nv999 :");
+          NV = input.nextLine();
+          if (NV.isEmpty() || !NV.matches("^nv[0-9]+$") || NV.length() > 5 || check_NV(NV) == false) {
+            System.out.println("Bạn nhập không đúng định dạng hoặc mã nhân viên không tồn tại hãy nhập lại.");
+          }
 
-				String TT;
-				do {
-					System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
-					TT = input.nextLine();
-					if(TT.isEmpty()||TT.length()>20){
-						System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
-					}
+        } while (NV.isEmpty() || !NV.matches("^nv[0-9]+$") || NV.length() > 5 || check_NV(NV) == false);
+        re[i].setEmployeeId(NV);
 
-				} while (KH.isEmpty()||TT.length()>20);
-				re[i].setPurchaseMethod(TT);
+        String TT;
+        do {
+          System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
+          TT = input.nextLine();
+          if (TT.isEmpty() || TT.length() > 20) {
+            System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
+          }
+
+        } while (KH.isEmpty() || TT.length() > 20);
+        re[i].setPurchaseMethod(TT);
 
       }
       data[i] = re[i].getReceiptId() + ";" + re[i].getPrice() + ";" + re[i].getPurchaseDate() + ";"

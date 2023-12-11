@@ -3,4 +3,7 @@ hd2;1000000;2012-10-31;Giao hàng tận nơi;kh2;nv1
 hd3;15000000;2022-04-05;Gửi bưu điện;kh3;nv1
 hd5;1000000;2023-11-20;Online;kh1;NV5
 hd7;1500000;2023-11-25;tt5;kh5;nv5
-hd10;1500000;2023-11-26;online;kh1;nv1
+hd10;1500000;2023-11-26;online;kh1;nv1hd132
+hd22;0;2023-12-11;null;null;null
+hd23;424;2023-12-11;hgfhg;kh21;nv001
+hd55;12312;2023-12-11;sadasd;kh21;nv001
