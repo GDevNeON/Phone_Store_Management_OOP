@@ -173,6 +173,10 @@ public class Validation {
     return kindOfCustomer.equalsIgnoreCase("walk-in") || kindOfCustomer.equalsIgnoreCase("regular");
   }
 
+  public static boolean isValidKindOfPayment(String kindOfPayment) {
+    return kindOfPayment.equalsIgnoreCase("tien mat") || kindOfPayment.equalsIgnoreCase("chuyen khoan");
+  }
+
   public String validateInput(Scanner sc, String[] validValues, int maxLength) {
     String value;
     while (true) {

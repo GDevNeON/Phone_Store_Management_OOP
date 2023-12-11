@@ -176,13 +176,13 @@ public class QuanLyHoaDon implements ControllerInterface {
 
     String TT;
     do {
-      System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
+      System.out.print("Nhập phương pháp mua hàng::(truc tiep,online)");
       TT = input.nextLine();
       if (TT.isEmpty() || TT.length() > 20) {
         System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
       }
 
-    } while (KH.isEmpty() || TT.length() > 20);
+    } while (TT.isEmpty() || TT.length() > 20 || Validation.isValidKindOfPayment(TT));
     hd.setPurchaseMethod(TT);
 
     LocalDate date = java.time.LocalDate.now();
@@ -301,13 +301,13 @@ public class QuanLyHoaDon implements ControllerInterface {
 
         String TT;
         do {
-          System.out.print("Nhập phương pháp mua hàng::(trực tiếp,onl,....)-không quá 20 kí tự");
+          System.out.print("Nhập phương pháp mua hàng::(truc tiep;online)");
           TT = input.nextLine();
           if (TT.isEmpty() || TT.length() > 20) {
             System.out.println("Bạn nhập không đúng định dạng hãy nhập lại.");
           }
 
-        } while (KH.isEmpty() || TT.length() > 20);
+        } while (KH.isEmpty() || TT.length() > 20 || Validation.isValidKindOfPayment(TT));
         re[i].setPurchaseMethod(TT);
 
       }
